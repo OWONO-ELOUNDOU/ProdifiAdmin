@@ -1,0 +1,21 @@
+.home-container {
+    .titles {
+        .graphs {
+            .stats {
+                .higher, .lower { height: 175px; }
+            }
+        }
+    }
+
+    .transactions {
+        .col-1 {
+            .transaction-table {
+                margin-top: 20px;
+                thead tr td {
+                    font-size: 13px;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}

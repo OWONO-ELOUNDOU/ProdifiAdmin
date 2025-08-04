@@ -1,0 +1,40 @@
+@mixin td_config {
+    width: 220px;
+    font-size: 12px;
+
+    &:nth-child(1),
+    &:nth-child(2),
+    &:nth-child(3) {
+        text-align: left;
+    }
+
+    &:nth-child(4) {
+        width: 50px;
+        place-items: center;
+        text-align: center
+    };
+
+    &:nth-child(5),
+    &:nth-child(6),
+    &:nth-child(7),
+    &:nth-child(8),
+    &:nth-child(9),
+    &:nth-child(10) {
+        text-align: right;
+    }
+}
+
+
+.assets-container {
+    .table-container {
+        table {
+            thead {
+                tr > td {
+                    @include td_config();
+                }
+            }
+
+            tbody > tr > td { @include td_config(); }
+        }
+    }
+}

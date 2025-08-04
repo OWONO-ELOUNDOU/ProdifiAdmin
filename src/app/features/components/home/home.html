@@ -1,0 +1,67 @@
+<div class="home-container mt-20 p-8">
+    <h1 class="text-4xl font-bold mb-2">Statistiques d'ensemble</h1>
+    <span class="text-sm text-gray-500 font-semibold">Tableau de bord</span>
+
+    <section class="mt-8">
+        <app-statistic-card />
+    </section>
+
+    <section class="titles mt-8">
+        <h3 class="text-2xl font-bold mb-2">Titres (actifs)</h3>
+        <div class="graphs w-full flex items-center justify-between flex-wrap row mt-2 p-4">
+            <div class="graphic w-2/3 h-300 border rounded-lg">
+                <app-chart-line [chartData]="marketData()" />
+            </div>
+            <div class="stats w-1/4">
+                <div class="higher w-full p-2 mb-4 border shadow-md rounded-lg">
+                    <app-crypto-card [cryptoItem]="marketData()[0]" />
+                </div>
+                <div class="lower w-full border rounded-lg">
+                    <app-crypto-card [cryptoItem]="marketData()[9]" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="transactions w-full flex items-center justify-between gap-8 mt-10">
+        <div class="col-1 w-2/3">
+            <h3 class="text-2xl font-bold mb-2">Dernières Transactions</h3>
+            <span class="text-sm text-gray-500 font-semibold">Tableau récapitulatif des 3 dernières transactions</span>
+            <table class="transaction-table w-full mt-2">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <td class="py-4 px-4">symbol</td>
+                        <td class="py-4 px-4">Nom</td>
+                        <td class="py-4 px-4 text-right">Quantité</td>
+                        <td class="py-4 px-4 text-right">prix actuel</td>
+                        <td class="py-4 px-4 text-right">Date</td>
+                        <td class="py-4 px-4 text-right">options</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through marketData and display each coin -->
+                    <ng-container *ngIf="lastData().length; else noData">
+                        @for (coin of lastData(); track coin.name) {
+                            <tr>
+                                <td class="border-b py-4 px-4">{{ coin.symbol | uppercase }}</td>
+                                <td class="border-b py-4 px-4">{{ coin.name }}</td>
+                                <td class="border-b py-4 px-4 text-right">235</td>
+                                <td class="border-b py-4 px-4 text-right">${{ coin.current_price }}</td>
+                                <td class="border-b py-4 px-4 text-right">30-07-2025</td>
+                                <td class="border-b py-4 px-4 text-right">°°°</td>
+                            </tr>
+                        }
+                    </ng-container>
+                    <ng-template #noData>
+                        <tr>
+                            <td colspan="6" class="text-center py-4">Aucune donnée disponible</td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-2">
+            <h3>Plus haute transaction</h3>
+        </div>
+    </div>
+</div>

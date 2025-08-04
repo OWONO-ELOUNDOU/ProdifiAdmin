@@ -1,0 +1,26 @@
+<div class="crypto-card w-full h-full p-2">
+    <div class="card-header w-full flex items-start justify-between gap-4 mb-3">
+        <div class="w-1/2 flex items-center justify-start gap-2">
+            <picture>
+                <img [src]="cryptoItem()?.image" width="60" height="60" alt="crypto symbol">
+            </picture>
+            <div class="title">
+                <h3 class="text-lg font-bold">{{ cryptoItem()?.name }}</h3>
+                <span class="text-sm uppercase font-semibold">{{ cryptoItem()?.symbol }}</span>
+            </div>
+        </div>
+        <div class="w-1/2 text-right pt-2">
+            <span class="text-sm text-gray-600">Prix actuel: {{ cryptoItem()?.current_price | currency:'USD':'symbol':'1.2-2' }}</span>
+        </div>
+    </div>
+    <hr class="w-full mb-2 bg-gray-300" />
+    <div class="card-body w-full flex items-start justify-between gap-2 p-2 rounded-md">
+        <div class="col-2 w-1/2 flex flex-col gap-2">
+            <span class="text-sm text-gray-600">Market cap rank: {{ cryptoItem()?.market_cap_rank }}</span>
+        </div>
+        <div class="col-1 w-1/2 flex flex-col gap-2">
+            <span class="text-sm text-green-600">High_24h: {{ cryptoItem()?.high_24h }}</span>
+            <span class="text-sm text-red-600">Low_24h: {{ cryptoItem()?.low_24h }}</span>
+        </div>
+    </div>
+</div>

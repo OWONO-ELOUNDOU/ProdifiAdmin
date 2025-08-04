@@ -1,0 +1,74 @@
+<div class="assets-container w-full h-full px-8 mt-28">
+    <span class="text-sm text-left font-semibold text-gray-500">Tableau de bord > {{ title() }}</span>
+    <h1 class="text-4xl text-left font-bold my-4">Gestion des titres (actifs)</h1>
+
+    <div class="table-container flex items-start justify-between gap-4">
+        <table class="w-3/4">
+            <thead class="bg-gray-100">
+                <tr>
+                    <td class="p-2">Id</td>
+                    <td class="p-2">Symbol</td>
+                    <td class="p-2">Nom</td>
+                    <td class="p-2">Image</td>
+                    <td class="p-2">Prix Actuel $</td>
+                    <td class="p-2">Ch. Prix %</td>
+                    <td class="p-2">Qt. en circulation</td>
+                    <td class="p-2">Qt. total</td>
+                    <td class="p-2">Mr. Rang</td>
+                    <td class="p-2">Options</td>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="transactionData().length > 0; else noData">
+                    @for (item of transactionData(); track item.id) {
+                        <tr>
+                            <td class="border-b p-2">{{ item.id }}</td>
+                            <td class="border-b p-2">{{ item.symbol }}</td>
+                            <td class="border-b p-2">{{ item.name }}</td>
+                            <td class="border-b p-2">
+                                <picture>
+                                    <img class="w-8 h-8" [src]="item.image" alt="{{ item.name }}" />
+                                </picture>
+                            </td>
+                            <td class="border-b p-2">{{ item.current_price }}</td>
+                            <td class="border-b p-2">{{ item.price_change_percentage_24h }}</td>
+                            <td class="border-b p-2">{{ item.circulating_supply }}</td>
+                            <td class="border-b p-2">{{ item.total_supply }}</td>
+                            <td class="border-b p-2">{{ item.market_cap_rank }}</td>
+                            <td class="border-b p-2 cursor-pointer">°°°</td>
+                        </tr>
+                    }
+                </ng-container>
+
+                <ng-template #noData>
+                    <tr>
+                        <td class="border-b p-2 text-center" colspan="9">Aucune donnée disponible</td>
+                    </tr>
+                </ng-template>
+            </tbody>
+        </table>
+
+        <div class="analytics w-1/4">
+            <div class="higher w-full p-2 mb-4 border shadow-md rounded-lg">
+                <app-crypto-card [cryptoItem]="transactionData()[0]" />
+            </div>
+            <div class="lower w-full border rounded-lg">
+                <app-crypto-card [cryptoItem]="transactionData()[9]" />
+            </div>
+        </div>
+    </div>
+
+    <div class="circulation-graph w-full p-2 my-20">
+        <span class="text-sm text-left font-semibold text-gray-500">
+            Graphique expliquant l'évolution des {{ title() }} en fonction des quantités en circulation, des quantités totales et des prix sur le marché.
+        </span>
+        <h1 class="text-4xl text-left font-bold my-4">Gestion des titres (actifs)</h1>
+
+        <div class="graph-stats w-full flex items-start justify-between gap-20 mt-4">
+            <div class="graph w-3/4 border">
+                <app-chart-line [chartData]="transactionData()" />
+            </div>
+            <div class="stats w-1/4 border"></div>
+        </div>
+    </div>
+</div>

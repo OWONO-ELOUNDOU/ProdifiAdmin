@@ -22,13 +22,11 @@ export class Home implements OnInit {
   lastData = signal<any[]>([]);
 
   ngOnInit() {
-    /*
     this.cryptoService.getMarketData().subscribe(data => {
       localStorage.setItem('crypto_data', JSON.stringify(data));
     }, error => {
       console.error('Error fetching market data:', error);
     });
-    */
 
     this.marketData.set(JSON.parse(localStorage.getItem('crypto_data') || '[]'));
     this.lastData.set(this.marketData().slice(0, 5));

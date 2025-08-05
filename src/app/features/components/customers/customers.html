@@ -1,0 +1,38 @@
+<div class="customers-container w-full p-8 mt-20">
+    <span class="text-sm font-semibold text-gray-500 mb-4">Tableau de bord > Clients</span>
+    <h1 class="text-5xl text-gray-700 font-bold my-4">Gestion des clients</h1>
+
+    <table class="customers-table w-3/4 mt-8">
+        <thead class="w-full">
+            <tr class="w-full bg-gray-200">
+                <td class="text-sm font-bold text-gray-600 p-4">Nom</td>
+                <td class="text-sm font-bold text-gray-600 p-4">N° Téléphone</td>
+                <td class="text-sm font-bold text-gray-600 p-4">titre(s) acheté(s)</td>
+                <td class="text-sm font-bold text-gray-600 p-4">Image</td>
+                <td class="text-sm font-bold text-gray-600 p-4">Quantité</td>
+                <td class="text-sm font-bold text-gray-600 p-4">Montant Total ($)</td>
+                <td class="text-sm font-bold text-gray-600 p-4">Date</td>
+                <td class="text-sm font-bold text-gray-600 p-4">Options</td>
+            </tr>
+        </thead>
+        <tbody class="w-full">
+            <ng-container *ngIf="customersData().length > 0; else noCustomers">
+                @for (customer of customersData(); track customer.name) {
+                    <tr>
+                        <td>{{ customer.name }}</td>
+                        <td>{{ customer.phone }}</td>
+                        <td>{{ customer.assets_bought }}</td>
+                        <td>{{ customer.image }}</td>
+                        <td>{{ customer.quantity }}</td>
+                        <td>{{ customer.total }}</td>
+                        <td>{{ customer.date }}</td>
+                        <td>°°°</td>
+                    </tr>
+                }
+            </ng-container>
+        </tbody>
+    </table>
+    <ng-template #noCustomers>
+        <p class="w-full text-md text-gray-700 text-center mt-8">Aucune données disponible!</p>
+    </ng-template>
+</div>

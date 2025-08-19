@@ -1,25 +1,25 @@
 <div class="assets-container w-full h-full px-8 mt-28">
     <span class="text-sm text-left font-semibold text-gray-500">Tableau de bord > {{ title() }}</span>
     <div class="header w-full flex items-center justify-between">
-        <h1 class="text-4xl text-left font-bold my-4">Gestion des titres (actifs)</h1>
+        <h1 class="text-5xl text-gray-700 font-bold my-4">Gestion des titres (actifs)</h1>
         <!-- <button class="text-white bg-indigo-900 py-2 px-6 rounded-full shadow-md cursor-pointer">+ Titre</button> -->
         <p-button icon="pi pi-plus" label="Ajouter Titre" size="small" severity="contrast" [rounded]="true" />
     </div>
 
     <div class="table-container flex items-start justify-between gap-4">
         <table class="w-3/4">
-            <thead class="bg-gray-100">
-                <tr>
-                    <td class="p-2">Id</td>
-                    <td class="p-2">Symbol</td>
-                    <td class="p-2">Nom</td>
-                    <td class="p-2">Image</td>
-                    <td class="p-2">Prix Actuel $</td>
-                    <td class="p-2">Ch. Prix %</td>
-                    <td class="p-2">Qt. en circulation</td>
-                    <td class="p-2">Qt. total</td>
-                    <td class="p-2">Mr. Rang</td>
-                    <td class="p-2">Options</td>
+            <thead class="+w-full">
+                <tr class="w-full bg-gray-200">
+                    <td class="text-sm font-bold text-gray-600 p-2">Id</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Symbol</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Nom</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Image</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Prix Actuel $</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Ch. Prix %</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Qt. en circulation</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Qt. total</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Mr. Rang</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Options</td>
                 </tr>
             </thead>
             <tbody>
@@ -75,10 +75,10 @@
     </div>
 
     <div class="circulation-graph w-full p-2 my-20">
+        <h1 class="text-4xl text-gray-700 font-bold my-4">Gestion des titres (actifs)</h1>
         <span class="text-sm text-left font-semibold text-gray-500">
             Graphique expliquant l'évolution des {{ title() }} en fonction des quantités en circulation, des quantités totales et des prix sur le marché.
         </span>
-        <h1 class="text-4xl text-left font-bold my-4">Gestion des titres (actifs)</h1>
 
         <div class="graph-stats w-full flex items-start justify-between gap-20 mt-4">
             <div class="graph w-3/4 border">

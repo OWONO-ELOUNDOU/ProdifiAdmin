@@ -12,7 +12,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 // Import Components
 import { ChartLine } from '../../../shared/components/chart-line/chart-line';
 import { CryptoCard } from '../../../shared/components/crypto-card/crypto-card';
-import { icon } from '@primeuix/themes/aura/avatar';
+
+// Import crypto service
+import {  Crypto } from '../../../core/services/Crypto/crypto';
 
 @Component({
   selector: 'app-assets',
@@ -23,6 +25,10 @@ import { icon } from '@primeuix/themes/aura/avatar';
 })
 export class Assets implements OnInit {
   protected readonly title = signal('Titres');
+
+  // Inject crypto service
+  private cryptoService = inject(Crypto);
+
   protected transactionData = signal<any[]>([]);
   protected priceData = signal<number[]>([]);
 
@@ -37,8 +43,11 @@ export class Assets implements OnInit {
 
   ngOnInit(): void {
     // Récupérer les données des transactions
-    this.transactionData.set(JSON.parse(localStorage.getItem('crypto_data') || '[]'));
-    console.log('transactions data: ', this.transactionData());
+    this.cryptoService.getMarketData().subscribe(data => {
+      this.transactionData.set(data);
+    }, error => {
+      console.error('Error fetching market data:', error);
+    });
 
     this.items.set([
       {
@@ -47,7 +56,7 @@ export class Assets implements OnInit {
         severity: 'info',
         size: 'small',
         command: () => {
-          this.messageService.add({ severity: 'info', summary: 'Modifier', detail: 'Modifier le titre', life: 3000 });
+          this.messageService.add({ severity: 'info', summary: 'Modifier', detail: 'Modifier le titre' });
         }
       },
       {

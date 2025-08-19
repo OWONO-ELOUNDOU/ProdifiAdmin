@@ -1,0 +1,4 @@
+/**
+ * Interface pour les transactions
+ */
+

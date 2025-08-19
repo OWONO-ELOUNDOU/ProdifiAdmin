@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-transactions',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './transactions.html',
   styleUrl: './transactions.scss'
 })
 export class Transactions {
-
+  protected transactions = signal([] as any[]);
 }

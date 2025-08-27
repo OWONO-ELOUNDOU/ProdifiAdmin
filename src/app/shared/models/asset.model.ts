@@ -29,6 +29,7 @@ export interface VirtualAsset {
     // Instance d'un titre d'état réel
     // real_asset: ReelAsset;
     id: string;
+    name: string;
     quantity: number;
     buy_price: number;
     sell_price: number;

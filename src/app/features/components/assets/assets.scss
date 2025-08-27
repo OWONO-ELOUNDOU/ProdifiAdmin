@@ -26,6 +26,7 @@
 
 
 .assets-container {
+    position: relative;
     .table-container {
         table {
             thead {
@@ -36,5 +37,12 @@
 
             tbody > tr > td { @include td_config(); }
         }
+    }
+
+    .edit-form {
+        width: 310px;
+        position: absolute;
+        top: 100px;
+        right: 30px;
     }
 }

@@ -10,44 +10,66 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 // Import Components
+import { AssetForm } from '../../../shared/components/asset-form/asset-form';
+import { DialogBox } from '../../../shared/components/dialog-box/dialog-box';
 import { ChartLine } from '../../../shared/components/chart-line/chart-line';
 import { CryptoCard } from '../../../shared/components/crypto-card/crypto-card';
 
 // Import crypto service
-import {  Crypto } from '../../../core/services/Crypto/crypto';
+import { Crypto } from '../../../core/services/Crypto/crypto';
+
+// Import assets data
+import assets from '../../../shared/database/assets.json';
+import { VirtualAsset } from '../../../shared/models/asset.model';
 
 @Component({
   selector: 'app-assets',
-  imports: [CommonModule, CryptoCard, ChartLine, ButtonModule, ToastModule, Menu, ConfirmDialog],
+  imports: [
+    CommonModule,
+    CryptoCard,
+    ChartLine,
+    ButtonModule,
+    ToastModule,
+    Menu,
+    ConfirmDialog,
+    DialogBox,
+    AssetForm,
+  ],
   templateUrl: './assets.html',
   styleUrl: './assets.scss',
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService, MessageService],
 })
 export class Assets implements OnInit {
   protected readonly title = signal('Titres');
+  isOpened = signal(false);
 
   // Inject crypto service
   private cryptoService = inject(Crypto);
 
   protected transactionData = signal<any[]>([]);
+  protected assetsData = signal<VirtualAsset[]>([]);
   protected priceData = signal<number[]>([]);
 
   // Inject primeNG message and confirmation service
-  items = signal<MenuItem[] | undefined>([])
+  items = signal<MenuItem[] | undefined>([]);
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
 
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit(): void {
     // Récupérer les données des transactions
-    this.cryptoService.getMarketData().subscribe(data => {
-      this.transactionData.set(data);
-    }, error => {
-      console.error('Error fetching market data:', error);
-    });
+    this.cryptoService.getMarketData().subscribe(
+      (data) => {
+        this.transactionData.set(data);
+      },
+      (error) => {
+        console.error('Error fetching market data:', error);
+      }
+    );
+
+    this.assetsData.set(assets);
+    console.log('Assets data:', this.assetsData());
 
     this.items.set([
       {
@@ -56,8 +78,15 @@ export class Assets implements OnInit {
         severity: 'info',
         size: 'small',
         command: () => {
-          this.messageService.add({ severity: 'info', summary: 'Modifier', detail: 'Modifier le titre' });
-        }
+          /*
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Modifier',
+            detail: 'Modifier le titre',
+          });
+          */
+          this.displayForm();
+        },
       },
       {
         label: 'Supprimer',
@@ -65,7 +94,12 @@ export class Assets implements OnInit {
         severity: 'danger',
         size: 'small',
         command: () => {
-          this.messageService.add({ severity: 'warn', summary: 'Supprimer', detail: 'Le titre a été supprimé. Cette action est irréversible.', life: 3000 });
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Supprimer',
+            detail: 'Le titre a été supprimé. Cette action est irréversible.',
+            life: 3000,
+          });
           // Logique de suppression du titre
           /*
           const currentData = this.transactionData();
@@ -75,9 +109,9 @@ export class Assets implements OnInit {
             localStorage.setItem('crypto_data', JSON.stringify(currentData));
           }
           */
-        }
-      }
-    ])
+        },
+      },
+    ]);
   }
 
   confirm() {
@@ -90,17 +124,21 @@ export class Assets implements OnInit {
         icon: 'pi pi-times',
         variant: 'outlined',
         severity: 'secondary',
-        size: 'small'
+        size: 'small',
       },
       acceptButtonProps: {
         label: 'Confirmer',
         icon: 'pi pi-check',
         variant: 'contained',
         severity: 'danger',
-        size: 'small'
+        size: 'small',
       },
       accept: () => {
-        this.messageService.add({ severity: 'success', summary: 'Confirmé', detail: 'Titre supprimé' });
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Confirmé',
+          detail: 'Titre supprimé',
+        });
         // Logique de suppression du titre
         const currentData = this.transactionData();
         if (currentData.length > 0) {
@@ -110,8 +148,17 @@ export class Assets implements OnInit {
         }
       },
       reject: () => {
-        this.messageService.add({ severity: 'warn', summary: 'Annulé', detail: 'Action annulée' });
-      }
-    })
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Annulé',
+          detail: 'Action annulée',
+        });
+      },
+    });
+  }
+
+  displayForm() {
+    this.isOpened.set(!this.isOpened());
+    console.log('isOpened:', this.isOpened());
   }
 }

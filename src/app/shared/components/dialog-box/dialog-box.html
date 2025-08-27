@@ -1,0 +1,51 @@
+<div class="dialog-container flex justify-center">
+    <div>
+        <p-button icon=`pi-pi-${buttonIcon}` [label]="buttonLabel()" severity="contrast" (click)="showDialog($event)" />
+        <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" styleClass="border !bg-transparent">
+            <ng-template #headless>
+                <form class="p-8 bg-white shadow-sm rounded-md">
+                    <div class="input-groups w-full flex flex-col items-center justify-center border-black gap-4 mb-4">
+                        <div class="input-box w-full">
+                            <label for="cryptoName" class="block text-sm font-medium text-gray-700">Nom de la crypto</label>
+                            <input id="cryptoName" type="text" placeholder="Entrer le nom de la crypto" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                        </div>
+                        <div class="input-box w-full">
+                            <label for="cryptoName" class="block text-sm font-medium text-gray-700">Quantité de la crypto</label>
+                            <input id="cryptoName" type="range" min="10" max="1000" [defaultValue]="0" class="mt-1 block w-full p-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                        </div>
+                    </div>
+                    <div class="input-groups w-full flex items-center justify-center gap-4 mb-4">
+                        <div class="input-box w-1/2">
+                            <label for="cryptoName" class="block text-sm font-medium text-gray-700">Prix d'achat</label>
+                            <input id="cryptoName" type="number" min="150" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                        </div>
+                        <div class="input-box w-1/2">
+                            <label for="cryptoName" class="block text-sm font-medium text-gray-700">Prix de vente</label>
+                            <input id="cryptoName" type="number" min="190" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                        </div>
+                    </div>
+                    <div class="input-groups w-full flex items-center justify-center gap-4 mb-4">
+                        <div class="input-box w-1/2">
+                            <label for="cryptoName" class="block text-sm font-medium text-gray-700">Taux d'intérêt</label>
+                            <input id="cryptoName" type="number" min="5" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                        </div>
+                        <div class="input-box w-1/2">
+                            <label for="cryptoName" class="block text-sm font-medium text-gray-700">Date de maturité</label>
+                            <input id="cryptoName" type="date" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                        </div>
+                    </div>
+                    <div class="input-groups w-full mb-4">
+                        <div class="input-box">
+                            <label for="cryptoName" class="block text-sm font-medium text-gray-700">Marge</label>
+                            <input id="cryptoName" type="number" min="5" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                        </div>
+                    </div>
+                    <div class="buttons w-full flex items-center justify-between gap-4 mt-4">
+                        <button class="w-1/2 p-2 border rounded-md cursor-pointer hover:bg-black hover:text-white" (click)="closeDialog($event)">Annuler</button>
+                        <button class="w-1/2 p-2 border border-green-200 rounded-md cursor-pointer hover:bg-green-100 text-green-600" (click)="closeDialog($event)">Enregistrer le titre</button>
+                    </div>
+                </form>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>

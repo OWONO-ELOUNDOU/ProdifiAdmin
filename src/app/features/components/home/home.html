@@ -1,4 +1,4 @@
-<div class="home-container mt-20 p-8">
+ <div class="home-container mt-20 p-8">
     <h1 class="text-4xl font-bold mb-2">Statistiques d'ensemble</h1>
     <span class="text-sm text-gray-500 font-semibold">Tableau de bord</span>
 
@@ -24,31 +24,37 @@
     </section>
 
     <div class="transactions w-full flex items-center justify-between gap-8 mt-10">
-        <div class="col-1 w-2/3">
+        <div class="col-1 w-3/4">
             <h3 class="text-2xl font-bold mb-2">Dernières Transactions</h3>
             <span class="text-sm text-gray-500 font-semibold">Tableau récapitulatif des 3 dernières transactions</span>
             <table class="transaction-table w-full mt-2">
                 <thead class="bg-gray-100">
                     <tr>
-                        <td class="py-4 px-4">symbol</td>
-                        <td class="py-4 px-4">Nom</td>
-                        <td class="py-4 px-4 text-right">Quantité</td>
-                        <td class="py-4 px-4 text-right">prix actuel</td>
-                        <td class="py-4 px-4 text-right">Date</td>
-                        <td class="py-4 px-4 text-right">options</td>
+                        <td class="py-4 px-4">Id</td>
+                        <td class="py-4 px-4">Client</td>
+                        <td class="py-4 px-4 text-right">Montant</td>
+                        <td class="py-4 px-4 text-right">Frais</td>
+                        <td class="py-4 px-4 text-right">Méthode de paiement</td>
+                        <td class="py-4 px-4 text-right">Type</td>
+                        <td class="py-4 px-4 text-right">Status</td>
+                        <td class="py-4 px-4 text-right">Option</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Loop through marketData and display each coin -->
-                    <ng-container *ngIf="lastData().length; else noData">
-                        @for (coin of lastData(); track coin.name) {
+                    <!-- Loop through marketData and display each assets -->
+                    <ng-container *ngIf="transactionList().length; else noData">
+                        @for (transaction of transactionList(); track transaction.transaction_reference) {
                             <tr>
-                                <td class="border-b py-4 px-4">{{ coin.symbol | uppercase }}</td>
-                                <td class="border-b py-4 px-4">{{ coin.name }}</td>
-                                <td class="border-b py-4 px-4 text-right">235</td>
-                                <td class="border-b py-4 px-4 text-right">${{ coin.current_price }}</td>
-                                <td class="border-b py-4 px-4 text-right">30-07-2025</td>
-                                <td class="border-b py-4 px-4 text-right">°°°</td>
+                                <td class="border-b py-4 px-4">{{ transaction.id }}</td>
+                                <td class="border-b py-4 px-4">{{ transaction.user }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.amount }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.fees }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.payment_method }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.type }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.status }}</td>
+                                <td class="border-b py-4 px-4 text-right">
+                                    <app-transaction-details [item]="transaction" />
+                                </td>
                             </tr>
                         }
                     </ng-container>

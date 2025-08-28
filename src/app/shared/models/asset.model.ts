@@ -30,6 +30,7 @@ export interface VirtualAsset {
     // real_asset: ReelAsset;
     id: string;
     name: string;
+    symbol: string;
     quantity: number;
     buy_price: number;
     sell_price: number;

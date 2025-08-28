@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // Import Charts Module for charts
 import { ChartComponent, ApexChart, ApexStroke, ApexXAxis, ApexAxisChartSeries, ApexTitleSubtitle } from 'ng-apexcharts';
+import { VirtualAsset } from '../../models/asset.model';
 
 interface ChartOptions {
   series: ApexAxisChartSeries;
@@ -21,7 +22,7 @@ interface ChartOptions {
 export class ChartLine implements OnInit {
   chartOptions!: ChartOptions;
 
-  chartData = input<any[]>([]);
+  chartData = input<VirtualAsset[]>([]);
   transactionsArr = [10, 80, 276, 348, 169, 400, 116, 369, 517, 82, 46, 479];
   marketCapArr = [50, 70, 95, 40, 65, 150, 230, 81, 400, 221, 110, 150];
   volumeArr = [300, 150, 25, 210, 65, 530, 120, 490, 500, 30, 185, 79];
@@ -32,26 +33,26 @@ export class ChartLine implements OnInit {
 
   ngOnInit(): void {
     // Get the total supply, current price and circulating supply informations
-    const totalSupplyArr = this.chartData().map(item => Math.round(item.total_supply));
-    const currentPriceArr = this.chartData().map(item => Math.round(item.current_price));
-    const circulatingSupplyArr = this.chartData().map(item => Math.round(item.circulating_supply));
+    const marginArr = this.chartData().slice(0, 9).map(item => Math.round(item.margin));
+    const buyPriceArr = this.chartData().slice(0, 9).map(item => Math.round(item.buy_price));
+    const quantityArr = this.chartData().slice(0, 9).map(item => Math.round(item.quantity));
 
-    const orderedBySupply = circulatingSupplyArr.map(item => Math.round(item)).sort((a, b) => a - b);
+    const orderedBySupply = quantityArr.map(item => Math.round(item)).sort((a, b) => a - b);
     console.log('Ordered by Supply:', orderedBySupply);
 
     this.chartOptions = {
       series: [
         {
-          name: this.chartData() ? 'Qt en circulation' : 'Market Cap',
-          data: circulatingSupplyArr ? circulatingSupplyArr : this.marketCapArr
+          name: this.chartData() ? 'Quantité' : 'Market Cap',
+          data: quantityArr ? quantityArr : this.marketCapArr
         },
         {
-          name: this.chartData() ? 'Qt totale' : 'Volume',
-          data: totalSupplyArr ? totalSupplyArr : this.volumeArr
+          name: this.chartData() ? 'Marge' : 'Volume',
+          data: marginArr ? marginArr : this.volumeArr
         },
         {
           name: this.chartData() ? 'Prix actuel' : 'Transactions',
-          data: currentPriceArr ? currentPriceArr : this.transactionsArr
+          data: buyPriceArr ? buyPriceArr : this.transactionsArr
         }
       ],
       chart: {

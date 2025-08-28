@@ -13,41 +13,31 @@
                     <td class="text-sm font-bold text-gray-600 p-2">Id</td>
                     <td class="text-sm font-bold text-gray-600 p-2">Symbol</td>
                     <td class="text-sm font-bold text-gray-600 p-2">Nom</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Image</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Prix Actuel $</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Ch. Prix %</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Qt. en circulation</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Qt. total</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Mr. Rang</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Prix d'achat</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Prix vente</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Qantité</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Taux d'intèrêt</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">date maturité</td>
+                    <td class="text-sm font-bold text-gray-600 p-2">Marge</td>
                     <td class="text-sm font-bold text-gray-600 p-2">Options</td>
                 </tr>
             </thead>
             <tbody>
-                <ng-container *ngIf="transactionData().length > 0; else noData">
-                    @for (item of transactionData(); track item.id) {
+                <ng-container *ngIf="assetsData().length > 0; else noData">
+                    @for (item of assetsData().slice(0, 9); track item.id) {
                         <tr>
                             <td class="border-b p-2">{{ item.id }}</td>
                             <td class="border-b p-2">{{ item.symbol }}</td>
                             <td class="border-b p-2">{{ item.name }}</td>
-                            <td class="border-b p-2">
-                                <picture>
-                                    <img class="w-8 h-8" [src]="item.image" alt="{{ item.name }}" />
-                                </picture>
-                            </td>
-                            <td class="border-b p-2">{{ item.current_price }}</td>
-                            <td class="border-b p-2">{{ item.price_change_percentage_24h }}</td>
-                            <td class="border-b p-2">{{ item.circulating_supply }}</td>
-                            <td class="border-b p-2">{{ item.total_supply }}</td>
-                            <td class="border-b p-2">{{ item.market_cap_rank }}</td>
+                            <td class="border-b p-2">{{ item.buy_price }}</td>
+                            <td class="border-b p-2">{{ item.sell_price }}</td>
+                            <td class="border-b p-2">{{ item.quantity }}</td>
+                            <td class="border-b p-2">{{ item.interest_rate }}</td>
+                            <td class="border-b p-2">{{ item.maturity_date }}</td>
+                            <td class="border-b p-2">{{ item.margin }}</td>
                             <td class="border-b p-2 cursor-pointer">
                                 <div class="flex items-center justify-center gap-2">
                                     <p-toast position="top-right" />
-                                    <p-confirmdialog [style]="{ width: '30rem' }">
-                                        <ng-template #message let-message>
-                                            <i [ngClass]="message.icon" class="text-sm"></i>
-                                            <span class="text-sm">{{ message.message }}</span>
-                                        </ng-template>
-                                    </p-confirmdialog>
                                     <p-menu #menu [model]="items()" popup="true" />
                                     <p-button icon="pi pi-ellipsis-v" size="small" variant="text" severity="contrast" (click)="menu.toggle($event)" />
                                 </div>
@@ -82,7 +72,7 @@
 
         <div class="graph-stats w-full flex items-start justify-between gap-20 mt-4">
             <div class="graph w-3/4 border">
-                <app-chart-line [chartData]="transactionData()" />
+                <app-chart-line [chartData]="assetsData()" />
             </div>
             <div class="stats w-1/4 border"></div>
         </div>

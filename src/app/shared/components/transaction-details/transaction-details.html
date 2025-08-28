@@ -1,0 +1,47 @@
+<p-toast position="top-right" />
+<div class="dialog-container flex justify-center gap-4">
+    <div class="dialog-box">
+        <p-button icon="pi pi-eye" size="small" variant="text" severity="contrast" (click)="showDetails($event)" />
+        <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" styleClass="border !bg-transaprent">
+            <ng-template #headless>
+                <div class="details-header text-left p-4 border rounded-lg" style="width: 450px; height: auto;">
+                    <div class="dialog-header w-full flex items-center justify-between p-2 mb-2">
+                        <h3 class="text-2xl font-semibold text-gray-700">{{ title() }}</h3>
+                        <i class="pi pi-times cursor-pointer p-3 rounded-full hover:bg-red-100" style="font-size: 1rem; color: red;" (click)="closeDialog()"></i>
+                    </div>
+
+                    <div class="transaction-details-card-reference mb-2 p-3 rounded-lg bg-gray-100">
+                        <h4 class="text-2xl font-semibold text-gray-700 mb-2">Référence</h4>
+                        <p class="text-lg text-gray-600">Référence: <span class="text-sm font-semibold">{{ item.transaction_reference }}</span></p>
+                        <p class="text-lg text-gray-600">Id externe: <span class="text-sm font-semibold">{{ item.external_transaction_id }}</span></p>
+                    </div>
+                    <div class="transaction-details-card-reference mb-2 p-3 rounded-lg bg-gray-100">
+                        <h4 class="text-2xl font-semibold text-gray-700 mb-2">Client</h4>
+                        <div class="w-full flex flex-wrap items-center justify-between">
+                            <p class="w-1/2 text-lg text-gray-600">Client: <span class="text-sm font-semibold">{{ item.user }}</span></p>
+                            <p class="w-1/2 text-lg text-gray-600">Montant: <span class="text-sm font-semibold">{{ item.amount }}</span></p>
+                            <p class="w-1/2 text-lg text-gray-600">frais: <span class="text-sm font-semibold">{{ item.fees }}</span></p>
+                            <p class="w-1/2 text-lg text-gray-600">Paiement: <span class="text-sm font-semibold">{{ item.payment_method }}</span></p>
+                        </div>
+                    </div>
+                    <div class="transaction-details-card-reference mb-3 p-3 rounded-lg bg-gray-100">
+                        <h4 class="text-2xl font-semibold text-gray-700 mb-2">Status</h4>
+                        <div class="w-full flex flex-wrap items-center justify-between">
+                            <p class="w-1/2 text-lg text-gray-600">Status: <span class="text-sm font-semibold">{{ item.status }}</span></p>
+                            <p class="w-1/2 text-lg text-gray-600">Type: <span class="text-sm font-semibold">{{ item.type }}</span></p>
+                            <p class="w-1/2 text-lg text-gray-600">création: <span class="text-sm font-semibold">{{ item.created_at }}</span></p>
+                            <p class="w-1/2 text-lg text-gray-600">modification: <span class="text-sm font-semibold">{{ item.updated_at }}</span></p>
+                        </div>
+                    </div>
+                    <button
+                        class="w-full border border-red-100 rounded-lg p-2 text-red-700 cursor-pointer hover:bg-red-100"
+                        (click)="displayToastMessages(item.status)"
+                    >
+                        Révoquer la transaction
+                    </button>
+                </div>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
+

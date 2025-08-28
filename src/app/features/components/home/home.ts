@@ -1,34 +1,44 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { CommonModule, UpperCasePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
-// Import crypto service
-import { Crypto } from '../../../core/services/Crypto/crypto';
+// Import models service
+import { VirtualAsset } from '../../../shared/models/asset.model';
+import { Transaction } from '../../../shared/models/transaction.model';
+
+// Import PrimeNG Libraries
+import { ButtonModule } from 'primeng/button';
 
 // Import components
 import { ChartLine } from '../../../shared/components/chart-line/chart-line';
 import { CryptoCard } from '../../../shared/components/crypto-card/crypto-card';
 import { StatisticCard } from '../../../shared/components/statistic-card/statistic-card';
+import { TransactionDetails } from '../../../shared/components/transaction-details/transaction-details';
+
+// Import fake data
+import assets from '../../../shared/database/assets.json';
+import transactions from '../../../shared/database/transactions.json';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, StatisticCard, UpperCasePipe, ChartLine, CryptoCard],
+  imports: [CommonModule, StatisticCard, ChartLine, CryptoCard, ButtonModule, TransactionDetails],
   templateUrl: './home.html',
-  styleUrl: './home.scss'
+  styleUrl: './home.scss',
 })
 export class Home implements OnInit {
-  private cryptoService = inject(Crypto);
-
-  marketData = signal<any[]>([]);
-  lastData = signal<any[]>([]);
+  marketData = signal<VirtualAsset[]>([]);
+  lastData = signal<VirtualAsset[]>([]);
+  transactionList = signal<Transaction[]>([]);
+  selectedTransaction = signal<Transaction | null>(null);
 
   ngOnInit() {
-    this.cryptoService.getMarketData().subscribe(data => {
-      localStorage.setItem('crypto_data', JSON.stringify(data));
-    }, error => {
-      console.error('Error fetching market data:', error);
-    });
+    this.marketData.set(assets.slice(0, 9));
+    this.lastData.set(assets.slice(0, 5));
+    this.transactionList.set(transactions.slice(0, 5));
+  }
 
-    this.marketData.set(JSON.parse(localStorage.getItem('crypto_data') || '[]'));
-    this.lastData.set(this.marketData().slice(0, 5));
+  showTransactionDetails(transaction: Transaction) {
+    // Logique pour afficher les détails de la transaction
+    this.selectedTransaction.set(transaction);
+    console.log('Afficher les détails pour:', this.selectedTransaction());
   }
 }

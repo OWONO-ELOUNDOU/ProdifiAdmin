@@ -6,7 +6,6 @@ import { Menu } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
-import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 // Import Components
@@ -31,7 +30,6 @@ import { VirtualAsset } from '../../../shared/models/asset.model';
     ButtonModule,
     ToastModule,
     Menu,
-    ConfirmDialog,
     DialogBox,
     AssetForm,
   ],

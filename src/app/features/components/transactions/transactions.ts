@@ -1,6 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// Import Primeng modules
+import { TableModule } from 'primeng/table';
+
 // Import Components
 import { TransactionDetails } from '../../../shared/components/transaction-details/transaction-details';
 
@@ -12,7 +15,7 @@ import transactions from '../../../shared/database/transactions.json';
 
 @Component({
   selector: 'app-transactions',
-  imports: [CommonModule, TransactionDetails],
+  imports: [CommonModule, TransactionDetails, TableModule],
   templateUrl: './transactions.html',
   styleUrl: './transactions.scss'
 })

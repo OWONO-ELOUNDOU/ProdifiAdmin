@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 // Import PrimeNG Librairies
 import { Menu } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
+import { Table, TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -32,6 +33,7 @@ import { VirtualAsset } from '../../../shared/models/asset.model';
     Menu,
     DialogBox,
     AssetForm,
+    TableModule
   ],
   templateUrl: './assets.html',
   styleUrl: './assets.scss',

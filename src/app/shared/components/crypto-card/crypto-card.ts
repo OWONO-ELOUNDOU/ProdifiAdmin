@@ -1,12 +1,13 @@
 import { Component, input } from '@angular/core';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { VirtualAsset } from '../../models/asset.model';
 
 @Component({
   selector: 'app-crypto-card',
-  imports: [CommonModule, CurrencyPipe],
+  imports: [CommonModule],
   templateUrl: './crypto-card.html',
   styleUrl: './crypto-card.scss'
 })
 export class CryptoCard {
-  cryptoItem = input<any>();
+  cryptoItem = input<VirtualAsset>();
 }

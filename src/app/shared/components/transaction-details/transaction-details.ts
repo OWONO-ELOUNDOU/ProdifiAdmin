@@ -55,4 +55,8 @@ export class TransactionDetails {
       this.closeDialog()
     }
   }
+
+  onSubmit() {
+
+  }
 }

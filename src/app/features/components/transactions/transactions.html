@@ -4,52 +4,6 @@
     <!-- Add your transaction management UI here -->
 
     <div class="table-container flex items-start justify-between gap-4">
-        <!--
-        <table class="w-4/5">
-            <thead class="w-full">
-                <tr class="w-full bg-gray-200">
-                    <td class="text-sm font-bold text-gray-600 p-2">Id</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Client</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Montant</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Frais</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Mode de paiement</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Type</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Date Création</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Date Modification</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Status</td>
-                    <td class="text-sm font-bold text-gray-600 p-2">Options</td>
-                </tr>
-            </thead>
-            <tbody>
-                <ng-container *ngIf="transactions() && transactions().length > 0; else noTransactions">
-                    @for (transaction of transactions(); track transaction.id) {
-                        <tr style="font-size: 0.8rem;">
-                            <td class="border-b p-2">{{ transaction.id }}</td>
-                            <td class="border-b p-2 text-gray-600">{{ transaction.user }}</td>
-                            <td class="border-b p-2">{{ transaction.amount }}</td>
-                            <td class="border-b p-2 text-gray-600">{{ transaction.fees }}</td>
-                            <td class="border-b p-2">{{ transaction.payment_method }}</td>
-                            <td class="border-b p-2 text-gray-600">{{ transaction.type }}</td>
-                            <td class="border-b p-2">{{ transaction.created_at }}</td>
-                            <td class="border-b p-2 text-gray-600">{{ transaction.updated_at }}</td>
-                            <td class="border-b p-2">{{ transaction.status }}</td>
-                            <td class="border-b p-2 cursor-pointer">
-                                <app-transaction-details [item]="transaction" />
-                            </td>
-                        </tr>
-                    }
-                </ng-container>
-
-                <ng-template #noTransactions>
-                    <tr>
-                        <td class="border-b p-2 text-center" colspan="10">Aucune donnée disponble</td>
-                    </tr>
-                </ng-template>
-            </tbody>
-        </table>
-        -->
-
-
         <div class="card">
             <p-table
                 [value]="transactions()"

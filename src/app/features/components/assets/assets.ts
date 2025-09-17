@@ -89,8 +89,8 @@ export class Assets implements OnInit {
         },
       },
       {
-        label: 'Supprimer',
-        icon: 'pi pi-trash',
+        label: 'Désactiver',
+        icon: 'pi pi-ban',
         severity: 'danger',
         size: 'small',
         command: () => {

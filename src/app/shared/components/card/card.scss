@@ -1,0 +1,18 @@
+.card {
+    width: 340px;
+    height: 180px;
+
+    &.black { background-color: black; }
+    &.pink {
+        background-color: #ff04a7;
+        span { background-color: #fe4abf; }
+    }
+    &.blue {
+        background-color: blue;
+        span { background-color: rgb(78, 78, 255); }
+    }
+    &.turquoise {
+        background-color: turquoise;
+        span { background-color: #61e7d9; }
+    }
+}

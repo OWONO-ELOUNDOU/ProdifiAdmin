@@ -1,0 +1,16 @@
+<div class="card p-4 rounded-lg text-white" [ngClass]="cardItem()?.background">
+    <div class="card-header w-full flex items-center justify-between mb-10">
+        <h3 class="font-semibold">{{ cardItem()?.title }}</h3>
+        <div>
+            <p-menu #menu [popup]="true" [model]="items" />
+            <p-button severity="secondary" (click)="menu.toggle($event)" icon="pi pi-ellipsis-h" size="small" />
+        </div>
+    </div>
+    <div class="card-body w-full flex items-center justify-start gap-6 pb-3 border-b mb-2">
+        <p class="text-3xl font-bold">{{ cardItem()?.title?.toLocaleLowerCase() !== 'titres d\'état' ? '$' : '' }}{{ cardItem()?.amount }}{{ cardItem()?.title?.toLocaleLowerCase() === 'revenus' ? 'M' : '' }}</p>
+        <span class="evolution text-sm font-bold bg-gray-800 py-1 px-3 rounded-md">
+            <i class="pi pi-arrow-up" style="font-size: 0.7rem; margin-right: 5px;"></i>  {{ cardItem()?.evolution_rate }}%
+        </span>
+    </div>
+    <p class="text-sm font-semibold">Le mois dernier: {{ cardItem()?.last_data }}{{ cardItem()?.title?.toLocaleLowerCase() === 'revenus' ? 'M' : '' }}</p>
+</div>

@@ -26,4 +26,6 @@ export class Transactions implements OnInit {
     this.transactions.set(transactions);
   }
 
+  
+
 }

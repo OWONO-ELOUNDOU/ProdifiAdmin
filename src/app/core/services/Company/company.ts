@@ -6,15 +6,16 @@ import { environment } from '../../../../environment/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class Auth {
-  private readonly endPoint = 'auth/login';
-
+export class Company {
+  private readonly endpoint = 'company/clients'
   private http = inject(HttpClient);
 
-  login(email: string, password: string) {
-    return this.http.post(environment.apiRoutes + this.endPoint, {email, password}, {
+  constructor() {}
+
+  getAllClients() {
+    this.http.get(environment.apiRoutes + this.endpoint, {
       headers: {
-        "Content-Type": 'application/json'
+        'Content-type': 'application/json'
       }
     })
   }

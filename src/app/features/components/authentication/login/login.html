@@ -1,33 +1,59 @@
+<p-toast position="top-right" />
 <div class="login-container flex items-center justify-center h-screen w-screen">
-    <form class="login-box w-1/4 h-1/2 border py-3 px-2 rounded-lg shadow-sm">
+    <form class="login-box w-1/4 h-2/2 border py-3 px-2 rounded-lg shadow-sm" [formGroup]="loginForm" (ngSubmit)="submit()">
         <h3 class="text-xl font-semibold text-center">Connexion</h3>
-        <div class="input-box mt-8 flex items-start justify-start flex-col gap-3">
-            <label for="email" class="text-l ml-2">Adresse mail</label>
+        <div class="input-box mt-4 flex items-start justify-start flex-col gap-3">
+            <label for="email" class="text-sm ml-2">Adresse mail</label>
             <input
                 id="email"
                 type="email"
                 formControlName="email"
                 placeholder=".....@example.com"
+                [class.error]="f['email'].touched && f['email'].invalid"
                 class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                required
             >
+            @if (f['email'].touched && f['email'].invalid) {
+                @if (f['email'].errors?.['required']) {
+                    <span class="error-text">Adresse mail requise</span>
+                }
+                @if (f['email'].errors?.['email']) {
+                    <span class="error-text">Format d'email invalide</span>
+                }
+            }
         </div>
-        <div class="input-box mt-8 flex items-start justify-start flex-col gap-3">
-            <label for="password" class="text-l ml-2">Mot de passe</label>
+        <div class="input-box mt-4 flex items-start justify-start flex-col gap-3">
+            <label for="password" class="text-sm ml-2">Mot de passe</label>
             <input
                 id="password"
                 type="password"
                 placeholder="**********"
                 formControlName="password"
+                [class.error]="f['password'].touched && f['password'].invalid"
                 class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                required
             >
+            @if (f['password'].touched && f['password'].invalid) {
+                @if (f['password'].errors?.['required']) {
+                    <span class="error-text">Mot de passe requis</span>
+                }
+                @if (f['password'].errors?.['minlength']) {
+                    <span class="error-text">8 caratères minimum</span>
+                }
+            }
         </div>
         <button
-            type="button"
-            class="w-full border rounded-md mt-10 p-2 cursor-pointer bg-blue-200 text-white hover:bg-blue-900 transition duration-200"
+            type="submit"
+            [disabled]="isLoading"
+            class="w-full border rounded-md mt-4 p-2 cursor-pointer text-white bg-blue-900"
         >
-            Connexion
+            @if (isLoading) {
+                <span>Chargement...</span>
+            } @else {
+                <span>Connexion</span>
+            }
         </button>
 
-        <div class="w-full text-sm text-center text-gray-400 mt-4 cursor-pointer">Tous les comptes sont crées uniquement via l'application mobile</div>
+        <div class="w-full text-sm text-center text-gray-400 mt-2 cursor-pointer">Tous les comptes sont crées uniquement via l'application mobile</div>
     </form>
 </div>

@@ -8,17 +8,12 @@
 
     <section class="titles mt-8">
         <h3 class="text-2xl font-bold mb-2">Titres (actifs)</h3>
-        <div class="graphs w-full flex items-center justify-between flex-wrap row mt-2 p-4">
+        <div class="graphs w-full flex items-start justify-between flex-wrap gap-4 mt-2">
             <div class="graphic w-2/3 h-300 border rounded-lg">
                 <app-chart-line [chartData]="marketData()" />
             </div>
             <div class="stats w-1/4">
-                <div class="higher w-full p-2 mb-4 border shadow-md rounded-lg">
-                    <app-crypto-card [cryptoItem]="marketData()[0]" />
-                </div>
-                <div class="lower w-full border rounded-lg">
-                    <app-crypto-card [cryptoItem]="marketData()[9]" />
-                </div>
+                <app-crypto-card [cryptoItem]="marketData()[0]" />
             </div>
         </div>
     </section>

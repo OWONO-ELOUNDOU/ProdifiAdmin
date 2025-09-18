@@ -29,16 +29,16 @@
     <div class="card-header w-full flex items-start justify-between mb-4">
         <div>
             <p class="text-sm font-semibold mb-2">{{ cryptoItem()?.name }}</p>
-            <h3 class="text-4xl font-bold">${{ cryptoItem()?.buy_price }}</h3>
+            <h3 class="text-4xl font-bold">${{ cryptoItem()?.amount }}</h3>
             <span class="text-sm font-semibold">Prix actuel</span>
         </div>
-        <p class="text-sm font-semibold">{{ cryptoItem()?.symbol }}</p>
+        <p class="text-sm font-semibold">{{ cryptoItem()?.title_type }}</p>
     </div>
     <div class="card-body w-full flex items-center justify-center flex-col gap-2">
         <div class="col-1 flex items-center justify-start gap-10 rounded-md p-1">
             <div>
-                <span class="font-semibold">Marge</span>
-                <p>{{ cryptoItem()?.margin }}%</p>
+                <span class="font-semibold">Durée</span>
+                <p>{{ cryptoItem()?.bta_duration_weeks }}%</p>
             </div>
             <div>
                 <span class="font-semibold">Taux d'intérêt</span>
@@ -47,7 +47,7 @@
         </div>
         <div class="col-2 rounded-md p-1">
             <span class="font-semibold">Date de création</span>
-            <p>{{ cryptoItem()?.created_at }}</p>
+            <p>{{ cryptoItem()?.issue_date }}</p>
             <span class="font-semibold">Date de maturation</span>
             <p>{{ cryptoItem()?.maturity_date }}</p>
         </div>

@@ -20,29 +20,31 @@
             <ng-template #header>
                 <tr class="w-full bg-gray-600">
                     <th class="text-sm font-bold text-gray-600 p-2">Id</th>
-                    <th class="text-sm font-bold text-gray-600 p-2">Symbol</th>
-                    <th class="text-sm font-bold text-gray-600 p-2">Nom</th>
-                    <th class="text-sm font-bold text-gray-600 p-2">Prix d'achat</th>
-                    <th class="text-sm font-bold text-gray-600 p-2">Prix vente</th>
+                    <th class="text-sm font-bold text-gray-600 p-2">nom</th>
+                    <th class="text-sm font-bold text-gray-600 p-2">type</th>
+                    <th class="text-sm font-bold text-gray-600 p-2">Durée(semaines)</th>
+                    <th class="text-sm font-bold text-gray-600 p-2">montant</th>
                     <th class="text-sm font-bold text-gray-600 p-2">Quantité</th>
-                    <th class="text-sm font-bold text-gray-600 p-2">Taux d'intérêt</th>
-                    <th class="text-sm font-bold text-gray-600 p-2">Date maturité</th>
-                    <th class="text-sm font-bold text-gray-600 p-2">Marge</th>
+                    <th class="text-sm font-bold text-gray-600 p-2">status</th>
+                    <th class="text-sm font-bold text-gray-600 p-2">taux intérêt</th>
+                    <th class="text-sm font-bold text-gray-600 p-2">date maturité</th>
+                    <th class="text-sm font-bold text-gray-600 p-2">date d'émission</th>
                     <th class="text-sm font-bold text-gray-600 p-2">Options</th>
                 </tr>
             </ng-template>
 
             <ng-template #body let-asset>
                 <tr style="font-size: 0.8rem;">
-                    <td class="border-b p-2">{{ asset.id }}</td>
-                    <td class="border-b p-2">{{ asset.symbol }}</td>
+                    <td class="border-b p-2">{{ asset.title_code }}</td>
                     <td class="border-b p-2">{{ asset.name }}</td>
-                    <td class="border-b p-2">{{ asset.buy_price }}</td>
-                    <td class="border-b p-2">{{ asset.sell_price }}</td>
+                    <td class="border-b p-2">{{ asset.title_type }}</td>
+                    <td class="border-b p-2">{{ asset.bta_duration_weeks }}</td>
+                    <td class="border-b p-2">{{ asset.amount }}</td>
                     <td class="border-b p-2">{{ asset.quantity }}</td>
+                    <td class="border-b p-2">{{ asset.state }}</td>
                     <td class="border-b p-2">{{ asset.interest_rate }}</td>
                     <td class="border-b p-2">{{ asset.maturity_date }}</td>
-                    <td class="border-b p-2">{{ asset.margin }}</td>
+                    <td class="border-b p-2">{{ asset.issue_date }}</td>
                     <td class="border-b p-2">
                         <div class="flex items-center justify-center gap-2">
                             <p-menu #menu [model]="items()" popup="true" />

@@ -16,7 +16,7 @@ import { ChartLine } from '../../../shared/components/chart-line/chart-line';
 import { CryptoCard } from '../../../shared/components/crypto-card/crypto-card';
 
 // Import crypto service
-import { Crypto } from '../../../core/services/Crypto/crypto';
+import { TitleService } from '../../../core/services/Titles/title-service';
 
 // Import assets data
 import assets from '../../../shared/database/assets.json';
@@ -43,12 +43,12 @@ export class Assets implements OnInit {
   protected readonly title = signal('Titres');
   isOpened = signal(false);
 
-  // Inject crypto service
-  private cryptoService = inject(Crypto);
+  // Inject le service des titres
+  private titleService = inject(TitleService);
 
-  protected transactionData = signal<any[]>([]);
-  protected assetsData = signal<VirtualAsset[]>([]);
   protected priceData = signal<number[]>([]);
+  protected titleData = signal<any[]>([]);
+  protected assetsData = signal<VirtualAsset[]>([]);
 
   // Inject primeNG message and confirmation service
   items = signal<MenuItem[] | undefined>([]);
@@ -59,14 +59,7 @@ export class Assets implements OnInit {
 
   ngOnInit(): void {
     // Récupérer les données des transactions
-    this.cryptoService.getMarketData().subscribe(
-      (data) => {
-        this.transactionData.set(data);
-      },
-      (error) => {
-        console.error('Error fetching market data:', error);
-      }
-    );
+    
 
     this.assetsData.set(assets);
     console.log('Assets data:', this.assetsData());
@@ -77,39 +70,14 @@ export class Assets implements OnInit {
         icon: 'pi pi-pencil',
         severity: 'info',
         size: 'small',
-        command: () => {
-          /*
-          this.messageService.add({
-            severity: 'info',
-            summary: 'Modifier',
-            detail: 'Modifier le titre',
-          });
-          */
-          this.displayForm();
-        },
+        command: () => this.displayForm()
       },
       {
         label: 'Désactiver',
-        icon: 'pi pi-ban',
+        icon: 'pi pi-trash',
         severity: 'danger',
         size: 'small',
-        command: () => {
-          this.messageService.add({
-            severity: 'warn',
-            summary: 'Supprimer',
-            detail: 'Le titre a été supprimé. Cette action est irréversible.',
-            life: 3000,
-          });
-          // Logique de suppression du titre
-          /*
-          const currentData = this.transactionData();
-          if (currentData.length > 0) {
-            currentData.pop(); // Suppression du dernier élément pour l'exemple
-            this.transactionData.set(currentData);
-            localStorage.setItem('crypto_data', JSON.stringify(currentData));
-          }
-          */
-        },
+        command: () => {},
       },
     ]);
   }
@@ -140,10 +108,10 @@ export class Assets implements OnInit {
           detail: 'Titre supprimé',
         });
         // Logique de suppression du titre
-        const currentData = this.transactionData();
+        const currentData = this.titleData();
         if (currentData.length > 0) {
           currentData.pop(); // Suppression du dernier élément pour l'exemple
-          this.transactionData.set(currentData);
+          this.titleData.set(currentData);
           localStorage.setItem('crypto_data', JSON.stringify(currentData));
         }
       },
@@ -160,5 +128,68 @@ export class Assets implements OnInit {
   displayForm() {
     this.isOpened.set(!this.isOpened());
     console.log('isOpened:', this.isOpened());
+  }
+
+  // Fonction pour récupérer les titres depuis le backend
+  onFecthData() {
+    try {
+      this.titleService.getAllTitles().subscribe({
+        next: (data) => {
+          this.titleData.set(data);
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Info',
+            detail: 'Aucun titre disponible',
+            life: 3000,
+            closable: true
+          })
+        }
+      })
+    } catch (error) {
+      this.messageService.add({
+        severity: 'danger',
+        summary: 'Erreur',
+        detail: 'Une erreur est survenue lors du chargement des données',
+        life: 3000,
+        closable: true
+      })
+    }
+  }
+
+
+  // Fonction pour supprimer un titre depuis le backend
+  onDeleteData(title_code: string) {
+    try {
+      this.titleService.deleteTitle(title_code).subscribe({
+        next: (response) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Succès',
+            detail: 'Le titre a été supprimé',
+            life: 3000,
+            closable: true
+          })
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Info',
+            detail: 'Titre non existant',
+            life: 3000,
+            closable: true
+          })
+        }
+      })
+    } catch (error) {
+      this.messageService.add({
+        severity: 'danger',
+        summary: 'Erreur',
+        detail: 'Une erreur est survenue lors de la suppression des données',
+        life: 3000,
+        closable: true
+      })
+    }
   }
 }

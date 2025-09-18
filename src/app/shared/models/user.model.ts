@@ -4,14 +4,16 @@
  * modèle pour les société de bourse
  */
 export interface BrokerageFirm {
-    id: string;
+    id?: string;
     name: string;
+    email?: string;
+    password?: string;
     nui: string;
-    logo: string; // URL ou path de l'image du logo
+    logo?: string; // URL ou path de l'image du logo
     address: string;
     contact_info: string;
     is_active: boolean;
-    is_issuer: boolean;
+    is_user: boolean;
     created_at: string;
 }
 /**

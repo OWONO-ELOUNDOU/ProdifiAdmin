@@ -1,6 +1,9 @@
 export const environment = {
   production: false,
-  apiRoutes: 'http://5.75.170.118:80/api/',
+  apiRoutes: {
+    baseRoute: 'http://5.75.170.118:80/api/',
+    v1Route: 'http://5.75.170.118:80/api/v1'
+  },
   firebase: {
     apiKey: "AIzaSyBBAGwXAwNKih1rjr0JK3N5uEjLZetFzBM",
     authDomain: "prodifi-admin.firebaseapp.com",

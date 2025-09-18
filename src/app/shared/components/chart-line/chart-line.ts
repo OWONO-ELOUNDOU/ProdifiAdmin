@@ -33,8 +33,8 @@ export class ChartLine implements OnInit {
 
   ngOnInit(): void {
     // Get the total supply, current price and circulating supply informations
-    const marginArr = this.chartData().slice(0, 9).map(item => Math.round(item.margin));
-    const buyPriceArr = this.chartData().slice(0, 9).map(item => Math.round(item.buy_price));
+    const marginArr = this.chartData().slice(0, 9).map(item => Math.round(item.interest_rate));
+    const buyPriceArr = this.chartData().slice(0, 9).map(item => Math.round(item.amount));
     const quantityArr = this.chartData().slice(0, 9).map(item => Math.round(item.quantity));
 
     const orderedBySupply = quantityArr.map(item => Math.round(item)).sort((a, b) => a - b);
@@ -44,15 +44,15 @@ export class ChartLine implements OnInit {
       series: [
         {
           name: this.chartData() ? 'Quantité' : 'Market Cap',
-          data: quantityArr ? quantityArr : this.marketCapArr
+          data: quantityArr.length === 0 ? quantityArr : this.marketCapArr
         },
         {
           name: this.chartData() ? 'Marge' : 'Volume',
-          data: marginArr ? marginArr : this.volumeArr
+          data: marginArr.length === 0 ? marginArr : this.volumeArr
         },
         {
           name: this.chartData() ? 'Prix actuel' : 'Transactions',
-          data: buyPriceArr ? buyPriceArr : this.transactionsArr
+          data: buyPriceArr.length === 0 ? buyPriceArr : this.transactionsArr
         }
       ],
       chart: {

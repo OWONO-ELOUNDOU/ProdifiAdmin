@@ -1,15 +1,37 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+
+// Import du service authentification
+import { Auth } from '../../../core/services/Auth/auth';
+
+// Import du model
+import { BrokerageFirm } from '../../models/user.model';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
-export class Header {
+export class Header implements OnInit {
   protected readonly title = signal('ProdifiAdmin');
+  isOpen = false;
+
+  // Injection des services
   private router = inject(Router);
+  private authService = inject(Auth);
+
+  currentFirm!: BrokerageFirm; // utilisateur actuel
+
+  constructor() {
+
+  }
+
+  ngOnInit(): void {
+    // Récupère l'utilisateur actuel
+    this.currentFirm = JSON.parse(localStorage.getItem('current_firm') || '');
+  }
 
   navigateTo(path: string) {
     this.router.navigate([path]);
@@ -17,5 +39,15 @@ export class Header {
 
   navigateToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  // Fonction pour afficher le bouton de déconnexion
+  showLogoutButton() {
+    this.isOpen = !this.isOpen;
+  }
+
+  // Méthode pour la déconnexion de l'utilisateur
+  onSignOut() {
+    this.authService.logout();
   }
 }

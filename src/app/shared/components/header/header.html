@@ -10,7 +10,18 @@
         <li (click)="navigateTo('assets')">Gestion des actifs</li>
     </ul>
 
-    <div class="user cursor-pointer">
-        <span (click)="navigateToLogin()">Log In</span>
+    @if (!currentFirm) {
+        <div class="user cursor-pointer">
+            <span (click)="navigateToLogin()">Log In</span>
+        </div>
+    }
+    
+    <div class="user cursor-pointer border px-2 py-1 rounded-full" (click)="showLogoutButton()">
+        <span class="mr-2">{{ currentFirm.name }}</span>
+        <i class="pi pi-chevron-down" style="font-size: 0.7rem;"></i>
     </div>
+</div>
+<div class="logout-box border px-2 py-2 rounded-md bg-white shadow-md cursor-pointer" [ngClass]="isOpen ? 'open' : ''" (click)="onSignOut()">
+    <i class="pi pi-sign-out" style="font-size: 0.7rem;"></i>
+    <span class="text-sm ml-2">Déconnexion</span>
 </div>

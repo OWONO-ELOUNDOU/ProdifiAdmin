@@ -1,23 +1,27 @@
 import { Routes } from '@angular/router';
 import { Home } from './features/components/home/home';
+import { authGuard } from './core/Guard/auth-guard';
 
 export const routes: Routes = [
     { path: '' , component: Home, },
-    { path: 'home', component: Home, },
+    { path: 'home', component: Home, canActivate: [authGuard] },
     {
         path: 'login',
         loadComponent: () => import('./features/components/authentication/login/login').then(m => m.Login),
     },
     {
         path: 'assets',
+        canActivate: [authGuard],
         loadComponent: () => import('./features/components/assets/assets').then(m => m.Assets),
     },
     {
         path: 'customers',
+        canActivate: [authGuard],
         loadComponent: () => import('./features/components/customers/customers').then(m => m.Customers),
     },
     {
         path: 'transactions',
+        canActivate: [authGuard],
         loadComponent: () => import('./features/components/transactions/transactions').then(m => m.Transactions),
     },
     {

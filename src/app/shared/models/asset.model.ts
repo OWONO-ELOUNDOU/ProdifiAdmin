@@ -28,17 +28,17 @@ export interface ReelAsset {
 export interface VirtualAsset {
     // Instance d'un titre d'état réel
     // real_asset: ReelAsset;
-    id: string;
+    title_code?: string;
     name: string;
-    symbol: string;
-    quantity: number;
-    buy_price: number;
-    sell_price: number;
+    issue_date?: string;
+    amount: number;
+    title_type: string;
+    state: string;
+    bta_duration_weeks: number;
     interest_rate: number;
     maturity_date: string;
-    margin: number;
-    is_available: boolean;
-    created_at: string;
+    quantity: number;
+    is_primary?: boolean;
 }
 /**
  * Modèles pour les titres d'état virtuels fin

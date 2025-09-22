@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { environment } from '../../../../environment/environment';
 import { BrokerageFirm } from '../../../shared/models/user.model';
+import { CurrentUser, UserLogin, UserLoginResponse } from '../../models/auth';
 
 
 // Sociétés prédéfinies pour la demo
@@ -38,12 +39,13 @@ import { BrokerageFirm } from '../../../shared/models/user.model';
 })
 export class Auth {
   private readonly endPoint = 'auth/login';
+  private readonly profileEndPoint = 'users/me';
 
   // Injection du service http Client pour les requêtes avec les apis backend
   private http = inject(HttpClient);
   private router = inject(Router);
 
-  private currentFirmSubject = new BehaviorSubject<BrokerageFirm | null>(null);
+  private currentUserSubject = new BehaviorSubject<UserLoginResponse | null>(null);
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
   constructor() {
@@ -70,7 +72,7 @@ export class Auth {
     DEMO_FIRMS.forEach((firm) => {
       if (firm.email === email && firm.password === password) {
         this.isAuthenticatedSubject.next(true);
-        this.currentFirmSubject.next(firm);
+        this.currentUserSubject.next(null);
         localStorage.setItem('current_firm', JSON.stringify(firm));
         this.router.navigate(['/home']);
       }
@@ -86,16 +88,28 @@ export class Auth {
   }
 
   get currentFirm$() {
-    return this.currentFirmSubject.asObservable();
+    return this.currentUserSubject.asObservable();
   }
 
   // Méthode de connexion avec les apis backend
-  login(email: string, password: string) {
-    return this.http.post(environment.apiRoutes + this.endPoint, {email, password}, {
+  login(email: string, password: string): Observable<UserLoginResponse> {
+    return this.http
+    .post<UserLoginResponse>(environment.apiRoutes.baseRoute + this.endPoint, {email, password}, {
       headers: {
         "Content-Type": 'application/json'
       }
     })
+    .pipe(
+      tap((response: UserLoginResponse) => {
+        this.isAuthenticatedSubject.next(true);
+        this.currentUserSubject.next(response);
+        localStorage.setItem('current_firm', JSON.stringify(response.user));
+        this.router.navigate(['/home']);
+      }),
+      catchError((error) => {
+        throw new Error(error.message);
+      })
+    )
   }
 
   logout() {
@@ -104,5 +118,23 @@ export class Auth {
 
     // Rediriger vres la page de connexion
     this.router.navigate(['/login']);
+  }
+
+
+  // Méthode pour récupérer le profil de l'utilisateur connecté
+  getProfile(): Observable<CurrentUser> {
+    return this.http
+    .get<CurrentUser>(environment.apiRoutes.baseRoute + this.profileEndPoint, {
+      headers: {
+        "Content-Type": 'application/json'
+      }
+    }).pipe(
+      tap((response: CurrentUser) =>{
+        localStorage.setItem('current_user', JSON.stringify(response))
+      }),
+      catchError((error) => {
+        throw new Error(error.message);
+      })
+    );
   }
 }

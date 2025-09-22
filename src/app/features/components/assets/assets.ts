@@ -2,14 +2,13 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Import PrimeNG Librairies
-import { Menu } from 'primeng/menu';
-import { MenuItem } from 'primeng/api';
 import { Table, TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 // Import Components
+import { TitleDetails } from '../title-details/title-details';
 import { AssetForm } from '../../../shared/components/asset-form/asset-form';
 import { DialogBox } from '../../../shared/components/dialog-box/dialog-box';
 import { ChartLine } from '../../../shared/components/chart-line/chart-line';
@@ -30,10 +29,10 @@ import { VirtualAsset } from '../../../shared/models/asset.model';
     ChartLine,
     ButtonModule,
     ToastModule,
-    Menu,
     DialogBox,
     AssetForm,
-    TableModule
+    TableModule,
+    TitleDetails
   ],
   templateUrl: './assets.html',
   styleUrl: './assets.scss',
@@ -47,11 +46,11 @@ export class Assets implements OnInit {
   private titleService = inject(TitleService);
 
   protected priceData = signal<number[]>([]);
-  protected titleData = signal<any[]>([]);
+  protected titleData = signal<VirtualAsset[]>([]);
   protected assetsData = signal<VirtualAsset[]>([]);
+  lastItem = signal(0);
 
   // Inject primeNG message and confirmation service
-  items = signal<MenuItem[] | undefined>([]);
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
 
@@ -59,27 +58,10 @@ export class Assets implements OnInit {
 
   ngOnInit(): void {
     // Récupérer les données des transactions
-    
+    this.onFecthData();
 
-    this.assetsData.set(assets);
-    console.log('Assets data:', this.assetsData());
-
-    this.items.set([
-      {
-        label: 'Modifier',
-        icon: 'pi pi-pencil',
-        severity: 'info',
-        size: 'small',
-        command: () => this.displayForm()
-      },
-      {
-        label: 'Désactiver',
-        icon: 'pi pi-trash',
-        severity: 'danger',
-        size: 'small',
-        command: () => {},
-      },
-    ]);
+    this.assetsData.set(JSON.parse(localStorage.getItem('title_data') || ''));
+    this.lastItem.set(this.assetsData().length - 1);
   }
 
   confirm() {
@@ -135,7 +117,8 @@ export class Assets implements OnInit {
     try {
       this.titleService.getAllTitles().subscribe({
         next: (data) => {
-          this.titleData.set(data);
+          this.titleData.set(data.results);
+          console.log(this.titleData());
         },
         error: (error) => {
           this.messageService.add({

@@ -43,3 +43,11 @@ export interface VirtualAsset {
 /**
  * Modèles pour les titres d'état virtuels fin
  */
+
+
+export interface PublicTitlesResponse {
+    count: number;
+    next: string;
+    previous: string;
+    results: VirtualAsset[]
+}

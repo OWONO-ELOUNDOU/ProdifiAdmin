@@ -3,7 +3,10 @@
     <span class="text-sm text-left font-semibold text-gray-500">Tableau de bord > {{ title() }}</span>
     <div class="header w-full flex items-center justify-between">
         <h1 class="text-5xl text-gray-700 font-bold my-4">Gestion des titres (actifs)</h1>
-        <app-dialog-box [buttonLabel]="'Nouveau titre'" />
+        <div class="flex items-center justify-center gap-4">
+            <a pButton icon="pi pi-refresh" severity="contrast" href="/assets" class="text-sm font-semibold p-2 cursor-pointer">Actualiser</a>
+            <app-dialog-box [buttonLabel]="'Nouveau titre'" />
+        </div>
     </div>
 
 
@@ -19,7 +22,6 @@
         >
             <ng-template #header>
                 <tr class="w-full bg-gray-600">
-                    <th class="text-sm font-bold text-gray-600 p-2">Id</th>
                     <th class="text-sm font-bold text-gray-600 p-2">nom</th>
                     <th class="text-sm font-bold text-gray-600 p-2">type</th>
                     <th class="text-sm font-bold text-gray-600 p-2">Durée(semaines)</th>
@@ -35,7 +37,6 @@
 
             <ng-template #body let-asset>
                 <tr style="font-size: 0.8rem;">
-                    <td class="border-b p-2">{{ asset.title_code }}</td>
                     <td class="border-b p-2">{{ asset.name }}</td>
                     <td class="border-b p-2">{{ asset.title_type }}</td>
                     <td class="border-b p-2">{{ asset.bta_duration_weeks }}</td>
@@ -45,22 +46,19 @@
                     <td class="border-b p-2">{{ asset.interest_rate }}</td>
                     <td class="border-b p-2">{{ asset.maturity_date }}</td>
                     <td class="border-b p-2">{{ asset.issue_date }}</td>
-                    <td class="border-b p-2">
-                        <div class="flex items-center justify-center gap-2">
-                            <p-menu #menu [model]="items()" popup="true" />
-                            <p-button icon="pi pi-ellipsis-v" size="small" variant="text" severity="contrast" (click)="menu.toggle($event)" />
-                        </div>
+                    <td class="border-b p-2 flex items-center justify-center">
+                        <app-title-details [currentItem]="asset" />
                     </td>
                 </tr>
             </ng-template>
         </p-table>
 
         <div class="analytics w-1/4">
-            <div class="higher w-full p-2 mb-4 border shadow-md rounded-lg">
+            <div class="higher w-full mb-4">
                 <app-crypto-card [cryptoItem]="assetsData()[0]" />
             </div>
             <div class="lower w-full border rounded-lg">
-                <app-crypto-card [cryptoItem]="assetsData()[9]" />
+                <app-crypto-card [cryptoItem]="assetsData()[lastItem()]" />
             </div>
         </div>
     </div>

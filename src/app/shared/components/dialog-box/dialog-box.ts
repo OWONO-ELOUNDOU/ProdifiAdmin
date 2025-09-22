@@ -51,8 +51,7 @@ export class DialogBox implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onFetchData();
-    console.log(this.titleData().length);
+    //this.onFetchData();
   }
 
   get f() {
@@ -74,7 +73,7 @@ export class DialogBox implements OnInit {
       this.titleService.getAllTitles().subscribe({
         next: (data) => {
           console.log(data);
-          this.titleData.set(data);
+          this.titleData.set(data.results);
         },
         error: (error) => {
           console.log('aucun titre existant', error.message);
@@ -91,13 +90,40 @@ export class DialogBox implements OnInit {
     }
   }
 
+
+  // fonction pour enregistrer les titres dans la liste de test
+  onTestSubmit() {
+    if (this.assetForm.valid) {
+      this.assetForm.patchValue({
+        title_code: `BTA-${Math.floor(100000 + Math.random() * 900000)}`, // Générer un code aléatoire pour le titre
+        is_primary: false
+      });
+
+      try {
+        this.titleService.addNewTitle(this.assetForm.value);
+        this.closeDialog();
+      } catch (error) {
+        this.messageService.add({
+          severity: 'danger',
+          summary: 'Erreur',
+          detail: 'Le titre n\'a pas pu être enregistré',
+          life: 3000,
+          closable: true
+        });
+        this.assetForm.reset();
+      }
+    }
+  }
+
   onSubmit() {
     // Vérifier si le formulaire est valide
     if (this.assetForm.valid) {
+      /*
       this.assetForm.patchValue({
         title_code: `BTA-${Math.floor(100000 + Math.random() * 900000)}`, // Générer un code aléatoire pour le titre
         is_primary: false,
       });
+      */
       console.log(this.assetForm.value);
 
       // Appeler le service pour créer un nouveau titre

@@ -4,7 +4,7 @@
         <p-button icon="pi pi-plus" [label]="buttonLabel()" severity="contrast" (click)="showDialog($event)" />
         <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" styleClass="border !bg-transparent">
             <ng-template #headless>
-                <form class="p-8 bg-white shadow-sm rounded-md" [formGroup]="assetForm" (ngSubmit)="onSubmit()">
+                <form class="p-8 bg-white shadow-sm rounded-md" [formGroup]="assetForm" (ngSubmit)="onTestSubmit()">
                     <div class="input-groups w-full flex flex-col items-center justify-center border-black gap-4 mb-4">
                         <!-- Champs d'entrée pour le nom du titre -->
                         <div class="input-box w-full">

@@ -1,6 +1,16 @@
 .header-container {
     z-index: 2;
     position: relative;
+
+    .user {
+        .avatar {
+            p {
+                width: 30px;
+                height: 30px;
+                text-align: center;
+            }
+        }
+    }
 }
 
 .logout-box {
@@ -8,10 +18,10 @@
     
     &.open {
         display: block;
-        width: 160px;
+        width: 190px;
         position: absolute;
-        top: 60px;
-        right: 30px;
+        top: 70px;
+        right: 140px;
         z-index: 3;
     }
 }

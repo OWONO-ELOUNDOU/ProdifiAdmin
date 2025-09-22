@@ -3,7 +3,7 @@ import { Home } from './features/components/home/home';
 import { authGuard } from './core/Guard/auth-guard';
 
 export const routes: Routes = [
-    { path: '' , component: Home, },
+    { path: '' , component: Home, canActivate: [authGuard] },
     { path: 'home', component: Home, canActivate: [authGuard] },
     {
         path: 'login',

@@ -40,9 +40,19 @@ export class Login {
       const safePassword = password ?? '';
       
       try {
-        this.authService.loginWithDemoUser(safeEmail, safePassword)
+        this.authService.login(safeEmail, safePassword).subscribe({
+          next: (response) => {
+            console.log(response);
+            this.isLoading = false;
+          },
+          error: (error) => {
+            console.log('error', error.message);
+            this.isLoading = false;
+          }
+        })
       } catch (error: any) {
         console.log(error.message);
+        this.isLoading = false;
         this.showNotification('echec');
       }
     } else {

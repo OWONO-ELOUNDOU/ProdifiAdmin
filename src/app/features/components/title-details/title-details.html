@@ -1,0 +1,52 @@
+<p-toast position="top-right" />
+<div class="title-details-container flex justify-center">
+    <div>
+        <i class="pi pi-eye" style="font-size: 1rem; cursor: pointer;" (click)="showDialog($event)"></i>
+        <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" styleClass="!bg-transparent" (onHide)="closeDialog()">
+            <ng-template #headless>
+                <div class="details-card p-8 bg-white shadow-sm rounded-md">
+                    <div class="header mb-6">
+                        <h1 class="text-3xl text-gray-600 mb-2 font-bold">Informations sur le titre</h1>
+                        <span class="text-sm font-semibold text-gray-400">Détails sur le titre sélectionné</span>
+                    </div>
+                    <div class="details-grid gap-4">
+                        <div class="details-box w-full flex items-center justify-start gap-8 rounded-md p-2 mb-6">
+                            <div class="detail-item">
+                                <span class="text-sm font-semibold text-gray-500">Nom du titre: </span>
+                                <p class="text-lg font-semibold">{{ currentItem()?.name }}</p>
+                            </div>
+                            <div class="detail-item">
+                                <span class="text-sm font-semibold text-gray-500">Type de titre: </span>
+                                <p class="text-lg font-semibold">{{ currentItem()?.title_type }}</p>
+                            </div>
+                        </div>
+                        <div class="details-box w-full flex items-center justify-start gap-8 rounded-md p-2 mb-6">
+                            <div class="detail-item">
+                                <span class="text-sm font-semibold text-gray-500">État du titre: </span>
+                                <p class="text-lg font-semibold">{{ currentItem()?.state }}</p>
+                            </div>
+                            <div class="detail-item">
+                                <span class="text-sm font-semibold text-gray-500">Prix: </span>
+                                <p class="text-lg font-semibold">{{ currentItem()?.amount }}</p>
+                            </div>
+                        </div>
+                        <div class="details-box w-full flex items-center justify-start gap-8 rounded-md p-2 mb-6">
+                            <div class="detail-item">
+                                <span class="text-sm font-semibold text-gray-500">Quantité: </span>
+                                <p class="text-lg font-semibold">{{ currentItem()?.quantity }}</p>
+                            </div>
+                            <div class="detail-item">
+                                <span class="text-sm font-semibold text-gray-500">Date de création: </span>
+                                <p class="text-lg font-semibold">{{ currentItem()?.issue_date }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full mt-6 flex items-center justify-between gap-4">
+                        <button pButton type="button" label="Fermer" icon="pi pi-times" (click)="closeDialog()" class="p-button-secondary w-1/2"></button>
+                        <button pButton type="button" label="Supprimer" severity="danger" variant="text" icon="pi pi-trash" class="p-button-secondary w-1/2"></button>
+                    </div>
+                </div>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>

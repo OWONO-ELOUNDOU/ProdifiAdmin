@@ -16,9 +16,16 @@
         </div>
     }
     
-    <div class="user cursor-pointer border px-2 py-1 rounded-full" (click)="showLogoutButton()">
-        <span class="mr-2">{{ currentFirm.name }}</span>
-        <i class="pi pi-chevron-down" style="font-size: 0.7rem;"></i>
+    <div class="user flex items-center justify-center gap-2">
+        <div class="avatar flex items-center justify-center gap-2 cursor-pointer border px-1 py-1 rounded-full" (click)="showLogoutButton()">
+            <p class="flex items-center justify-center font-semibold text-white rounded-full bg-black">{{ currentFirm.email?.charAt(0) }}</p>
+            <span class="">{{ currentFirm.email }}</span>
+            <i class="pi pi-chevron-down" style="font-size: 0.7rem; margin-right: 5px;"></i>
+        </div>
+        <div class="cursor-pointer border px-2 py-1 rounded-full bg-black text-white" (click)="navigateToLogin()">
+            <i class="pi pi-sign-in" style="font-size: 0.7rem;"></i>
+            <span class="text-sm ml-2">connexion</span>
+        </div>
     </div>
 </div>
 <div class="logout-box border px-2 py-2 rounded-md bg-white shadow-md cursor-pointer" [ngClass]="isOpen ? 'open' : ''" (click)="onSignOut()">

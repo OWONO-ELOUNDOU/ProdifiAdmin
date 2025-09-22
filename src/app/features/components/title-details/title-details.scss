@@ -1,0 +1,19 @@
+.title-details-container {
+    div {
+        .details-card {
+            width: 450px;
+            height: 100%;
+            padding: 1rem;
+
+            .details-grid {
+                .details-box {
+                    background-color: #e8e8e8;
+
+                    .detail-item {
+                        span { font-size: 12px; }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+.profile-container {
+    .profile-box {
+        width: 800px;
+        height: 100%;
+
+        .profile-header {
+            button {
+                width: 200px;
+                padding: 15px;
+                border-radius: 30px;
+                font-size: 13px;
+            }
+        }
+    }
+}

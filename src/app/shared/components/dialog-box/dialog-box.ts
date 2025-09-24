@@ -12,6 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 // Import service titres
 import { TitleService } from '../../../core/services/Titles/title-service';
 import { VirtualAsset } from '../../models/asset.model';
+import { UserLoginResponse } from '../../../core/models/auth';
 
 @Component({
   selector: 'app-dialog-box',
@@ -25,6 +26,7 @@ export class DialogBox implements OnInit {
   visible: boolean = false;
   action = input<string>('');
   buttonLabel = input<string>('');
+  current_user!: UserLoginResponse;
 
   titleData = signal<VirtualAsset[]>([]); // Tableau pour stocker les titres depuis le backend
 
@@ -51,6 +53,9 @@ export class DialogBox implements OnInit {
   }
 
   ngOnInit(): void {
+    // Récupérer l'utilisateur connecté
+    this.current_user = JSON.parse(localStorage.getItem('current_firm') || '{}');
+
     //this.onFetchData();
   }
 
@@ -94,13 +99,26 @@ export class DialogBox implements OnInit {
   // fonction pour enregistrer les titres dans la liste de test
   onTestSubmit() {
     if (this.assetForm.valid) {
+      const safeDate = new Date(this.assetForm.value.maturity_date).toLocaleDateString('en-CA'); // Formater la date au format ISO sans l'heure
       this.assetForm.patchValue({
         title_code: `BTA-${Math.floor(100000 + Math.random() * 900000)}`, // Générer un code aléatoire pour le titre
+        maturity_date: safeDate, // Formater la date au format ISO sans l'heure
         is_primary: false
       });
+      console.log(this.assetForm.value);
 
+      // Appeler le service pour créer un nouveau titre
       try {
-        this.titleService.addNewTitle(this.assetForm.value);
+        this.titleService.createVirtualTitle(this.assetForm.value).subscribe({
+          next: (response) => {
+            console.log('Titre créé avec succès:', response);
+            this.assetForm.reset();
+          },
+          error: (error) => {
+            console.error('Erreur lors de la création du titre:', error);
+            this.assetForm.reset();
+          }
+        });
         this.closeDialog();
       } catch (error) {
         this.messageService.add({

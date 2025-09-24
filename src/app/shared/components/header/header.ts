@@ -7,6 +7,7 @@ import { Auth } from '../../../core/services/Auth/auth';
 
 // Import du model
 import { BrokerageFirm } from '../../models/user.model';
+import { UserLoginResponse } from '../../../core/models/auth';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +23,7 @@ export class Header implements OnInit {
   private router = inject(Router);
   private authService = inject(Auth);
 
-  currentFirm!: BrokerageFirm; // utilisateur actuel
+  currentFirm!: UserLoginResponse; // utilisateur actuel
 
   constructor() {
 

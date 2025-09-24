@@ -1,15 +1,17 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PublicTitlesResponse, VirtualAsset } from '../../../shared/models/asset.model';
+
 import { environment } from '../../../../environment/environment';
-import { Header } from 'primeng/api';
+import { UserLoginResponse } from '../../models/auth';
+import { PublicTitlesResponse, VirtualAsset } from '../../../shared/models/asset.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TitleService {
   private readonly endPoint = 'titles/real/';
+  private current_user: UserLoginResponse = JSON.parse(localStorage.getItem('current_firm') || '{}');
 
   // Demo liste des titres
   TitleList: VirtualAsset[] = [];
@@ -49,7 +51,8 @@ export class TitleService {
   createVirtualTitle(title: VirtualAsset): Observable<VirtualAsset> {
     return this.http.post<VirtualAsset>(`${environment.apiRoutes.v1Route}/${this.endPoint}`, title, {
       headers: {
-        "Content-type": "application/json"
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${this.current_user.access}`
       }
     });
   }

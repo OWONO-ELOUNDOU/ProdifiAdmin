@@ -103,7 +103,7 @@ export class Auth {
       tap((response: UserLoginResponse) => {
         this.isAuthenticatedSubject.next(true);
         this.currentUserSubject.next(response);
-        localStorage.setItem('current_firm', JSON.stringify(response.user));
+        localStorage.setItem('current_firm', JSON.stringify(response));
         this.router.navigate(['/home']);
       }),
       catchError((error) => {
@@ -122,15 +122,16 @@ export class Auth {
 
 
   // Méthode pour récupérer le profil de l'utilisateur connecté
-  getProfile(): Observable<CurrentUser> {
+  getProfile(token: string): Observable<any> {
     return this.http
-    .get<CurrentUser>(environment.apiRoutes.baseRoute + this.profileEndPoint, {
+    .get<any>(environment.apiRoutes.baseRoute + this.profileEndPoint, {
       headers: {
-        "Content-Type": 'application/json'
+        "Content-Type": 'application/json',
+        'Authorization': `Bearer ${token}`
       }
     }).pipe(
-      tap((response: CurrentUser) =>{
-        localStorage.setItem('current_user', JSON.stringify(response))
+      tap((response: any) =>{
+        localStorage.setItem('profile_user', JSON.stringify(response))
       }),
       catchError((error) => {
         throw new Error(error.message);

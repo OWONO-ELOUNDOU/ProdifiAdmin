@@ -16,10 +16,10 @@
         </div>
     }
     
-    <div class="user flex items-center justify-center gap-2">
+    <div class="user flex items-center justify-center gap-2 cursor-pointer">
         <div class="avatar flex items-center justify-center gap-2 cursor-pointer border px-1 py-1 rounded-full" (click)="showLogoutButton()">
-            <p class="flex items-center justify-center font-semibold text-white rounded-full bg-black">{{ currentFirm.email?.charAt(0) }}</p>
-            <span class="">{{ currentFirm.email }}</span>
+            <p class="flex items-center justify-center font-semibold text-white rounded-full bg-black">{{ currentFirm.user.email.charAt(0).toUpperCase() }}</p>
+            <span class="">{{ currentFirm.user.email }}</span>
             <i class="pi pi-chevron-down" style="font-size: 0.7rem; margin-right: 5px;"></i>
         </div>
         <div class="cursor-pointer border px-2 py-1 rounded-full bg-black text-white" (click)="navigateToLogin()">
@@ -28,7 +28,13 @@
         </div>
     </div>
 </div>
-<div class="logout-box border px-2 py-2 rounded-md bg-white shadow-md cursor-pointer" [ngClass]="isOpen ? 'open' : ''" (click)="onSignOut()">
-    <i class="pi pi-sign-out" style="font-size: 0.7rem;"></i>
-    <span class="text-sm ml-2">Déconnexion</span>
+<div class="logout-box border px-4 py-2 rounded-md bg-white shadow-md cursor-pointer" [ngClass]="isOpen ? 'open' : ''">
+    <div class="w-full border-b py-2 cursor-pointer" (click)="onSignOut()">
+        <i class="pi pi-sign-out" style="font-size: 0.7rem;"></i>
+        <span class="text-sm font-semibold ml-2">Déconnexion</span>
+    </div>
+    <div class="w-full py-2 cursor-pointer" (click)="navigateTo('profile')">
+        <i class="pi pi-user" style="font-size: 0.7rem;"></i>
+        <span class="text-sm font-semibold ml-2">Profile</span>
+    </div>
 </div>

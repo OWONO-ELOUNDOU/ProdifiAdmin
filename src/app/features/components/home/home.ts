@@ -32,8 +32,7 @@ export class Home implements OnInit {
 
   ngOnInit() {
     this.marketData.set(assets);
-    this.lastData.set(assets);
-    this.transactionList.set(transactions.slice(0, 5));
+    this.transactionList.set([]);
   }
 
   showTransactionDetails(transaction: Transaction) {

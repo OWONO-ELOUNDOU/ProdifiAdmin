@@ -4,46 +4,77 @@
         <i class="pi pi-eye" style="font-size: 1rem; cursor: pointer;" (click)="showDialog($event)"></i>
         <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" styleClass="!bg-transparent" (onHide)="closeDialog()">
             <ng-template #headless>
-                <div class="details-card p-8 bg-white shadow-sm rounded-md">
+                <div class="details-card p-8 bg-white shadow-sm rounded-lg">
                     <div class="header mb-6">
-                        <h1 class="text-3xl text-gray-600 mb-2 font-bold">Informations sur le titre</h1>
-                        <span class="text-sm font-semibold text-gray-400">Détails sur le titre sélectionné</span>
-                    </div>
-                    <div class="details-grid gap-4">
-                        <div class="details-box w-full flex items-center justify-start gap-8 rounded-md p-2 mb-6">
-                            <div class="detail-item">
-                                <span class="text-sm font-semibold text-gray-500">Nom du titre: </span>
-                                <p class="text-lg font-semibold">{{ currentItem()?.name }}</p>
-                            </div>
-                            <div class="detail-item">
-                                <span class="text-sm font-semibold text-gray-500">Type de titre: </span>
-                                <p class="text-lg font-semibold">{{ currentItem()?.title_type }}</p>
-                            </div>
+                        <div class="w-full flex items-center justify-between mb-6">
+                            <h1 class="text-3xl text-gray-600 font-bold">Informations sur le titre</h1>
+                            <button pButton type="button"  rounded="true" icon="pi pi-times" (click)="closeDialog()" class="p-button-secondary w-1/2 cursor-pointer"></button>
                         </div>
-                        <div class="details-box w-full flex items-center justify-start gap-8 rounded-md p-2 mb-6">
-                            <div class="detail-item">
-                                <span class="text-sm font-semibold text-gray-500">État du titre: </span>
-                                <p class="text-lg font-semibold">{{ currentItem()?.state }}</p>
-                            </div>
-                            <div class="detail-item">
-                                <span class="text-sm font-semibold text-gray-500">Prix: </span>
-                                <p class="text-lg font-semibold">{{ currentItem()?.amount }}</p>
-                            </div>
-                        </div>
-                        <div class="details-box w-full flex items-center justify-start gap-8 rounded-md p-2 mb-6">
-                            <div class="detail-item">
-                                <span class="text-sm font-semibold text-gray-500">Quantité: </span>
-                                <p class="text-lg font-semibold">{{ currentItem()?.quantity }}</p>
-                            </div>
-                            <div class="detail-item">
-                                <span class="text-sm font-semibold text-gray-500">Date de création: </span>
-                                <p class="text-lg font-semibold">{{ currentItem()?.issue_date }}</p>
+                        <div class="w-full flex items-center justify-start gap-8 mt-2">
+                            <span class="text-5xl text-white font-bold px-7 py-5 rounded-full bg-black">{{ current_title()?.name?.charAt(0) }}</span>
+                            <div>
+                                <h2 class="text-2xl text-gray-600 font-bold mb-4">{{ current_title()?.name }}</h2>
+                                <div class="grid grid-cols-3 gap-6">
+                                    <div>
+                                        <span>Type</span>
+                                        <p class="text-lg font-semibold">{{ current_title()?.title_type }}</p>
+                                    </div>
+                                    <div>
+                                        <span>État</span>
+                                        <p class="text-lg font-semibold">{{ current_title()?.state }}</p>
+                                    </div>
+                                    <div>
+                                        <span>Code</span>
+                                        <p class="text-lg font-semibold">{{ current_title()?.title_code }}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="body">
+                        <div class="grid grid-cols-6 gap-6 p-4">
+                            <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">
+                                <i class="pi pi-dollar font-semibold" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <span>Prix</span>
+                                    <p class="text-lg font-semibold">{{ current_title()?.amount }}</p>
+                                </div>
+                            </div>
+                            <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">
+                                <i class="pi pi-inbox font-semibold" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <span>Quantité</span>
+                                    <p class="text-lg font-semibold">{{ current_title()?.quantity}}</p>
+                                </div>
+                            </div>
+                            <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">
+                                <i class="pi pi-calendar-plus font-semibold" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <span>Date Création</span>
+                                    <p class="text-lg font-semibold">{{ current_title()?.issue_date}}</p>
+                                </div>
+                            </div>
+                            <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">
+                                <i class="pi pi-history font-semibold" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <span>Durée</span>
+                                    <p class="text-lg font-semibold">{{ current_title()?.bta_duration_weeks}}</p>
+                                </div>
+                            </div>
+                            <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">
+                                <i class="pi pi-calendar-clock font-semibold" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <span>Date maturité</span>
+                                    <p class="text-lg font-semibold">{{ current_title()?.maturity_date}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="w-full mt-6 flex items-center justify-between gap-4">
-                        <button pButton type="button" label="Fermer" icon="pi pi-times" (click)="closeDialog()" class="p-button-secondary w-1/2"></button>
-                        <button pButton type="button" label="Supprimer" severity="danger" variant="text" icon="pi pi-trash" class="p-button-secondary w-1/2"></button>
+                        <!--<button pButton type="button" label="Fermer" icon="pi pi-times" (click)="closeDialog()" class="p-button-secondary w-1/2"></button>-->
+                        <app-dialog-box [action]="'modify'" [buttonLabel]="'Modifier'" />
+                        <button pButton type="button" label="Supprimer" severity="danger" variant="text" icon="pi pi-trash" (click)="onDeleteTitle()" class="p-button-secondary w-1/2 cursor-pointer"></button>
                     </div>
                 </div>
             </ng-template>

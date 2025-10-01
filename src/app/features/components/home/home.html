@@ -10,7 +10,7 @@
         <h3 class="text-2xl font-bold mb-2">Titres (actifs)</h3>
         <div class="graphs w-full flex items-start justify-between flex-wrap gap-4 mt-2">
             <div class="graphic w-2/3 h-300 border rounded-lg">
-                <app-chart-line [chartData]="marketData()" />
+                <app-chart-line />
             </div>
             <div class="stats w-1/4">
                 <app-crypto-card [cryptoItem]="marketData()[0]" />

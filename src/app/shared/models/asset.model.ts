@@ -36,7 +36,7 @@ export interface VirtualAsset {
     state: string;
     bta_duration_weeks: number;
     interest_rate: number;
-    maturity_date: string;
+    maturity_date?: string;
     quantity: number;
     is_primary?: boolean;
 }

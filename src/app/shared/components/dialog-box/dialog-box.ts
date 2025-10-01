@@ -13,6 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TitleService } from '../../../core/services/Titles/title-service';
 import { VirtualAsset } from '../../models/asset.model';
 import { UserLoginResponse } from '../../../core/models/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-box',
@@ -27,11 +28,13 @@ export class DialogBox implements OnInit {
   action = input<string>('');
   buttonLabel = input<string>('');
   current_user!: UserLoginResponse;
+  title_id = input<string>('');
 
   titleData = signal<VirtualAsset[]>([]); // Tableau pour stocker les titres depuis le backend
 
   private messageService = inject(MessageService);
   private titleService = inject(TitleService);
+  private router = inject(Router);
 
   // Form group pour les inputs
   assetForm: FormGroup = new FormGroup({
@@ -45,7 +48,7 @@ export class DialogBox implements OnInit {
     interest_rate: new FormControl(0, [Validators.required, Validators.min(5)]),
     maturity_date: new FormControl('', Validators.required),
     bta_duration_weeks: new FormControl(0, [Validators.required, Validators.min(3)]),
-    issue_date: new FormControl(new Date().toISOString()),
+    issue_date: new FormControl(''),
   });
 
   constructor() {
@@ -72,113 +75,78 @@ export class DialogBox implements OnInit {
     this.visible = false;
   }
 
-  // Fonction pour récupérer les titres depuis le backend
-  onFetchData() {
-    try {
-      this.titleService.getAllTitles().subscribe({
-        next: (data) => {
-          console.log(data);
-          this.titleData.set(data.results);
-        },
-        error: (error) => {
-          console.log('aucun titre existant', error.message);
-        }
-      })
-    } catch (error) {
-      this.messageService.add({
-        severity: 'danger',
-        summary: 'Erreur',
-        detail: 'Une erreur est survenue lors du chargement des titres veuillez réessayer plus tard',
-        life: 3000,
-        closable: true,
-      });
-    }
-  }
-
-
-  // fonction pour enregistrer les titres dans la liste de test
-  onTestSubmit() {
+  onSubmit() {
     if (this.assetForm.valid) {
       const safeDate = new Date(this.assetForm.value.maturity_date).toLocaleDateString('en-CA'); // Formater la date au format ISO sans l'heure
-      this.assetForm.patchValue({
-        title_code: `BTA-${Math.floor(100000 + Math.random() * 900000)}`, // Générer un code aléatoire pour le titre
-        maturity_date: safeDate, // Formater la date au format ISO sans l'heure
-        is_primary: false
-      });
-      console.log(this.assetForm.value);
 
-      // Appeler le service pour créer un nouveau titre
+      this.assetForm.patchValue({
+        maturity_date: safeDate,
+        is_primary: true
+      });
+
       try {
-        this.titleService.createVirtualTitle(this.assetForm.value).subscribe({
+        this.titleService.updateTitle(this.assetForm.value, this.title_id()).subscribe({
           next: (response) => {
-            console.log('Titre créé avec succès:', response);
+            this.showMessage('success', 'Succès', 'Le titre a été modifié avec succès');
             this.assetForm.reset();
+            this.router.navigate(['/assets']);
           },
           error: (error) => {
-            console.error('Erreur lors de la création du titre:', error);
+            this.showMessage('error', 'Erreur', `${error.error.message}`);
             this.assetForm.reset();
           }
         });
+
         this.closeDialog();
-      } catch (error) {
-        this.messageService.add({
-          severity: 'danger',
-          summary: 'Erreur',
-          detail: 'Le titre n\'a pas pu être enregistré',
-          life: 3000,
-          closable: true
-        });
+      } catch (error: any) {
+        this.showMessage('error', 'Erreur', `${error.error.message}`);
         this.assetForm.reset();
       }
     }
   }
 
-  onSubmit() {
-    // Vérifier si le formulaire est valide
+
+  // fonction pour enregistrer les titres
+  onCreate() {
     if (this.assetForm.valid) {
-      /*
+      const safeDate = new Date(this.assetForm.value.maturity_date).toLocaleDateString('en-CA'); // Formater la date au format ISO sans l'heure
+
       this.assetForm.patchValue({
         title_code: `BTA-${Math.floor(100000 + Math.random() * 900000)}`, // Générer un code aléatoire pour le titre
-        is_primary: false,
+        maturity_date: safeDate,
+        issue_date: new Date().toISOString().split('T')[0], // Date actuelle au format ISO sans l'heure
+        is_primary: true
       });
-      */
-      console.log(this.assetForm.value);
 
       // Appeler le service pour créer un nouveau titre
       try {
         this.titleService.createVirtualTitle(this.assetForm.value).subscribe({
-
-          // Gérer la réponse du serveur
           next: (response) => {
-            console.log('Titre créé avec succès:', response);
-
-            // Afficher une notification de succès, ferme la boîte de dialogue et réinitialise le formulaire
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Succès',
-              detail: 'Le titre a été ajouté avec succès',
-              life: 3000,
-              closable: true,
-            });
-            this.closeDialog();
+            this.showMessage('success', 'Succès', 'Le titre a été créé avec succès');
             this.assetForm.reset();
+            this.router.navigate(['/assets']);
           },
-          // Gérer les erreurs
           error: (error) => {
-            console.error('Erreur lors de la création du titre:', error);
+            this.showMessage('error', 'Erreur', `${error.error.message}`);
+            this.assetForm.reset();
           }
         });
-      } catch (error) {
-        console.error('Erreur lors de la création du titre:', error);
+        this.closeDialog();
+      } catch (error: any) {
+        this.showMessage('error', 'Erreur', `${error.error.message}`);
+        this.assetForm.reset();
       }
-
-    } else {
-      // Si e formulaire n'est pas valide, afficher les message d'erreur sur le formulaire
-      // Marquer tous les champs comme touchés pour afficher les erreurs
-      Object.keys(this.assetForm.controls).forEach((key) => {
-        const control = this.assetForm.get(key);
-        control?.markAsTouched();
-      });
     }
+  }
+
+  // Fonction d'affichage des messages de retour d'API
+  showMessage(type: string, title: string, message: string) {
+    this.messageService.add({
+      severity: type,
+      summary: title,
+      detail: message,
+      life: 3000,
+      closable: true
+    });
   }
 }

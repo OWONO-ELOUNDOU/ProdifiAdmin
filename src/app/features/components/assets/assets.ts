@@ -30,7 +30,6 @@ import { VirtualAsset } from '../../../shared/models/asset.model';
     ButtonModule,
     ToastModule,
     DialogBox,
-    AssetForm,
     TableModule,
     TitleDetails
   ],
@@ -60,8 +59,8 @@ export class Assets implements OnInit {
     // Récupérer les données des transactions
     this.onFecthData();
 
-    this.assetsData.set(JSON.parse(localStorage.getItem('title_data') || ''));
-    this.lastItem.set(this.assetsData().length - 1);
+    this.assetsData.set(this.titleData());
+    this.lastItem.set(this.titleData().length - 1);
   }
 
   confirm() {

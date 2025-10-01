@@ -10,11 +10,6 @@
         <li (click)="navigateTo('assets')">Gestion des actifs</li>
     </ul>
 
-    @if (!currentFirm) {
-        <div class="user cursor-pointer">
-            <span (click)="navigateToLogin()">Log In</span>
-        </div>
-    }
     
     <div class="user flex items-center justify-center gap-2 cursor-pointer">
         <div class="avatar flex items-center justify-center gap-2 cursor-pointer border px-1 py-1 rounded-full" (click)="showLogoutButton()">

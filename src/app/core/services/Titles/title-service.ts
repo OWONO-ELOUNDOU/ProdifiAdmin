@@ -59,23 +59,41 @@ export class TitleService {
 
   // Récupérer tous les titres
   getAllTitles(): Observable<PublicTitlesResponse> {
-    return this.http.get<PublicTitlesResponse>(`${environment.apiRoutes.v1Route}/${this.endPoint}public/`);
+    return this.http.get<PublicTitlesResponse>(`${environment.apiRoutes.v1Route}/${this.endPoint}`, {
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${this.current_user.access}`
+      }
+    });
   }
 
   // Récupérer les informations d'un titre spécifique
-  getSingleTitle(title_code: string): Observable<VirtualAsset> {
-    return this.http.get<VirtualAsset>(`${environment.apiRoutes.v1Route}${this.endPoint}/${title_code}`);
+  getTitleDetails(title_code: string): Observable<VirtualAsset> {
+    return this.http.get<VirtualAsset>(`${environment.apiRoutes.v1Route}/${this.endPoint}${title_code}`, {
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${this.current_user.access}`
+      }
+    });
   }
 
   // Modifier les informations d'un titre
-  updateTitle(title: VirtualAsset): Observable<VirtualAsset> {
-    return this.http.put<VirtualAsset>(`${environment.apiRoutes.v1Route}/${this.endPoint}/${title.title_code}`, title, {
-      headers: { "Content-type": "application/json" }
+  updateTitle(title: VirtualAsset, title_id: string): Observable<VirtualAsset> {
+    return this.http.put<VirtualAsset>(`${environment.apiRoutes.v1Route}/${this.endPoint}${title_id}`, title, {
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${this.current_user.access}`
+      }
     });
   }
 
   // Suppression d'un title
   deleteTitle(title_code: string) {
-    return this.http.delete(`${environment.apiRoutes.v1Route}${this.endPoint}/${title_code}`);
+    return this.http.delete(`${environment.apiRoutes.v1Route}/${this.endPoint}${title_code}`, {
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${this.current_user.access}`
+      }
+    });
   }
 }

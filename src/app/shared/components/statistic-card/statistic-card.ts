@@ -1,8 +1,9 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Card } from '../card/card';
 
 // Import card model
 import { Card_Interface } from '../../models/card.model';
+import { TitleService } from '../../../core/services/Titles/title-service';
 
 @Component({
   selector: 'app-statistic-card',
@@ -13,36 +14,52 @@ import { Card_Interface } from '../../models/card.model';
 export class StatisticCard implements OnInit {
   cards = signal<Card_Interface[]>([]);
 
+  private titleService = inject(TitleService);
+  constructor() { }
+
   ngOnInit(): void {
     this.cards.set([
       {
         title: 'Revenus',
-        amount: 892.2,
-        evolution_rate: 0.2,
-        last_data: 889.1,
+        amount: 0,
+        evolution_rate: 0,
+        last_data: 0,
         background: 'black'
       },
       {
         title: 'Nouveau Clients',
-        amount: 12800,
-        evolution_rate: 3.1,
-        last_data: 12400,
+        amount: 0,
+        evolution_rate: 0,
+        last_data: 0,
         background: 'pink'
       },
       {
         title: 'Total transactions',
-        amount: 320,
-        evolution_rate: -1.2,
-        last_data: 340,
+        amount: 0,
+        evolution_rate: 0.0,
+        last_data: 0,
         background: 'blue'
       },
       {
         title: 'Titres d\'état',
-        amount: 23,
-        evolution_rate: -0.1,
-        last_data: 24,
+        amount: this.fetchData(),
+        evolution_rate: 0.0,
+        last_data: 0,
         background: 'turquoise'
       }
     ])
+  }
+
+  fetchData(): number {
+    let titleNumber = 0;
+    try {
+      this.titleService.getAllTitles().subscribe((data) => {
+        titleNumber = data.results.length;
+        console.log('Number of titles:', titleNumber);
+      });
+    } catch (error) {
+      console.error('Error fetching titles:', error);
+    }
+    return titleNumber;
   }
 }

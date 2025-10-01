@@ -1,9 +1,10 @@
-import { Component, computed, input, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Import Charts Module for charts
 import { ChartComponent, ApexChart, ApexStroke, ApexXAxis, ApexAxisChartSeries, ApexTitleSubtitle } from 'ng-apexcharts';
 import { VirtualAsset } from '../../models/asset.model';
+import { TitleService } from '../../../core/services/Titles/title-service';
 
 interface ChartOptions {
   series: ApexAxisChartSeries;
@@ -22,37 +23,39 @@ interface ChartOptions {
 export class ChartLine implements OnInit {
   chartOptions!: ChartOptions;
 
-  chartData = input<VirtualAsset[]>([]);
-  transactionsArr = [10, 80, 276, 348, 169, 400, 116, 369, 517, 82, 46, 479];
-  marketCapArr = [50, 70, 95, 40, 65, 150, 230, 81, 400, 221, 110, 150];
-  volumeArr = [300, 150, 25, 210, 65, 530, 120, 490, 500, 30, 185, 79];
+  chartData = signal<VirtualAsset[]>([]);
+
+  private titleService = inject(TitleService);
 
   constructor(){
 
   }
 
   ngOnInit(): void {
-    // Get the total supply, current price and circulating supply informations
-    const marginArr = this.chartData().slice(0, 9).map(item => Math.round(item.interest_rate));
-    const buyPriceArr = this.chartData().slice(0, 9).map(item => Math.round(item.amount));
-    const quantityArr = this.chartData().slice(0, 9).map(item => Math.round(item.quantity));
+    // On component init, fetch data from the service
+    this.fetchData();
 
-    const orderedBySupply = quantityArr.map(item => Math.round(item)).sort((a, b) => a - b);
+    // Get the total supply, current price and circulating supply informations
+    const interest_Arr = this.chartData().slice(0, 9).map(item => Math.round(item.interest_rate));
+    const price_Arr = this.chartData().slice(0, 9).map(item => Math.round(item.amount));
+    const quantity_Arr = this.chartData().slice(0, 9).map(item => Math.round(item.quantity));
+
+    const orderedBySupply = quantity_Arr.map(item => Math.round(item)).sort((a, b) => a - b);
     console.log('Ordered by Supply:', orderedBySupply);
 
     this.chartOptions = {
       series: [
         {
-          name: this.chartData() ? 'Quantité' : 'Market Cap',
-          data: quantityArr.length === 0 ? quantityArr : this.marketCapArr
+          name: 'Quantité',
+          data: quantity_Arr
         },
         {
-          name: this.chartData() ? 'Marge' : 'Volume',
-          data: marginArr.length === 0 ? marginArr : this.volumeArr
+          name: 'profitabilité',
+          data: interest_Arr
         },
         {
-          name: this.chartData() ? 'Prix actuel' : 'Transactions',
-          data: buyPriceArr.length === 0 ? buyPriceArr : this.transactionsArr
+          name: 'Prix actuel',
+          data: price_Arr
         }
       ],
       chart: {
@@ -86,6 +89,22 @@ export class ChartLine implements OnInit {
         curve: 'smooth',
         width: 2
       }
+    }
+  }
+
+  fetchData() {
+    try {
+      this.titleService.getAllTitles().subscribe({
+        next: (data) => {
+          this.chartData.set(data.results);
+          console.log('Fetched chart data:', this.chartData());
+        },
+        error: (error) => {
+          console.error('Error fetching data:', error);
+        }
+      })
+    } catch (error) {
+      console.error('Une erreur est survenue:', error);
     }
   }
 }

@@ -1,8 +1,8 @@
 export const environment = {
   production: false,
   apiRoutes: {
-    baseRoute: 'http://5.75.170.118:80/api/',
-    v1Route: 'http://5.75.170.118:80/api/v1'
+    baseRoute: 'https://prodifi.proditech-digital.com/api/',
+    v1Route: 'https://prodifi.proditech-digital.com/v1'
   },
   firebase: {
     apiKey: "AIzaSyBBAGwXAwNKih1rjr0JK3N5uEjLZetFzBM",

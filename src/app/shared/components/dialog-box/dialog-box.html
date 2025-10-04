@@ -31,7 +31,13 @@
                                         <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Le type est requis.</span>
                                     }
                                 }
-                                <input id="cryptoName" type="text" formControlName="title_type" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                                <!--<input id="cryptoName" type="text" formControlName="title_type" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />-->
+                                <select formControlName="title_type" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    <option value="" disabled selected>-- Sélectionner le type --</option>
+                                    @for (t of typeArr; track t.value) {
+                                        <option [value]="t.value">{{ t.label }}</option>
+                                    }
+                                </select>
                             </div>
                             <div class="input-box w-1/2">
                                 <label for="cryptoName" class="block text-sm font-medium text-gray-700">État du titre</label>
@@ -40,7 +46,13 @@
                                         <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">L'état est requis.</span>
                                     }
                                 }
-                                <input id="cryptoName" type="text" formControlName="state" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                                <!--<input id="cryptoName" type="text" formControlName="state" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />-->
+                                <select formControlName="state" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    <option value="" disabled selected>-- Sélectionner l'état --</option>
+                                    @for (state of stateArr; track state.value) {
+                                        <option [value]="state.value">{{ state.label }}</option>
+                                    }
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -85,21 +97,8 @@
                                     <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Un minimum de 5 est requis</span>
                                 }
                             }
-                            <input id="cryptoName" type="number" min="5" formControlName="interest_rate" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                            <input type="number" min="5" formControlName="interest_rate" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                         </div>
-                        <div class="input-box w-1/2">
-                            <label for="cryptoName" class="block text-sm font-medium text-gray-700">Date de maturité</label>
-                            @if (f['maturity_date'].touched && f['maturity_date'].invalid) {
-                                @if (f['maturity_date'].errors?.['required']) {
-                                    <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">La date est requise.</span>
-                                }
-                            }
-                            <input id="cryptoName" type="date" formControlName="maturity_date" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-                        </div>
-                    </div>
-
-                    <!-- Champs d'entrée pour la bta_duration_weeks -->
-                    <div class="input-groups w-full mb-4">
                         <div class="input-box">
                             <label for="cryptoName" class="block text-sm font-medium text-gray-700">Durée (en semaines)</label>
                             @if (f['bta_duration_weeks'].touched && f['bta_duration_weeks'].invalid) {
@@ -110,7 +109,26 @@
                                     <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Un minimum de 3 semaines est requis</span>
                                 }
                             }
-                            <input id="cryptoName" type="number" min="3" formControlName="bta_duration_weeks" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                            <!--<input type="number" min="3" formControlName="bta_duration_weeks" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />-->
+                            <select formControlName="bta_duration_weeks" (change)="computedDurationWeeks($event)" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <option value="" disabled selected>-- Sélectionner la durée --</option>
+                                @for (bta of btaDurationArr; track bta.value) {
+                                    <option [value]="bta.value">{{ bta.label }}</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Champs d'entrée pour la bta_duration_weeks -->
+                    <div class="input-groups w-full mb-4">
+                        <div class="input-box">
+                            <label for="cryptoName" class="block text-sm font-medium text-gray-700">Date de maturité</label>
+                            @if (f['maturity_date'].touched && f['maturity_date'].invalid) {
+                                @if (f['maturity_date'].errors?.['required']) {
+                                    <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">La date est requise.</span>
+                                }
+                            }
+                            <input id="cryptoName" type="text" formControlName="maturity_date" style="cursor: not-allowed;" [placeholder]="selectedDate() ? selectedDate() : maturity_date()" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"/>
                         </div>
                     </div>
 

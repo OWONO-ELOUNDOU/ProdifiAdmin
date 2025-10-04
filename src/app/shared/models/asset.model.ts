@@ -43,11 +43,32 @@ export interface VirtualAsset {
 /**
  * Modèles pour les titres d'état virtuels fin
  */
-
-
 export interface PublicTitlesResponse {
     count: number;
     next: string;
     previous: string;
     results: VirtualAsset[]
 }
+
+/**
+ * Informations sur les titres d'état
+ */
+
+export const TitleTypeList = [
+    { value: 'BTA', label: 'BTA' },
+    { value: 'OTA', label: 'OTA' }
+]
+
+export const TitleStateList = [
+    { value: 'ACTIVE', label: 'ACTIVE' },
+    { value: 'DRAFT', label: 'DRAFT' },
+    { value: 'MATURED', label: 'MATURED' },
+    { value: 'REDEEMED', label: 'REDEEMED' },
+    { value: 'ARCHIVED', label: 'ARCHIVED' }
+]
+
+export const TitleDurationWeeksList = [
+    { value: 13, label: '3 mois (13 semaines)' },
+    { value: 26, label: '6 mois (26 semaines)' },
+    { value: 52, label: '12 mois (52 semaines)' }
+]

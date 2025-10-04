@@ -55,7 +55,7 @@ export class StatisticCard implements OnInit {
     try {
       this.titleService.getAllTitles().subscribe((data) => {
         titleNumber = data.results.length;
-        console.log('Number of titles:', titleNumber);
+        console.log('Number of titles:', titleNumber); 
       });
     } catch (error) {
       console.error('Error fetching titles:', error);

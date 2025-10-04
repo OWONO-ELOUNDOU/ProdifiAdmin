@@ -1,5 +1,6 @@
-import { Component, inject, Input, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 
 // Import PrimeNG Libraries
@@ -11,9 +12,11 @@ import { InputTextModule } from 'primeng/inputtext';
 
 // Import service titres
 import { TitleService } from '../../../core/services/Titles/title-service';
-import { VirtualAsset } from '../../models/asset.model';
+import { VirtualAsset, TitleDurationWeeksList, TitleTypeList, TitleStateList } from '../../models/asset.model';
 import { UserLoginResponse } from '../../../core/models/auth';
-import { Router } from '@angular/router';
+
+// Import Utils
+import { addWeeksToToday } from '../../../utils/date.utils';
 
 @Component({
   selector: 'app-dialog-box',
@@ -26,9 +29,11 @@ export class DialogBox implements OnInit {
   isOpen = input(false);
   visible: boolean = false;
   action = input<string>('');
+  title_id = input<string>('');
   buttonLabel = input<string>('');
   current_user!: UserLoginResponse;
-  title_id = input<string>('');
+  maturity_date = signal<string>('');
+  selectedDate = signal<string>('');
 
   titleData = signal<VirtualAsset[]>([]); // Tableau pour stocker les titres depuis le backend
 
@@ -46,10 +51,14 @@ export class DialogBox implements OnInit {
     state: new FormControl('', Validators.required),
     title_type: new FormControl('', Validators.required),
     interest_rate: new FormControl(0, [Validators.required, Validators.min(5)]),
-    maturity_date: new FormControl('', Validators.required),
+    maturity_date: new FormControl({ value: '', disabled: false }),
     bta_duration_weeks: new FormControl(0, [Validators.required, Validators.min(3)]),
     issue_date: new FormControl(''),
   });
+
+  typeArr = TitleTypeList;
+  stateArr = TitleStateList;
+  btaDurationArr = TitleDurationWeeksList;
 
   constructor() {
 
@@ -58,12 +67,15 @@ export class DialogBox implements OnInit {
   ngOnInit(): void {
     // Récupérer l'utilisateur connecté
     this.current_user = JSON.parse(localStorage.getItem('current_firm') || '{}');
-
-    //this.onFetchData();
   }
 
   get f() {
     return this.assetForm.controls;
+  }
+
+  computedDurationWeeks(event: any) {
+    const selectedDuration = event.target.value;
+    this.selectedDate.set(addWeeksToToday(selectedDuration));
   }
 
   showDialog(event: any) {
@@ -77,10 +89,9 @@ export class DialogBox implements OnInit {
 
   onSubmit() {
     if (this.assetForm.valid) {
-      const safeDate = new Date(this.assetForm.value.maturity_date).toLocaleDateString('en-CA'); // Formater la date au format ISO sans l'heure
 
       this.assetForm.patchValue({
-        maturity_date: safeDate,
+        maturity_date: addWeeksToToday(this.assetForm.value.bta_duration_weeks),
         is_primary: true
       });
 
@@ -109,16 +120,17 @@ export class DialogBox implements OnInit {
   // fonction pour enregistrer les titres
   onCreate() {
     if (this.assetForm.valid) {
-      const safeDate = new Date(this.assetForm.value.maturity_date).toLocaleDateString('en-CA'); // Formater la date au format ISO sans l'heure
 
       this.assetForm.patchValue({
         title_code: `BTA-${Math.floor(100000 + Math.random() * 900000)}`, // Générer un code aléatoire pour le titre
-        maturity_date: safeDate,
+        maturity_date: addWeeksToToday(this.assetForm.value.bta_duration_weeks), // Ajouter le nombre de semaines à la date actuelle
         issue_date: new Date().toISOString().split('T')[0], // Date actuelle au format ISO sans l'heure
         is_primary: true
       });
+      console.log('Form Data:', this.assetForm.value);
 
       // Appeler le service pour créer un nouveau titre
+      
       try {
         this.titleService.createVirtualTitle(this.assetForm.value).subscribe({
           next: (response) => {
@@ -136,6 +148,7 @@ export class DialogBox implements OnInit {
         this.showMessage('error', 'Erreur', `${error.error.message}`);
         this.assetForm.reset();
       }
+      
     }
   }
 

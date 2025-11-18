@@ -38,7 +38,7 @@ import { CurrentUser, UserLogin, UserLoginResponse } from '../../models/auth';
   providedIn: 'root'
 })
 export class Auth {
-  private readonly endPoint = 'auth/login';
+  private readonly endPoint = '/auth/login';
   private readonly profileEndPoint = 'users/me';
 
   // Injection du service http Client pour les requêtes avec les apis backend

@@ -48,23 +48,24 @@ export class Login {
           error: (error) => {
             console.log('error', error.message);
             this.isLoading = false;
+            this.showNotification('danger', 'Erreur', error.message);
           }
         })
       } catch (error: any) {
         console.log(error.message);
         this.isLoading = false;
-        this.showNotification('echec');
+        this.showNotification('danger', 'Erreur', error.message);
       }
     } else {
       this.loginForm.markAsTouched();
     }
   }
 
-  showNotification(state: string) {
+  showNotification(type: string, title: string, message: string) {
     this.messageService.add({
-      severity: state === 'success' ? state : 'danger',
-      summary: state === 'success' ? 'Succès' : 'Échec',
-      detail: state === 'success' ? 'Connexion Réussie' : 'Échec de la connexion',
+      severity: type,
+      summary: title,
+      detail: message,
       life: 3000
     })
   }

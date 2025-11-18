@@ -1,0 +1,82 @@
+<p-toast position="top-right" />
+<div class="virtual-title-form-container">
+    <button pbutton class="px-4 py-1 cursor-pointer border rounded-md bg-black text-white" icon="pi pi-plus" severity="contrast" variant="text" size="small" rounded="true" (click)="showDialog($event)">titre virtuel</button>
+
+    <p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" styleClass="border !bg-tranparent">
+        <ng-template #headless>
+            <form class="p-4 bg-white shadow-md rounded-md" [formGroup]="virtualTitleForm" (ngSubmit)="onSubmit()">
+
+                <div class="input-groups mb-4">
+                    <!-- Titre réel -->
+                    <div class="input-box w-full flex items-center justify-between gap-2 mb-4">
+                        <div class="input-field" class="input-field w-full flex flex-col items-start justify-start gap-2">
+                            <label for="real_title" class="text-sm font-semibold">Titre réel correspondant</label>
+                            <select formControlName="real_title" id="real_title" class="w-full p-1 border text-black border-gray-200 focus:border-blue-400 rounded-md">
+                                <option value="" disabled selected>-- Sélectionner un titre réel --</option>
+                                @if (f['real_title'].touched && f['real_title'].invalid) {
+                                    @if (f['real_title'].errors?.['required']) {
+                                        <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Le titre réel correspondant est requis</span>
+                                    }
+                                }
+                                @for (asset of realAssetList(); track asset.id) {
+                                    <option [value]="asset.id" class="text-sm text-gray-700 font-semibold">{{ asset.name }}</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Quantité -->
+                    <div class="input-box w-full flex items-center justify-between gap-2">
+                        <div class="input-field w-full flex flex-col items-start justify-start gap-2">
+                            <label for="quantity" class="text-sm font-semibold">Quantité</label>
+                            @if (f['quantity'].touched && f['quantity'].invalid) {
+                                @if (f['quantity'].errors?.['required']) {
+                                    <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">La quantité est requise</span>
+                                }
+                                @if (f['quantity'].errors?.['min']) {
+                                    <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Un minimum de 1 est requis</span>
+                                }
+                            }
+                            <input type="number" min="1" id="quantity" formControlName="quantity" class="w-full p-1 border border-gray-200 focus:border-blue-400 rounded-md">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-groups mb-4">
+                    <!-- Titre réel, nom, code, type & status -->
+                    <div class="input-box w-full flex items-center justify-between gap-2 mb-2">
+                        <div class="input-field" class="input-field w-1/2 flex flex-col items-start justify-start">
+                            <label for="buy_price" class="text-sm font-semibold">Prix d'achat</label>
+                            @if (f['buy_price'].touched && f['buy_price'].invalid) {
+                                @if (f['buy_price'].errors?.['required']) {
+                                    <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Le prix d'achat est requis</span>
+                                }
+                                @if (f['buy_price'].errors?.['min']) {
+                                    <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Un minimum de 50 est requis</span>
+                                }
+                            }
+                            <input type="number" min="50" id="buy_price" formControlName="buy_price" class="w-full p-1 border border-gray-200 focus:border-blue-400 rounded-md">
+                        </div>
+                        <div class="input-field" class="input-field w-1/2 flex flex-col items-start justify-start">
+                            <label for="sell_price" class="text-sm font-semibold">Prix de vente</label>
+                            @if (f['sell_price'].touched && f['sell_price'].invalid) {
+                                @if (f['sell_price'].errors?.['required']) {
+                                    <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Le prix de vente est requis</span>
+                                }
+                                @if (f['sell_price'].errors?.['min']) {
+                                    <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Un minimum de 50 est requis</span>
+                                }
+                            }
+                            <input type="number" min="50" id="sell_price" formControlName="sell_price" class="w-full p-1 border border-gray-200 focus:border-blue-400 rounded-md">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttons w-full flex items-center justify-between gap-2">
+                    <button class="w-1/2 p-2 cursor-pointer border rounded-md hover:bg-black hover:text-white" pButton icon="pi pi-times" severity="contrast" variant="text" size="small" (click)="closeDialog()">Annuler</button>
+                    <button class="w-1/2 p-2 cursor-pointer border rounded-md border-green-200 rounded-md hover:bg-green-100 text-green-600" pButton icon="pi pi-check" variant="text" size="small">Enregistrer</button>
+                </div>
+            </form>
+        </ng-template>
+    </p-dialog>
+</div>

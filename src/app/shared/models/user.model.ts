@@ -43,10 +43,10 @@ export interface Client {
  * Modèles pour les utilisateurs / clients liés à une société début
  */
 export interface CompanyClient {
-    id: string;
-    company: string;
-    client: string;
-    created_at: string;
+    email: string;
+    password: string;
+    phone: string;
+    push_token?: string;
 }
 /**
  * Modèles pour les utilisateurs / clients liés à une société fin

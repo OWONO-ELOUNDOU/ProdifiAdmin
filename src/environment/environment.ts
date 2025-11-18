@@ -1,7 +1,8 @@
 export const environment = {
   production: false,
   apiRoutes: {
-    baseRoute: 'https://prodifi.proditech-digital.com/api/',
+    baseRoute: 'https://prodifi.proditech-digital.com/api',
+    companyRoute: 'https://prodifi.proditech-digital.com/company',
     v1Route: 'https://prodifi.proditech-digital.com/api/v1'
   },
   firebase: {

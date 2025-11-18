@@ -96,7 +96,7 @@ export class DialogBox implements OnInit {
       });
 
       try {
-        this.titleService.updateTitle(this.assetForm.value, this.title_id()).subscribe({
+        this.titleService.updateReelTitle(this.assetForm.value, this.title_id()).subscribe({
           next: (response) => {
             this.showMessage('success', 'Succès', 'Le titre a été modifié avec succès');
             this.assetForm.reset();
@@ -132,7 +132,7 @@ export class DialogBox implements OnInit {
       // Appeler le service pour créer un nouveau titre
       
       try {
-        this.titleService.createVirtualTitle(this.assetForm.value).subscribe({
+        this.titleService.createRealTitle(this.assetForm.value).subscribe({
           next: (response) => {
             this.showMessage('success', 'Succès', 'Le titre a été créé avec succès');
             this.assetForm.reset();

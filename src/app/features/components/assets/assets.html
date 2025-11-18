@@ -10,15 +10,13 @@
     </div>
 
 
-    <div class="table-container flex items-start justify-between gap-4">
-
-
+    <div class="table-container">
         <p-table
             [value]="titleData()"
             [rows]="10"
             [paginator]="true"
             [rowsPerPageOptions]="[5,10,20]"
-            class="w-3/4"
+            class="w-full"
         >
             <ng-template #header>
                 <tr class="w-full bg-gray-600">
@@ -52,18 +50,27 @@
                 </tr>
             </ng-template>
         </p-table>
-
-        <div class="analytics w-1/4">
-            <div class="higher w-full mb-4">
-                <app-crypto-card [cryptoItem]="titleData()[0]" />
-            </div>
-            <!--
-            <div class="lower w-full border rounded-lg">
-                <app-crypto-card [cryptoItem]="titleData()[lastItem()]" />
-            </div>
-            -->
-        </div>
     </div>
+
+    <hr class="w-full my-4" />
+
+    @defer () {
+        <!-- Titre virtuel -->
+        <div class="virtual-titles w-full">
+            <!-- boutons d'action -->
+            <div class="buttons w-1/4 flex items-center justify-start gap-4 mb-4">
+                <app-virtual-title-form />
+                <button pButton class="cursor-pointer rounded-md" icon="pi pi-search" label="chercher" severity="contrast" variant="text" size="small"></button>
+            </div>
+    
+            <!-- composant titre virtuel -->
+            <div class="virtual-title-cards w-full flex items-start justify-start flex-wrap gap-4">
+                @for (item of virtualTitleData(); track item.id) {
+                    <app-virtual-title-card [virtualTitleItem]="item" />
+                }
+            </div>
+        </div>
+    }
 
     <div class="circulation-graph w-full p-2 my-20">
         <h1 class="text-4xl text-gray-700 font-bold my-4">Gestion des titres (actifs)</h1>
@@ -71,11 +78,10 @@
             Graphique expliquant l'évolution des {{ title() }} en fonction des quantités en circulation, des quantités totales et des prix sur le marché.
         </span>
 
-        <div class="graph-stats w-full flex items-start justify-between gap-20 mt-4">
-            <div class="graph w-3/4 border">
+        <div class="graph-stats w-full">
+            <div class="graph w-full border">
                 <app-chart-line />
             </div>
-            <div class="stats w-1/4 border"></div>
         </div>
     </div>
 </div>

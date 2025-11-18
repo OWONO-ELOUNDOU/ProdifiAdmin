@@ -53,7 +53,7 @@ export class StatisticCard implements OnInit {
   fetchData(): number {
     let titleNumber = 0;
     try {
-      this.titleService.getAllTitles().subscribe((data) => {
+      this.titleService.getAllRealTitles().subscribe((data) => {
         titleNumber = data.results.length;
         console.log('Number of titles:', titleNumber); 
       });

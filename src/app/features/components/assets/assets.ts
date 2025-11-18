@@ -9,29 +9,29 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 
 // Import Components
 import { TitleDetails } from '../title-details/title-details';
-import { AssetForm } from '../../../shared/components/asset-form/asset-form';
 import { DialogBox } from '../../../shared/components/dialog-box/dialog-box';
 import { ChartLine } from '../../../shared/components/chart-line/chart-line';
-import { CryptoCard } from '../../../shared/components/crypto-card/crypto-card';
+import { VirtualTitleCard } from '../../../shared/components/virtual-title-card/virtual-title-card';
+import { VirtualTitleForm } from '../../../shared/components/virtual-title-form/virtual-title-form';
 
 // Import crypto service
 import { TitleService } from '../../../core/services/Titles/title-service';
 
 // Import assets data
-import assets from '../../../shared/database/assets.json';
-import { VirtualAsset } from '../../../shared/models/asset.model';
+import { ReelAsset, VirtualAsset } from '../../../shared/models/asset.model';
 
 @Component({
   selector: 'app-assets',
   imports: [
     CommonModule,
-    CryptoCard,
     ChartLine,
     ButtonModule,
     ToastModule,
     DialogBox,
     TableModule,
-    TitleDetails
+    TitleDetails,
+    VirtualTitleCard,
+    VirtualTitleForm
   ],
   templateUrl: './assets.html',
   styleUrl: './assets.scss',
@@ -45,9 +45,8 @@ export class Assets implements OnInit {
   private titleService = inject(TitleService);
 
   protected priceData = signal<number[]>([]);
-  protected titleData = signal<VirtualAsset[]>([]);
-  protected assetsData = signal<VirtualAsset[]>([]);
-  lastItem = signal(0);
+  protected titleData = signal<ReelAsset[]>([]);
+  protected virtualTitleData = signal<VirtualAsset[]>([]);
 
   // Inject primeNG message and confirmation service
   private messageService = inject(MessageService);
@@ -56,11 +55,9 @@ export class Assets implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    // Récupérer les données des transactions
     this.onFecthData();
 
-    this.assetsData.set(this.titleData());
-    this.lastItem.set(this.titleData().length - 1);
+    this.fetchVirtualTitle();
   }
 
   confirm() {
@@ -114,10 +111,10 @@ export class Assets implements OnInit {
   // Fonction pour récupérer les titres depuis le backend
   onFecthData() {
     try {
-      this.titleService.getAllTitles().subscribe({
+      this.titleService.getAllRealTitles().subscribe({
         next: (data) => {
           this.titleData.set(data.results);
-          console.log(this.titleData());
+          localStorage.setItem('real_assets', JSON.stringify(data.results));
         },
         error: (error) => {
           this.messageService.add({
@@ -144,7 +141,7 @@ export class Assets implements OnInit {
   // Fonction pour supprimer un titre depuis le backend
   onDeleteData(title_code: string) {
     try {
-      this.titleService.deleteTitle(title_code).subscribe({
+      this.titleService.deleteReelTitle(title_code).subscribe({
         next: (response) => {
           this.messageService.add({
             severity: 'success',
@@ -172,6 +169,23 @@ export class Assets implements OnInit {
         life: 3000,
         closable: true
       })
+    }
+  }
+
+  // Fonction pour récupérer les titres virtuels
+  fetchVirtualTitle() {
+    try {
+      this.titleService.getAllVirtualTitle().subscribe({
+        next: (data) => {
+          console.log(data.results);
+          this.virtualTitleData.set(data.results);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      })
+    } catch (error) {
+      console.log(error);
     }
   }
 }

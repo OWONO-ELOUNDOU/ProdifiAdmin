@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../../../environment/environment';
 import { UserLoginResponse } from '../../models/auth';
-import { PublicTitlesResponse, VirtualAsset } from '../../../shared/models/asset.model';
+import { PublicRealTitlesResponse, PublicVirtualTitlesResponse, ReelAsset, VirtualAsset } from '../../../shared/models/asset.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TitleService {
-  private readonly endPoint = 'titles/real/';
+  private readonly realEndPoint = 'titles/real/';
+  private readonly virtualEndPoint = 'titles/virtual/';
   private current_user: UserLoginResponse = JSON.parse(localStorage.getItem('current_firm') || '{}');
 
   // Demo liste des titres
@@ -23,33 +24,11 @@ export class TitleService {
 
 
   /**
-   * Méthodes de test de l'application avec des fakes data debut
-  */
-  addNewTitle(title: VirtualAsset) {
-    // Vérifier si une liste de titres existe déjà dans le localStorage et mettre à jour la liste
-    const currentList = localStorage.getItem('title_data');
-    if (currentList) {
-      this.TitleList = JSON.parse(currentList);
-      this.TitleList.push(title);
-      localStorage.setItem('title_data', JSON.stringify(this.TitleList));
-      return;
-    }
-
-    // Ajouter le titre à la liste si elle n'existe pas encore et initialiser le localStorage
-    this.TitleList.push(title);
-    localStorage.setItem('title_data', JSON.stringify(this.TitleList));
-  }
-
-  deleteDemoTitle(title_index: string) {
-    const currentTitleList: VirtualAsset[] = JSON.parse(localStorage.getItem('title_list') || '');
-  }
-  /**
-   * Méthodes de test de l'application avec des fakes data debut
-  */
-
+   * Méthodes de communication avec l'API pour la gestion des titres réels
+   */
   // Créer un nouveau titre
-  createVirtualTitle(title: VirtualAsset): Observable<VirtualAsset> {
-    return this.http.post<VirtualAsset>(`${environment.apiRoutes.v1Route}/${this.endPoint}`, title, {
+  createRealTitle(title: ReelAsset): Observable<ReelAsset> {
+    return this.http.post<ReelAsset>(`${environment.apiRoutes.v1Route}/${this.realEndPoint}`, title, {
       headers: {
         "Content-type": "application/json",
         "Authorization": `Bearer ${this.current_user.access}`
@@ -58,8 +37,8 @@ export class TitleService {
   }
 
   // Récupérer tous les titres
-  getAllTitles(): Observable<PublicTitlesResponse> {
-    return this.http.get<PublicTitlesResponse>(`${environment.apiRoutes.v1Route}/${this.endPoint}`, {
+  getAllRealTitles(): Observable<PublicRealTitlesResponse> {
+    return this.http.get<PublicRealTitlesResponse>(`${environment.apiRoutes.v1Route}/${this.realEndPoint}`, {
       headers: {
         "Content-type": "application/json",
         "Authorization": `Bearer ${this.current_user.access}`
@@ -68,8 +47,8 @@ export class TitleService {
   }
 
   // Récupérer les informations d'un titre spécifique
-  getTitleDetails(title_code: string): Observable<VirtualAsset> {
-    return this.http.get<VirtualAsset>(`${environment.apiRoutes.v1Route}/${this.endPoint}${title_code}`, {
+  getReelTitleDetails(title_code: string): Observable<VirtualAsset> {
+    return this.http.get<VirtualAsset>(`${environment.apiRoutes.v1Route}/${this.realEndPoint}${title_code}`, {
       headers: {
         "Content-type": "application/json",
         "Authorization": `Bearer ${this.current_user.access}`
@@ -78,8 +57,8 @@ export class TitleService {
   }
 
   // Modifier les informations d'un titre
-  updateTitle(title: VirtualAsset, title_id: string): Observable<VirtualAsset> {
-    return this.http.put<VirtualAsset>(`${environment.apiRoutes.v1Route}/${this.endPoint}${title_id}`, title, {
+  updateReelTitle(title: VirtualAsset, title_id: string): Observable<VirtualAsset> {
+    return this.http.put<VirtualAsset>(`${environment.apiRoutes.v1Route}/${this.realEndPoint}${title_id}`, title, {
       headers: {
         "Content-type": "application/json",
         "Authorization": `Bearer ${this.current_user.access}`
@@ -88,8 +67,34 @@ export class TitleService {
   }
 
   // Suppression d'un title
-  deleteTitle(title_code: string) {
-    return this.http.delete(`${environment.apiRoutes.v1Route}/${this.endPoint}${title_code}`, {
+  deleteReelTitle(title_code: string) {
+    return this.http.delete(`${environment.apiRoutes.v1Route}/${this.realEndPoint}${title_code}`, {
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${this.current_user.access}`
+      }
+    });
+  }
+
+
+  /**
+   * Méhodes de communication avec l'API pour la gestion des titres virtuels
+   */
+
+  // fonction de création de titre virtuel
+  createVirtualTitle(title: VirtualAsset): Observable<VirtualAsset> {
+    return this.http.post<VirtualAsset>(`${environment.apiRoutes.v1Route}/${this.virtualEndPoint}`, title, {
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${this.current_user.access}`
+      }
+    });
+  }
+
+
+  // fonction de création de titre virtuel
+  getAllVirtualTitle(): Observable<PublicVirtualTitlesResponse> {
+    return this.http.get<PublicVirtualTitlesResponse>(`${environment.apiRoutes.v1Route}/${this.virtualEndPoint}`, {
       headers: {
         "Content-type": "application/json",
         "Authorization": `Bearer ${this.current_user.access}`

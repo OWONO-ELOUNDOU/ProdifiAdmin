@@ -31,7 +31,6 @@ export class Home implements OnInit {
   selectedTransaction = signal<Transaction | null>(null);
 
   ngOnInit() {
-    this.marketData.set(assets);
     this.transactionList.set([]);
   }
 

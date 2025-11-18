@@ -11,12 +11,12 @@ export const routes: Routes = [
     },
     {
         path: 'assets',
-        //canActivate: [authGuard],
+        canActivate: [authGuard],
         loadComponent: () => import('./features/components/assets/assets').then(m => m.Assets),
     },
     {
         path: 'funds',
-        //canActivate: [authGuard],
+        canActivate: [authGuard],
         loadComponent: () => import('./features/components/Titles/funds/funds').then(m => m.Funds),
     },
     {

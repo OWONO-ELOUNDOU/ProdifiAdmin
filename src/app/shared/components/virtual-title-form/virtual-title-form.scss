@@ -1,0 +1,9 @@
+.virtual-title-form-container {
+    button:not(form > .buttons > button) {
+        width: 120px;
+    }
+
+    form {
+        width: 350px;
+    }
+}

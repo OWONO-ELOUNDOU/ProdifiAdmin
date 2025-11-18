@@ -31,7 +31,6 @@
                                         <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Le type est requis.</span>
                                     }
                                 }
-                                <!--<input id="cryptoName" type="text" formControlName="title_type" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />-->
                                 <select formControlName="title_type" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                                     <option value="" disabled selected>-- Sélectionner le type --</option>
                                     @for (t of typeArr; track t.value) {
@@ -46,7 +45,6 @@
                                         <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">L'état est requis.</span>
                                     }
                                 }
-                                <!--<input id="cryptoName" type="text" formControlName="state" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />-->
                                 <select formControlName="state" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                                     <option value="" disabled selected>-- Sélectionner l'état --</option>
                                     @for (state of stateArr; track state.value) {

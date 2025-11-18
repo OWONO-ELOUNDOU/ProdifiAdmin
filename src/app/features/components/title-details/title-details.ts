@@ -55,7 +55,7 @@ export class TitleDetails implements OnInit {
   // Fonction pour la Récupération des détails du titre
   fecthTitleDetails(title_code: string) {
     try {
-      this.titleService.getTitleDetails(title_code).subscribe({
+      this.titleService.getReelTitleDetails(title_code).subscribe({
         next: (response) => {
           console.log(response);
           this.current_title.set(response);
@@ -71,7 +71,7 @@ export class TitleDetails implements OnInit {
 
   onDeleteTitle() {
     try {
-      this.titleService.deleteTitle(this.title_id()).subscribe({
+      this.titleService.deleteReelTitle(this.title_id()).subscribe({
         next: (response) => {
           console.log(response);
           this.showMessage('success', 'Succès', 'Titre supprimé avec succès');

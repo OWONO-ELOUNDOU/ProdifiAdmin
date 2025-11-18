@@ -11,9 +11,9 @@
                             <button pButton type="button"  rounded="true" icon="pi pi-times" (click)="closeDialog()" class="p-button-secondary w-1/2 cursor-pointer"></button>
                         </div>
                         <div class="w-full flex items-center justify-start gap-8 mt-2">
-                            <span class="text-5xl text-white font-bold px-7 py-5 rounded-full bg-black">{{ current_title()?.name?.charAt(0) }}</span>
+                            <span class="text-5xl text-white font-bold px-7 py-5 rounded-full bg-black">{{ current_title()?.id?.charAt(0) }}</span>
                             <div>
-                                <h2 class="text-2xl text-gray-600 font-bold mb-4">{{ current_title()?.name }}</h2>
+                                <h2 class="text-2xl text-gray-600 font-bold mb-4">{{ current_title()?.real_title }}</h2>
                                 <div class="grid grid-cols-3 gap-6">
                                     <div>
                                         <span>Type</span>
@@ -21,11 +21,11 @@
                                     </div>
                                     <div>
                                         <span>État</span>
-                                        <p class="text-lg font-semibold">{{ current_title()?.state }}</p>
+                                        <p class="text-lg font-semibold">{{ current_title()?.buy_price }}</p>
                                     </div>
                                     <div>
                                         <span>Code</span>
-                                        <p class="text-lg font-semibold">{{ current_title()?.title_code }}</p>
+                                        <p class="text-lg font-semibold">{{ current_title()?.real_title_code }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
                                 <i class="pi pi-dollar font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
                                     <span>Prix</span>
-                                    <p class="text-lg font-semibold">{{ current_title()?.amount }}</p>
+                                    <p class="text-lg font-semibold">{{ current_title()?.sell_price }}</p>
                                 </div>
                             </div>
                             <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">
@@ -51,14 +51,14 @@
                                 <i class="pi pi-calendar-plus font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
                                     <span>Date Création</span>
-                                    <p class="text-lg font-semibold">{{ current_title()?.issue_date}}</p>
+                                    <p class="text-lg font-semibold">{{ current_title()?.created_at}}</p>
                                 </div>
                             </div>
                             <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">
                                 <i class="pi pi-history font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
                                     <span>Durée</span>
-                                    <p class="text-lg font-semibold">{{ current_title()?.bta_duration_weeks}}</p>
+                                    <p class="text-lg font-semibold">{{ current_title()?.margin}}</p>
                                 </div>
                             </div>
                             <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">

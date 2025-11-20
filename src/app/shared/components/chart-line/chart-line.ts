@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // Import Charts Module for charts
 import { ChartComponent, ApexChart, ApexStroke, ApexXAxis, ApexAxisChartSeries, ApexTitleSubtitle } from 'ng-apexcharts';
-import { VirtualAsset } from '../../models/asset.model';
+import { ReelAsset, VirtualAsset } from '../../models/asset.model';
 import { TitleService } from '../../../core/services/Titles/title-service';
 
 interface ChartOptions {
@@ -23,7 +23,7 @@ interface ChartOptions {
 export class ChartLine implements OnInit {
   chartOptions!: ChartOptions;
 
-  chartData = signal<VirtualAsset[]>([]);
+  chartData = signal<ReelAsset[]>([]);
 
   private titleService = inject(TitleService);
 
@@ -34,10 +34,22 @@ export class ChartLine implements OnInit {
   ngOnInit(): void {
     // On component init, fetch data from the service
     this.fetchData();
-
   }
 
   fetchData() {
-    
+    try {
+      this.titleService.getAllRealTitles().subscribe({
+        next: (data) => {
+          console.log(data.results);
+          this.chartData.set(data.results);
+          console.log(this.chartData());
+        },
+        error: (error) => {
+          console.log(error.message);
+        }
+      })
+    } catch (error) {
+      console.log('Une erreur est survenue', error);
+    }
   }
 }

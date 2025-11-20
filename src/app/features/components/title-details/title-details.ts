@@ -69,6 +69,21 @@ export class TitleDetails implements OnInit {
     }
   }
 
+  onActivate() {
+    try {
+      this.titleService.activateRealTitle(this.current_title()?.id).subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      })
+    } catch (error) {
+      this.showMessage('error', 'Erreur', 'Une erreur est survenue');
+    }
+  }
+
   onDeleteTitle() {
     try {
       this.titleService.deleteReelTitle(this.title_id()).subscribe({

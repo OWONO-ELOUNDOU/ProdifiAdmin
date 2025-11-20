@@ -74,7 +74,8 @@
                     <div class="w-full mt-6 flex items-center justify-between gap-4">
                         <!--<button pButton type="button" label="Fermer" icon="pi pi-times" (click)="closeDialog()" class="p-button-secondary w-1/2"></button>-->
                         <app-dialog-box [action]="'modify'" [buttonLabel]="'Modifier'" />
-                        <button pButton type="button" label="Supprimer" severity="danger" variant="text" icon="pi pi-trash" (click)="onDeleteTitle()" class="p-button-secondary w-1/2 cursor-pointer"></button>
+                        <button pButton type="button" label="Supprimer" severity="danger" variant="text" icon="pi pi-trash" (click)="onDeleteTitle()" class="p-button-secondary w-1/3 cursor-pointer"></button>
+                        <button pButton type="button" label="Activer" severity="contrast" variant="text" icon="pi pi-trash" (click)="onActivate()" class="p-button-secondary w-1/3 cursor-pointer"></button>
                     </div>
                 </div>
             </ng-template>

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FundsService {
-  private readonly endPoint = '';
+  private readonly endPoint = 'funds/';
   private readonly current_user: UserLoginResponse = JSON.parse(localStorage.getItem('current_firm') || '{}');
 
   private http = inject(HttpClient);

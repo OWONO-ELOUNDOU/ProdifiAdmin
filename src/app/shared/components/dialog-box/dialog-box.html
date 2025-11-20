@@ -99,19 +99,15 @@
                         </div>
                         <div class="input-box">
                             <label for="cryptoName" class="block text-sm font-medium text-gray-700">Durée (en semaines)</label>
-                            @if (f['bta_duration_weeks'].touched && f['bta_duration_weeks'].invalid) {
-                                @if (f['bta_duration_weeks'].errors?.['required']) {
-                                    <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">La durée est requise.</span>
-                                }
-                                @if (f['bta_duration_weeks'].errors?.['min']) {
-                                    <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Un minimum de 3 semaines est requis</span>
-                                }
-                            }
-                            <!--<input type="number" min="3" formControlName="bta_duration_weeks" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />-->
                             <select formControlName="bta_duration_weeks" (change)="computedDurationWeeks($event)" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                <option value="" disabled selected>-- Sélectionner la durée --</option>
-                                @for (bta of btaDurationArr; track bta.value) {
-                                    <option [value]="bta.value">{{ bta.label }}</option>
+                                @if (assetForm.controls['title_type'].value === 'BTA') {
+                                    <option value="" disabled selected>-- Sélectionner la durée --</option>
+                                    @for (bta of btaDurationArr; track bta.value) {
+                                        <option [value]="bta.value">{{ bta.label }}</option>
+                                    }
+                                }
+                                @else {
+                                    <option value="" disabled selected>-- Aucune spécification pour les type OTA --</option>
                                 }
                             </select>
                         </div>

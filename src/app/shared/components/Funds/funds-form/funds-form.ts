@@ -76,7 +76,8 @@ export class FundsForm {
       console.table('Form fund data: ', this.fundForm.value);
 
       this.fundForm.patchValue({
-        code: `FUND-${Math.floor(100000 + Math.random() * 900000)}` // Générer un code aléatoire pour le fond de placement
+        code: `FUND-${Math.floor(100000 + Math.random() * 900000)}`, // Générer un code aléatoire pour le fond de placement
+        management_company: 'a53b4cc9-e7de-49ee-ba12-131d0990cbb4'
       });
       console.table('Form fund data: ', this.fundForm.value);
 

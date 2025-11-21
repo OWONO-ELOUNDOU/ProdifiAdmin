@@ -61,7 +61,7 @@ export class TitleService {
     return this.http.post(`${environment.apiRoutes.v1Route}/${this.realEndPoint}${id}/activate`, {
       headers: {
         "Content-type": "application/json",
-        "Authorization": `Bearer ${this.current_user.refresh}`
+        "Authorization": `Bearer ${this.current_user.access}`
       }
     })
   }

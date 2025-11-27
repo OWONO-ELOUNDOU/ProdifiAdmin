@@ -10,9 +10,6 @@ import { TransactionDetails } from '../../../shared/components/transaction-detai
 // Import models
 import { Transaction } from '../../../shared/models/transaction.model';
 
-// Import transaction fake data
-import transactions from '../../../shared/database/transactions.json';
-
 @Component({
   selector: 'app-transactions',
   imports: [CommonModule, TransactionDetails, TableModule],
@@ -23,7 +20,7 @@ export class Transactions implements OnInit {
   protected transactions = signal([] as Transaction[]);
   
   ngOnInit(): void {
-    this.transactions.set(transactions);
+    
   }
 
   

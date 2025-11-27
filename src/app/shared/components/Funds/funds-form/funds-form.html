@@ -74,7 +74,7 @@
                     </div>
                 </div>
 
-                <!-- Champs d'entrée pour les expense_ratio & min_subscription -->
+                <!-- Champs d'entrée pour les expense_ratio & min_subscription_amount -->
                 <div class="input-groups w-full flex items-center justify-center border-black gap-4 mb-4">
                     <!-- Champs d'entrée pour le expense_ratio -->
                     <div class="input-box w-full">
@@ -92,16 +92,47 @@
 
                     <!-- Champs d'entrée pour le min_subscription -->
                     <div class="input-box w-full">
-                        <label for="min_subscription" class="block text-sm font-medium text-gray-700">Subscription Minimum</label>
-                        @if (f['min_subscription'].touched && f['min_subscription'].invalid) {
-                            @if (f['min_subscription'].errors?.['required']) {
-                                <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Le minimum est requis</span>
+                        <label for="min_subscription_amount" class="block text-sm font-medium text-gray-700">Montant subscription Minimum</label>
+                        @if (f['min_subscription_amount'].touched && f['min_subscription_amount'].invalid) {
+                            @if (f['min_subscription_amount'].errors?.['required']) {
+                                <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Le montant minimum est requis</span>
                             }
-                            @if (f['min_subscription'].errors?.['min']) {
-                                <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Le minimum requis est 10</span>
+                            @if (f['min_subscription_amount'].errors?.['min']) {
+                                <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Un minimum requis est 10</span>
                             }
                         }
-                        <input id="min_subscription" type="number" min="10" formControlName="min_subscription" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outlined-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                        <input id="min_subscription_amount" type="number" min="10" formControlName="min_subscription_amount" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outlined-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                    </div>
+                </div>
+
+                <!-- Champs d'entrée pour les entry_fee_rate & exit_fee_rate -->
+                <div class="input-groups w-full flex items-center justify-center border-black gap-4 mb-4">
+                    <!-- Champs d'entrée pour le entry_fee_rate -->
+                    <div class="input-box w-full">
+                        <label for="expense_ratio" class="block text-sm font-medium text-gray-700">Frais d'entrée</label>
+                        @if (f['entry_fee_rate'].touched && f['entry_fee_rate'].invalid) {
+                            @if (f['entry_fee_rate'].errors?.['required']) {
+                                <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Le frais d'entrée sont requis</span>
+                            }
+                            @if (f['entry_fee_rate'].errors?.['min']) {
+                                <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Le minimum requis est 100</span>
+                            }
+                        }
+                        <input id="entry_fee_rate" type="number" min="7" formControlName="entry_fee_rate" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outlined-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                    </div>
+
+                    <!-- Champs d'entrée pour le exit_fee_rate -->
+                    <div class="input-box w-full">
+                        <label for="exit_fee_rate" class="block text-sm font-medium text-gray-700">Frais de sortie</label>
+                        @if (f['exit_fee_rate'].touched && f['exit_fee_rate'].invalid) {
+                            @if (f['exit_fee_rate'].errors?.['required']) {
+                                <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Les frais de sortie sont requis</span>
+                            }
+                            @if (f['exit_fee_rate'].errors?.['min']) {
+                                <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Un minimum requis est 250</span>
+                            }
+                        }
+                        <input id="exit_fee_rate" type="number" min="10" formControlName="exit_fee_rate" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outlined-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                     </div>
                 </div>
 

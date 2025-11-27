@@ -13,6 +13,7 @@ import { TableModule } from "primeng/table";
 
 // Import Models
 import { fundTypeList, riskLevelList } from '../../../models/asset.model';
+import { FundsService } from '../../../../core/services/Funds/funds-service';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class FundsForm {
 
   // Injection des services
   private router = inject(Router);
+  private fundService = inject(FundsService);
   private messageService = inject(MessageService);
 
   // Formulaire pour la création d'un fond de placement
@@ -40,7 +42,9 @@ export class FundsForm {
     nav_per_unit: new FormControl(0, [Validators.required, Validators.min(5)]),
     nav_date: new FormControl(''),
     expense_ratio: new FormControl(0, [Validators.required, Validators.min(7)]),
-    min_subscription: new FormControl(0, [Validators.required, Validators.min(10)]),
+    min_subscription_amount: new FormControl(0, [Validators.required, Validators.min(10)]),
+    entry_fee_rate: new FormControl(0, [Validators.required, Validators.max(100)]),
+    exit_fee_rate: new FormControl(0, [Validators.required, Validators.max(100)]),
     risk_level: new FormControl('', Validators.required),
     is_open: new FormControl(true),
     verified: new FormControl(true)
@@ -72,9 +76,25 @@ export class FundsForm {
       console.table('Form fund data: ', this.fundForm.value);
 
       this.fundForm.patchValue({
-        code: `FUND-${Math.floor(100000 + Math.random() * 900000)}` // Générer un code aléatoire pour le fond de placement
+        code: `FUND-${Math.floor(100000 + Math.random() * 900000)}`, // Générer un code aléatoire pour le fond de placement
+        management_company: 'a53b4cc9-e7de-49ee-ba12-131d0990cbb4'
       });
       console.table('Form fund data: ', this.fundForm.value);
+
+      try {
+        this.fundService.createNewFund(this.fundForm.value).subscribe({
+          next: (data) => {
+            this.showMessage('success', 'Succès', 'Le fond a été crée avec succès');
+            console.log(data);
+          },
+          error: (error) => {
+            this.showMessage('danger', 'Succès', error.message);
+            console.log(error);
+          }
+        })
+      } catch (error) {
+          console.log(error);
+      }
     }
   }
 

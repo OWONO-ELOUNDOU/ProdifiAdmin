@@ -52,7 +52,7 @@ export class DialogBox implements OnInit {
     title_type: new FormControl('', Validators.required),
     interest_rate: new FormControl(0, [Validators.required, Validators.min(5)]),
     maturity_date: new FormControl({ value: '', disabled: false }),
-    bta_duration_weeks: new FormControl(0, [Validators.required, Validators.min(3)]),
+    bta_duration_weeks: new FormControl(0),
     issue_date: new FormControl(''),
   });
 
@@ -122,8 +122,8 @@ export class DialogBox implements OnInit {
     if (this.assetForm.valid) {
 
       this.assetForm.patchValue({
-        title_code: `BTA-${Math.floor(100000 + Math.random() * 900000)}`, // Générer un code aléatoire pour le titre
-        maturity_date: addWeeksToToday(this.assetForm.value.bta_duration_weeks), // Ajouter le nombre de semaines à la date actuelle
+        title_code: `${this.assetForm.value.title_type}-${Math.floor(100000 + Math.random() * 900000)}`, // Générer un code aléatoire pour le titre
+        maturity_date: this.assetForm.value.bta_duration_weeks ? addWeeksToToday(this.assetForm.value.bta_duration_weeks) : addWeeksToToday(152), // Ajouter le nombre de semaines à la date actuelle
         issue_date: new Date().toISOString().split('T')[0], // Date actuelle au format ISO sans l'heure
         is_primary: true
       });
@@ -148,7 +148,6 @@ export class DialogBox implements OnInit {
         this.showMessage('error', 'Erreur', `${error.error.message}`);
         this.assetForm.reset();
       }
-      
     }
   }
 

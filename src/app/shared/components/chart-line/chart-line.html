@@ -1,8 +1,9 @@
-<apx-chart
-    [chart]="chartOptions.chart"
-    [series]="chartOptions.series"
-    [xaxis]="chartOptions.xaxis"
-    [title]="chartOptions.title"
-    [stroke]="chartOptions.stroke"
-    class="w-full h-full"
-/>
+<div id="chart" class="w-full text-center">
+    <apx-chart
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [xaxis]="chartOptions.xaxis"
+        [stroke]="chartOptions.stroke"
+        [dataLabels]="chartOptions.dataLabels"
+    ></apx-chart>
+</div>

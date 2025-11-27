@@ -56,9 +56,19 @@ export class TitleService {
     });
   }
 
+  // activattion du titre réel (DRAFT --> ACTIVE)
+  activateRealTitle(id: any) {
+    return this.http.post(`${environment.apiRoutes.v1Route}/${this.realEndPoint}${id}/activate`, {
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": `Bearer ${this.current_user.access}`
+      }
+    })
+  }
+
   // Modifier les informations d'un titre
   updateReelTitle(title: VirtualAsset, title_id: string): Observable<VirtualAsset> {
-    return this.http.put<VirtualAsset>(`${environment.apiRoutes.v1Route}/${this.realEndPoint}${title_id}`, title, {
+    return this.http.put<VirtualAsset>(`https://prodifi.proditech-digital.com/api/v1/titles/real/${title_id}`, title, {
       headers: {
         "Content-type": "application/json",
         "Authorization": `Bearer ${this.current_user.access}`

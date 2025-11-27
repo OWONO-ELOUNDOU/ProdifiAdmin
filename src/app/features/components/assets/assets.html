@@ -54,7 +54,7 @@
 
     <hr class="w-full my-4" />
 
-    @defer () {
+    @defer (on viewport) {
         <!-- Titre virtuel -->
         <div class="virtual-titles w-full">
             <!-- boutons d'action -->
@@ -70,6 +70,8 @@
                 }
             </div>
         </div>
+    }@placeholder {
+        <div class="virtual-titles-placeholder"></div>
     }
 
     <div class="circulation-graph w-full p-2 my-20">

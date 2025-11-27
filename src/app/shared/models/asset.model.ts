@@ -88,8 +88,10 @@ export interface Fund {
     nav_per_unit: number;
     nav_date: Date;
     expense_ratio: number;
-    min_subscription: number;
+    min_subscription_amount: number;
     risk_level: string;
+    entry_fee_rate: number;
+    exit_fee_rate: number;
     is_open: boolean;
     document?: File; // Document justificatif associé au fonds
     verified?: boolean;
@@ -125,20 +127,20 @@ export interface FundEvent {
 
 
 export const fundTypeList = [
-    { "value": "MOMEY_MARKET", "label": "MOMEY_MARKET" },
-    { "value": "BOND", "label": "BOND" },
-    { "value": "EQUITY", "label": "EQUITY" },
-    { "value": "BALANCED", "label": "BALANCED" },
-    { "value": "INDEX", "label": "INDEX" },
-    { "value": "ALTERNATIVE", "label": "ALTERNATIVE" }
+    { "value": "Monétaire", "label": "MOMEY_MARKET" },
+    { "value": "Obligatoire", "label": "BOND" },
+    { "value": "Actions", "label": "EQUITY" },
+    { "value": "Diversifié", "label": "BALANCED" },
+    { "value": "Indice", "label": "INDEX" },
+    { "value": "Alternatif", "label": "ALTERNATIVE" }
 ]
 
 export const riskLevelList = [
-    { "value": "LOW", "label": "LOW" },
-    { "value": "VERY_LOW", "label": "VERY_LOW" },
-    { "value": "MODERATE_LOW", "label": "MODERATE_LOW" },
-    { "value": "MODERATE", "label": "MODERATE" },
-    { "value": "MODERATE_HIGH", "label": "MODERATE_HIGH" },
-    { "value": "HIGH", "label": "HIGH" },
-    { "value": "VERY_HIGH", "label": "VERY_HIGH" }
+    { "value": "2", "label": "LOW" },
+    { "value": "1", "label": "VERY_LOW" },
+    { "value": "3", "label": "MODERATE_LOW" },
+    { "value": "4", "label": "MODERATE" },
+    { "value": "5", "label": "MODERATE_HIGH" },
+    { "value": "6", "label": "HIGH" },
+    { "value": "7", "label": "VERY_HIGH" }
 ]

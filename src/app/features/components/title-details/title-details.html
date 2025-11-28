@@ -6,65 +6,70 @@
             <ng-template #headless>
                 <div class="details-card p-8 bg-white shadow-sm rounded-lg">
                     <div class="header mb-6">
-                        <div class="w-full flex items-center justify-between mb-6">
+                        <div class="w-full flex items-center justify-between mb-6 px-4">
                             <h1 class="text-3xl text-gray-600 font-bold">Informations sur le titre</h1>
                             <button pButton type="button"  rounded="true" icon="pi pi-times" (click)="closeDialog()" class="p-button-secondary w-1/2 cursor-pointer"></button>
                         </div>
-                        <div class="w-full flex items-center justify-start gap-8 mt-2">
-                            <span class="text-5xl text-white font-bold px-7 py-5 rounded-full bg-black">{{ current_title()?.id?.charAt(0) }}</span>
-                            <div>
-                                <h2 class="text-2xl text-gray-600 font-bold mb-4">{{ current_title()?.real_title }}</h2>
-                                <div class="grid grid-cols-3 gap-6">
-                                    <div>
-                                        <span>Type</span>
-                                        <p class="text-lg font-semibold">{{ current_title()?.title_type }}</p>
-                                    </div>
-                                    <div>
-                                        <span>État</span>
-                                        <p class="text-lg font-semibold">{{ current_title()?.buy_price }}</p>
-                                    </div>
-                                    <div>
-                                        <span>Code</span>
-                                        <p class="text-lg font-semibold">{{ current_title()?.real_title_code }}</p>
+                        <div class="w-full flex items-start justify-start flex-col gap-2 px-4">
+                            <!--<span class="text-5xl text-white font-bold px-7 py-5 rounded-full bg-black">{{ current_title()?.name?.charAt(0) }}</span>-->
+                            <h2 class="text-xl text-gray-600 font-bold mb-2">{{ current_title()?.name }}</h2>
+                            <div class="w-full flex items-center justify-start gap-10">
+                                <div>
+                                    <span>Type</span>
+                                    <p class="text-sm font-semibold">{{ current_title()?.title_type }}</p>
+                                </div>
+                                <div>
+                                    <span>État</span>
+                                    <p class="text-sm font-semibold">{{ current_title()?.amount }}</p>
+                                </div>
+                                <div>
+                                    <span>Code</span>
+                                    <p class="text-sm font-semibold">{{ current_title()?.title_code }}</p>
+                                </div>
+                                <div>
+                                    <span>État</span>
+                                    <div class="w-full flex items-center justify-start gap-4">
+                                        <p class="text-sm font-semibold">{{ current_title()?.state }}</p>
+                                        <button pButton severity="success" variant="outlined" size="small" rounded="true" icon="pi pi-check" (click)="onActivate()" class="text-sm cursor-pointer">activer</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="body">
-                        <div class="grid grid-cols-6 gap-6 p-4">
-                            <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">
+                        <div class="block bg-gray-100 rounded-lg p-2 grid grid-cols-4 gap-4">
+                            <div class="col-span-2 flex items-center justify-start gap-4 border-b border-gray-300">
                                 <i class="pi pi-dollar font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
-                                    <span>Prix</span>
-                                    <p class="text-lg font-semibold">{{ current_title()?.sell_price }}</p>
+                                    <span class="text-xl font-semibold">Prix</span>
+                                    <p class="text-lg font-semibold">{{ current_title()?.amount }}</p>
                                 </div>
                             </div>
-                            <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">
+                            <div class="col-span-2 flex items-center justify-start gap-4 bg-gray-100 border-b border-gray-300">
                                 <i class="pi pi-inbox font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
-                                    <span>Quantité</span>
+                                    <span class="text-xl font-semibold">Quantité</span>
                                     <p class="text-lg font-semibold">{{ current_title()?.quantity}}</p>
                                 </div>
                             </div>
-                            <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">
+                            <div class="col-span-2 flex items-center justify-start gap-4 bg-gray-100 border-b border-gray-300">
                                 <i class="pi pi-calendar-plus font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
-                                    <span>Date Création</span>
-                                    <p class="text-lg font-semibold">{{ current_title()?.created_at}}</p>
+                                    <span class="text-xl font-semibold">Date Création</span>
+                                    <p class="text-lg font-semibold">{{ current_title()?.issue_date}}</p>
                                 </div>
                             </div>
-                            <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">
+                            <div class="col-span-2 flex items-center justify-start gap-4 bg-gray-100 border-b border-gray-300">
                                 <i class="pi pi-history font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
-                                    <span>Durée</span>
-                                    <p class="text-lg font-semibold">{{ current_title()?.margin}}</p>
+                                    <span class="text-xl font-semibold">Durée (en semaines)</span>
+                                    <p class="text-lg font-semibold">{{ current_title()?.bta_duration_weeks}}</p>
                                 </div>
                             </div>
-                            <div class="col-span-2 flex items-center justify-start gap-4 p-3 bg-gray-100 rounded-lg">
+                            <div class="col-span-2 flex items-center justify-start gap-4 bg-gray-100 rounded-lg">
                                 <i class="pi pi-calendar-clock font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
-                                    <span>Date maturité</span>
+                                    <span class="text-xl font-semibold">Date maturité</span>
                                     <p class="text-lg font-semibold">{{ current_title()?.maturity_date}}</p>
                                 </div>
                             </div>
@@ -74,8 +79,7 @@
                     <div class="w-full mt-6 flex items-center justify-between gap-4">
                         <!--<button pButton type="button" label="Fermer" icon="pi pi-times" (click)="closeDialog()" class="p-button-secondary w-1/2"></button>-->
                         <app-dialog-box [action]="'modify'" [buttonLabel]="'Modifier'" />
-                        <button pButton type="button" label="Supprimer" severity="danger" variant="text" icon="pi pi-trash" (click)="onDeleteTitle()" class="p-button-secondary w-1/3 cursor-pointer"></button>
-                        <button pButton type="button" label="Activer" severity="contrast" variant="text" icon="pi pi-trash" (click)="onActivate()" class="p-button-secondary w-1/3 cursor-pointer"></button>
+                        <button pButton type="button" label="Supprimer" severity="danger" variant="text" icon="pi pi-trash" (click)="onDeleteTitle()" class="p-button-secondary w-1/2 cursor-pointer"></button>
                     </div>
                 </div>
             </ng-template>

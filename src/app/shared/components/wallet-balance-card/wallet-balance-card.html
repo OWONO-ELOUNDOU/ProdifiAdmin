@@ -1,0 +1,10 @@
+<div class="wallet-balance-card-container">
+    <div
+        class="wallet-balance-card p-4 rounded-lg text-white"
+        [ngStyle]="{ 'background-color': backgroundColor() }"
+    >
+        <h3 class="text-lg font-semibold mb-2">{{ cardItemTitle() }}</h3>
+        <p class="text-3xl font-bold mb-2">{{ cardItemNumber() | number:'1.0-2' }}</p>
+        <p class="text-sm">{{ cardItemDescription() }}</p>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="wallet-container w-full h-screen p-8 bg-gray-100">
+    <h1 class="text-4xl font-bold text-gray-600 mb-8">Gestion du portefeuille</h1>
+
+    <div class="balance mb-12">
+        <h2 class="text-2xl font-semibold">Solde du portefeuille</h2>
+        <p class="text-gray-700 mb-2">Voici un aperçu du solde actuel de votre portefeuille.</p>
+        <div class="w-full flex gap-6 overflow-x-auto py-4 scrollbar-hide">
+            <app-wallet-balance-card
+                [cardItemTitle]="'Solde total'"
+                [cardItemNumber]="350000"
+                [cardItemDescription]="'Montant total disponible dans le portefeuille'"
+                [backgroundColor]="'#1E3A8A'"
+            />
+            <app-wallet-balance-card
+                [cardItemTitle]="'Investissements en cours'"
+                [cardItemNumber]="13254"
+                [cardItemDescription]="'Montant actuellement investi'"
+                [backgroundColor]="'#047857'"
+            />
+            <app-wallet-balance-card
+                [cardItemTitle]="'Retraits récents'"
+                [cardItemNumber]="20000"
+                [cardItemDescription]="'Montant retiré récemment'"
+                [backgroundColor]="'#B91C1C'"
+            />
+        </div>
+    </div>
+
+    <div class="wallet-actions-tables w-full">
+        <h2 class="text-2xl font-semibold mb-4">Tableau récapitulatif des différentes actions sur le portefeuille</h2>
+        <div class="tabs mb-8">
+            <ul class="w-1/6 flex items-center justify-center gap-8 py-2 border border-gray-300 rounded-full cursor-pointer">
+                <li [class.active]="activeTab === 'withdrawals'" (click)="setActiveTab('withdrawals')">
+                    <a role="button" (click)="$event.preventDefault(); setActiveTab('withdrawals')">Retraits</a>
+                </li>
+                <li [class.active]="activeTab === 'topups'" (click)="setActiveTab('topups')">
+                    <a role="button" (click)="$event.preventDefault(); setActiveTab('topups')">Recharges</a>
+                </li>
+            </ul>
+        </div>
+        <div class="switch-header" [ngSwitch]="activeTab">
+            <app-wallet-withdrawals-table *ngSwitchCase="'withdrawals'" />
+            <app-wallet-topups-table *ngSwitchCase="'topups'" />
+        </div>
+    </div>
+</div>

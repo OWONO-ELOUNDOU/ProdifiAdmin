@@ -29,12 +29,12 @@ export class Company {
   }
 
   // fonction pour créer un nouveau client
-  createCustomer(customer: CompanyClient): Observable<CompanyClient> {
-    return this.http.post<CompanyClient>(`${environment.apiRoutes.companyRoute}${this.endpoint1}/${customer}`, {
+  createCustomer(data: CompanyClient): Observable<CompanyClient> {
+    return this.http.post<CompanyClient>(`${environment.apiRoutes.companyRoute}${this.endpoint1}`, data, {
       headers: {
         'Content-type': 'application/json',
         "Authorization": `Bearer ${this.current_user.access}`
       }
-    })
+    });
   }
 }

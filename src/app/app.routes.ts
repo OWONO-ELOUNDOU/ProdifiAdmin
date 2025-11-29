@@ -20,10 +20,17 @@ export const routes: Routes = [
         loadComponent: () => import('./features/components/Titles/funds/funds').then(m => m.Funds),
     },
     {
+        path: 'wallet',
+        canActivate: [authGuard],
+        loadComponent: () => import('./features/components/wallet/wallet').then(m => m.Wallet),
+    },
+    /*
+    {
         path: 'customers',
         canActivate: [authGuard],
         loadComponent: () => import('./features/components/customers/customers').then(m => m.Customers),
     },
+    */
     {
         path: 'transactions',
         canActivate: [authGuard],

@@ -2,51 +2,97 @@
     <h1 class="text-4xl font-bold mb-2">Statistiques d'ensemble</h1>
     <span class="text-sm text-gray-500 font-semibold">Tableau de bord</span>
 
-    <section class="mt-8">
-        <app-statistic-card />
+    <section class="w-full flex items-center justify-start gap-2 flex-wrap mt-8">
+        <app-funds-statistic-card [cardItemTitle]="'Total Titres et Fonds'" [cardItemDescription]="'nombre actuel de titres'" [cardItemNumber]="lastTitleData().length" />
+        <app-funds-statistic-card [cardItemTitle]="'Total Titres'" [cardItemDescription]="'nombre actuel de titres'" [cardItemNumber]="btaTitleList().length" />
+        <app-funds-statistic-card [cardItemTitle]="'Total Fonds'" [cardItemDescription]="'nombre actuel de Fonds'" [cardItemNumber]="otaTitleList().length" />
+        <app-funds-statistic-card [cardItemTitle]="'Total Transactions'" [cardItemDescription]="'nombre actuel transactions'" [cardItemNumber]="otaTitleList().length" />
+        <app-funds-statistic-card [cardItemTitle]="'PortFeuille'" [cardItemDescription]="'montant actuel portefeuille'" [cardItemNumber]="otaTitleList().length" />
     </section>
 
     <section class="titles mt-8">
-        <h3 class="text-2xl font-bold mb-2">Titres (actifs)</h3>
-        <div class="graphs w-full flex items-start justify-between flex-wrap gap-4 mt-2">
-            <div class="graphic w-2/3 h-300 border rounded-lg">
-                <app-chart-line />
-            </div>
-            <div class="stats w-1/4">
-                <app-crypto-card [cryptoItem]="marketData()[0]" />
-            </div>
-        </div>
-    </section>
-
-    <div class="transactions w-full flex items-center justify-between gap-8 mt-10">
-        <div class="col-1 w-3/4">
-            <h3 class="text-2xl font-bold mb-2">Dernières Transactions</h3>
-            <span class="text-sm text-gray-500 font-semibold">Tableau récapitulatif des 3 dernières transactions</span>
+        <h3 class="text-2xl font-bold mb-2">Titres et Fonds</h3>
+        <div class="graphs w-full mt-2">
             <table class="transaction-table w-full mt-2">
                 <thead class="bg-gray-100">
                     <tr>
-                        <td class="py-4 px-4">Id</td>
-                        <td class="py-4 px-4">Client</td>
-                        <td class="py-4 px-4 text-right">Montant</td>
+                        <td class="py-4 px-4 text-sm">Nom</td>
+                        <td class="py-4 px-4 text-sm">Type</td>
+                        <td class="py-4 px-4 text-sm">Durée (semaines)</td>
+                        <td class="py-4 px-4 text-sm text-right">Montant</td>
+                        <td class="py-4 px-4 text-sm text-right">Quantité</td>
+                        <td class="py-4 px-4 text-sm text-right">Status</td>
+                        <td class="py-4 px-4 text-sm text-right">Taux intérêt</td>
+                        <td class="py-4 px-4 text-sm text-right">Date maturité</td>
+                        <td class="py-4 px-4 text-sm text-right">Date d'émission</td>
+                        <td class="py-4 px-4 text-sm text-right">Options</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through marketData and display each assets -->
+                    <ng-container *ngIf="lastTitleData().length; else noData">
+                        @for (t of lastTitleData().slice(0, 5); track t.id) {
+                            <tr>
+                                <td class="border-b py-4 px-4 text-sm">{{ t.name }}</td>
+                                <td class="border-b py-4 px-4 text-sm text-right">{{ t.title_type }}</td>
+                                <td class="border-b py-4 px-4 text-sm">{{ t.bta_duration_weeks }}</td>
+                                <td class="border-b py-4 px-4 text-sm text-right">{{ t.amount }}</td>
+                                <td class="border-b py-4 px-4 text-sm text-right">{{ t.quantity }}</td>
+                                <td class="border-b py-4 px-4 text-sm text-right">{{ t.state }}</td>
+                                <td class="border-b py-4 px-4 text-sm text-right">{{ t.interest_rate }}</td>
+                                <td class="border-b py-4 px-4 text-sm text-right">{{ t.maturity_date }}</td>
+                                <td class="border-b py-4 px-4 text-sm text-right">{{ t.issue_date }}</td>
+                                <td class="border-b py-4 px-4 text-sm text-right">
+                                    <app-title-details [title_id]="t.id" />
+                                </td>
+                            </tr>
+                        }
+                    </ng-container>
+                    <ng-template #noData>
+                        <tr>
+                            <td colspan="6" class="text-center py-4">Aucune donnée disponible</td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="transactions w-full mt-10">
+        <div class="col-1 w-full">
+            <h3 class="text-2xl font-bold mb-2">Dernières Transactions</h3>
+            <span class="text-sm text-gray-500 font-semibold">Tableau récapitulatif des 5 dernières transactions</span>
+            <table class="transaction-table w-full mt-2">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <td class="py-4 px-4">Titre</td>
+                        <td class="py-4 px-4">Type de titre</td>
+                        <td class="py-4 px-4">Status</td>
+                        <td class="py-4 px-4 text-right">Montant net</td>
+                        <td class="py-4 px-4 text-right">grosse montant</td>
                         <td class="py-4 px-4 text-right">Frais</td>
                         <td class="py-4 px-4 text-right">Méthode de paiement</td>
-                        <td class="py-4 px-4 text-right">Type</td>
-                        <td class="py-4 px-4 text-right">Status</td>
-                        <td class="py-4 px-4 text-right">Option</td>
+                        <td class="py-4 px-4 text-right">Status de Paiement</td>
+                        <td class="py-4 px-4 text-right">Date Création</td>
+                        <td class="py-4 px-4 text-right">Date Expiration</td>
+                        <td class="py-4 px-4 text-right">Date Règlement</td>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Loop through marketData and display each assets -->
                     <ng-container *ngIf="transactionList().length; else noData">
-                        @for (transaction of transactionList(); track transaction.transaction_reference) {
+                        @for (transaction of transactionList().slice(0, 5); track transaction.id) {
                             <tr>
-                                <td class="border-b py-4 px-4">{{ transaction.id }}</td>
-                                <td class="border-b py-4 px-4">{{ transaction.user }}</td>
-                                <td class="border-b py-4 px-4 text-right">{{ transaction.amount }}</td>
-                                <td class="border-b py-4 px-4 text-right">{{ transaction.fees }}</td>
+                                <td class="border-b py-4 px-4">{{ transaction.asset_kind }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.state }}</td>
+                                <td class="border-b py-4 px-4">{{ transaction.net_amount }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.gross_amount }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.fee_snapshot }}</td>
                                 <td class="border-b py-4 px-4 text-right">{{ transaction.payment_method }}</td>
-                                <td class="border-b py-4 px-4 text-right">{{ transaction.type }}</td>
-                                <td class="border-b py-4 px-4 text-right">{{ transaction.status }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.payment_state }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.created_at }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.expires_at }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.settled_at }}</td>
                                 <td class="border-b py-4 px-4 text-right">
                                     <app-transaction-details [item]="transaction" />
                                 </td>
@@ -60,9 +106,6 @@
                     </ng-template>
                 </tbody>
             </table>
-        </div>
-        <div class="col-2">
-            <h3>Plus haute transaction</h3>
         </div>
     </div>
 </div>

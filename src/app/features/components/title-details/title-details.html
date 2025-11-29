@@ -30,7 +30,7 @@
                                     <span>État</span>
                                     <div class="w-full flex items-center justify-start gap-4">
                                         <p class="text-sm font-semibold">{{ current_title()?.state }}</p>
-                                        <button pButton severity="success" variant="outlined" size="small" rounded="true" icon="pi pi-check" (click)="onActivate()" class="text-sm cursor-pointer">activer</button>
+                                        <!--<button pButton severity="success" variant="outlined" size="small" rounded="true" icon="pi pi-check" (click)="onActivate()" class="text-sm cursor-pointer">activer</button>-->
                                     </div>
                                 </div>
                             </div>
@@ -41,35 +41,35 @@
                             <div class="col-span-2 flex items-center justify-start gap-4 border-b border-gray-300">
                                 <i class="pi pi-dollar font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
-                                    <span class="text-xl font-semibold">Prix</span>
+                                    <span class="text-sm font-semibold">Prix</span>
                                     <p class="text-lg font-semibold">{{ current_title()?.amount }}</p>
                                 </div>
                             </div>
                             <div class="col-span-2 flex items-center justify-start gap-4 bg-gray-100 border-b border-gray-300">
                                 <i class="pi pi-inbox font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
-                                    <span class="text-xl font-semibold">Quantité</span>
+                                    <span class="text-sm font-semibold">Quantité</span>
                                     <p class="text-lg font-semibold">{{ current_title()?.quantity}}</p>
                                 </div>
                             </div>
                             <div class="col-span-2 flex items-center justify-start gap-4 bg-gray-100 border-b border-gray-300">
                                 <i class="pi pi-calendar-plus font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
-                                    <span class="text-xl font-semibold">Date Création</span>
+                                    <span class="text-sm font-semibold">Date Création</span>
                                     <p class="text-lg font-semibold">{{ current_title()?.issue_date}}</p>
                                 </div>
                             </div>
                             <div class="col-span-2 flex items-center justify-start gap-4 bg-gray-100 border-b border-gray-300">
                                 <i class="pi pi-history font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
-                                    <span class="text-xl font-semibold">Durée (en semaines)</span>
+                                    <span class="text-sm font-semibold">Durée (en semaines)</span>
                                     <p class="text-lg font-semibold">{{ current_title()?.bta_duration_weeks}}</p>
                                 </div>
                             </div>
                             <div class="col-span-2 flex items-center justify-start gap-4 bg-gray-100 rounded-lg">
                                 <i class="pi pi-calendar-clock font-semibold" style="font-size: 1.5rem;"></i>
                                 <div>
-                                    <span class="text-xl font-semibold">Date maturité</span>
+                                    <span class="text-sm font-semibold">Date maturité</span>
                                     <p class="text-lg font-semibold">{{ current_title()?.maturity_date}}</p>
                                 </div>
                             </div>
@@ -78,8 +78,8 @@
                     
                     <div class="w-full mt-6 flex items-center justify-between gap-4">
                         <!--<button pButton type="button" label="Fermer" icon="pi pi-times" (click)="closeDialog()" class="p-button-secondary w-1/2"></button>-->
-                        <app-dialog-box [action]="'modify'" [buttonLabel]="'Modifier'" />
-                        <button pButton type="button" label="Supprimer" severity="danger" variant="text" icon="pi pi-trash" (click)="onDeleteTitle()" class="p-button-secondary w-1/2 cursor-pointer"></button>
+                        <!--<app-dialog-box [action]="'modify'" [buttonLabel]="'Modifier'" />-->
+                        <button pButton type="button" label="Supprimer" severity="danger" variant="text" icon="pi pi-trash" (click)="onDeleteTitle()" class="p-button-secondary w-full cursor-pointer"></button>
                     </div>
                 </div>
             </ng-template>

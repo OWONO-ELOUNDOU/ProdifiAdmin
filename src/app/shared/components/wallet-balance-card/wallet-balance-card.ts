@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 })
 export class WalletBalanceCard {
   cardItemTitle = input('');
-  cardItemNumber = input(0);
+  cardItemNumber = input('');
   cardItemDescription = input('');
   backgroundColor = input('');
 }

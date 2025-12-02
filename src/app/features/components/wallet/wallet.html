@@ -7,19 +7,19 @@
         <div class="w-full flex gap-6 overflow-x-auto py-4 scrollbar-hide">
             <app-wallet-balance-card
                 [cardItemTitle]="'Solde total'"
-                [cardItemNumber]="350000"
+                [cardItemNumber]="walletBalance()"
                 [cardItemDescription]="'Montant total disponible dans le portefeuille'"
                 [backgroundColor]="'#1E3A8A'"
             />
             <app-wallet-balance-card
                 [cardItemTitle]="'Investissements en cours'"
-                [cardItemNumber]="13254"
+                [cardItemNumber]="'13254'"
                 [cardItemDescription]="'Montant actuellement investi'"
                 [backgroundColor]="'#047857'"
             />
             <app-wallet-balance-card
                 [cardItemTitle]="'Retraits récents'"
-                [cardItemNumber]="20000"
+                [cardItemNumber]="'20000'"
                 [cardItemDescription]="'Montant retiré récemment'"
                 [backgroundColor]="'#B91C1C'"
             />

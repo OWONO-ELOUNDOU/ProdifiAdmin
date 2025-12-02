@@ -1,1 +1,44 @@
-<p>wallet-topups-table works!</p>
+<div class="wallet-topups-container w-full">
+    <p-table
+        [value]="topupsData()"
+        [rows]="10"
+        [paginator]="true"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        class="w-full"
+    >
+        <ng-template #header>
+            <tr class="w-full bg-gray-600">
+                <th class="text-sm font-bold text-gray-600 p-2">Id</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Portefeuille</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Montant</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Devise</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Requête transak</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Référence transaction</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Status</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Numéro Mobile Protefeuille</th>
+                <th class="text-sm font-bold text-gray-600 p-2">date d'émission</th>
+                <th class="text-sm font-bold text-gray-600 p-2">date Modification</th>
+                <th class="text-sm font-bold text-gray-600 p-2">date Décision</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Options</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-topup>
+            <tr style="font-size: 0.8rem;">
+                <td class="border-b p-2">{{ topup.id }}</td>
+                <td class="border-b p-2">{{ topup.wallet }}</td>
+                <td class="border-b p-2">{{ topup.amount }}</td>
+                <td class="border-b p-2">{{ topup.currency }}</td>
+                <td class="border-b p-2">{{ topup.transak_request_id }}</td>
+                <td class="border-b p-2">{{ topup.mch_transaction_ref }}</td>
+                <td class="border-b p-2">{{ topup.status }}</td>
+                <td class="border-b p-2">{{ topup.mobile_wallet_number }}</td>
+                <td class="border-b p-2">{{ topup.created_at }}</td>
+                <td class="border-b p-2">{{ topup.updated_at }}</td>
+                <td class="border-b p-2">{{ topup.decided_at }}</td>
+                <td class="border-b p-2 flex items-center justify-center">
+                    
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

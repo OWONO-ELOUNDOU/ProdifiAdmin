@@ -4,25 +4,28 @@
     <p class="text-gray-600 mb-6">Gestion des toutes vos transactions sur la plateforme.</p>
     <!-- Add your transaction management UI here -->
 
-    <div class="table-container flex items-start justify-between gap-4">
+    <div class="table-container w-full">
         <div class="card">
             <p-table
                 [value]="transactions()"
                 [paginator]="true"
                 [rows]="10"
                 [rowsPerPageOptions]="[5,10,20]"
+                class="w-full"
             >
                 <ng-template #header>
-                    <tr class="w-full bg-gray-200">
+                    <tr class="bg-gray-200">
                         <th class="text-sm font-bold text-gray-600 p-2">Id</th>
-                        <th class="text-sm font-bold text-gray-600 p-2">Client</th>
-                        <th class="text-sm font-bold text-gray-600 p-2">Montant</th>
-                        <th class="text-sm font-bold text-gray-600 p-2">Frais</th>
-                        <th class="text-sm font-bold text-gray-600 p-2">Mode de paiement</th>
                         <th class="text-sm font-bold text-gray-600 p-2">Type</th>
-                        <th class="text-sm font-bold text-gray-600 p-2">Date de création</th>
-                        <th class="text-sm font-bold text-gray-600 p-2">Date Modification</th>
+                        <th class="text-sm font-bold text-gray-600 p-2">side</th>
+                        <th class="text-sm font-bold text-gray-600 p-2">Méthode de paiement</th>
                         <th class="text-sm font-bold text-gray-600 p-2">Status</th>
+                        <th class="text-sm font-bold text-gray-600 p-2">Status de paiement</th>
+                        <th class="text-sm font-bold text-gray-600 p-2">Montant (grosse)</th>
+                        <th class="text-sm font-bold text-gray-600 p-2">Montant net</th>
+                        <th class="text-sm font-bold text-gray-600 p-2">Date expiration</th>
+                        <th class="text-sm font-bold text-gray-600 p-2">Date création</th>
+                        <th class="text-sm font-bold text-gray-600 p-2">settled_at</th>
                         <th class="text-sm font-bold text-gray-600 p-2">Options</th>
                     </tr>
                 </ng-template>
@@ -30,14 +33,16 @@
                 <ng-template #body let-transaction>
                     <tr style="font-size: 0.8rem;">
                         <td class="border-b p-2">{{ transaction.id }}</td>
-                        <td class="border-b p-2 text-gray-600">{{ transaction.user }}</td>
-                        <td class="border-b p-2">{{ transaction.amount }}</td>
-                        <td class="border-b p-2 text-gray-600">{{ transaction.fees }}</td>
-                        <td class="border-b p-2">{{ transaction.payment_method }}</td>
-                        <td class="border-b p-2 text-gray-600">{{ transaction.type }}</td>
-                        <td class="border-b p-2">{{ transaction.created_at }}</td>
-                        <td class="border-b p-2 text-gray-600">{{ transaction.updated_at }}</td>
-                        <td class="border-b p-2">{{ transaction.status }}</td>
+                        <td class="border-b p-2 text-gray-600">{{ transaction.asset_kind }}</td>
+                        <td class="border-b p-2">{{ transaction.side }}</td>
+                        <td class="border-b p-2 text-gray-600">{{ transaction.payment_method }}</td>
+                        <td class="border-b p-2 text-gray-600">{{ transaction.state }}</td>
+                        <td class="border-b p-2">{{ transaction.payment_state }}</td>
+                        <td class="border-b p-2 text-gray-600">{{ transaction.gross_amount }}</td>
+                        <td class="border-b p-2 text-gray-600">{{ transaction.net_amount }}</td>
+                        <td class="border-b p-2 text-gray-600">{{ transaction.expires_at }}</td>
+                        <td class="border-b p-2 text-gray-600">{{ transaction.created_at }}</td>
+                        <td class="border-b p-2 text-gray-600">{{ transaction.settled_at }}</td>
                         <td class="border-b p-2 cursor-pointer">
                             <app-transaction-details [item]="transaction" />
                         </td>

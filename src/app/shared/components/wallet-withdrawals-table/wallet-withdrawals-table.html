@@ -1,1 +1,35 @@
-<p>wallet-withdrawals-table works!</p>
+<div class="withdrawals-table-container w-full">
+    <p-table
+        [value]="withdrawalsData()"
+        [rows]="10"
+        [paginator]="true"
+        [rowsPerPageOptions]="[5,10,20]"
+        class="w-full"
+    >
+        <ng-template #header>
+            <tr class="w-full bg-gray-600">
+                <th class="text-sm font-bold text-gray-600 p-2">ID Retrait</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Type</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Montant</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Solde après</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Devise</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Référence externe</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Tax Id</th>
+                <th class="text-sm font-bold text-gray-600 p-2">Date Création</th>
+            </tr>
+        </ng-template>
+
+        <ng-template #body let-withdrawal>
+            <tr style="font-size: 0.8rem;">
+                <td class="border-b p-2">{{ withdrawal.id }}</td>
+                <td class="border-b p-2">{{ withdrawal.kind }}</td>
+                <td class="border-b p-2">{{ withdrawal.amount }}</td>
+                <td class="border-b p-2">{{ withdrawal.balance_after }}</td>
+                <td class="border-b p-2">{{ withdrawal.currency }}</td>
+                <td class="border-b p-2">{{ withdrawal.external_ref }}</td>
+                <td class="border-b p-2">{{ withdrawal.tx_id }}</td>
+                <td class="border-b p-2">{{ withdrawal.created_at }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

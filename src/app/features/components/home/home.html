@@ -65,17 +65,18 @@
             <table class="transaction-table w-full mt-2">
                 <thead class="bg-gray-100">
                     <tr>
-                        <td class="py-4 px-4">Titre</td>
-                        <td class="py-4 px-4">Type de titre</td>
+                        <td class="py-4 px-4">Id</td>
+                        <td class="py-4 px-4">Type</td>
+                        <td class="py-4 px-4">Side</td>
+                        <td class="py-4 px-4 text-right">Méthode de paiement</td>
                         <td class="py-4 px-4">Status</td>
+                        <td class="py-4 px-4">Status de paiement</td>
                         <td class="py-4 px-4 text-right">Montant net</td>
                         <td class="py-4 px-4 text-right">grosse montant</td>
-                        <td class="py-4 px-4 text-right">Frais</td>
-                        <td class="py-4 px-4 text-right">Méthode de paiement</td>
-                        <td class="py-4 px-4 text-right">Status de Paiement</td>
                         <td class="py-4 px-4 text-right">Date Création</td>
                         <td class="py-4 px-4 text-right">Date Expiration</td>
                         <td class="py-4 px-4 text-right">Date Règlement</td>
+                        <td class="py-4 px-4 text-right">Options</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,16 +84,17 @@
                     <ng-container *ngIf="transactionList().length; else noData">
                         @for (transaction of transactionList().slice(0, 5); track transaction.id) {
                             <tr>
+                                <td class="border-b py-4 px-4">{{ transaction.id }}</td>
                                 <td class="border-b py-4 px-4">{{ transaction.asset_kind }}</td>
-                                <td class="border-b py-4 px-4 text-right">{{ transaction.state }}</td>
-                                <td class="border-b py-4 px-4">{{ transaction.net_amount }}</td>
-                                <td class="border-b py-4 px-4 text-right">{{ transaction.gross_amount }}</td>
-                                <td class="border-b py-4 px-4 text-right">{{ transaction.fee_snapshot }}</td>
+                                <td class="border-b py-4 px-4">{{ transaction.side }}</td>
                                 <td class="border-b py-4 px-4 text-right">{{ transaction.payment_method }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.state }}</td>
                                 <td class="border-b py-4 px-4 text-right">{{ transaction.payment_state }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.gross_amount }}</td>
+                                <td class="border-b py-4 px-4">{{ transaction.net_amount }}</td>
+                                <td class="border-b py-4 px-4 text-right">{{ transaction.fee_snapshot }}</td>
                                 <td class="border-b py-4 px-4 text-right">{{ transaction.created_at }}</td>
                                 <td class="border-b py-4 px-4 text-right">{{ transaction.expires_at }}</td>
-                                <td class="border-b py-4 px-4 text-right">{{ transaction.settled_at }}</td>
                                 <td class="border-b py-4 px-4 text-right">
                                     <app-transaction-details [item]="transaction" />
                                 </td>

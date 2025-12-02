@@ -11,7 +11,7 @@ import { UserLoginResponse } from '../../models/auth';
 })
 export class Transaction {
   private http = inject(HttpClient);
-  private readonly endPoint = 'transactions';
+  private readonly endPoint = 'transactions/list';
   private current_user: UserLoginResponse = JSON.parse(localStorage.getItem('current_firm') || '{}');
 
   constructor() {}

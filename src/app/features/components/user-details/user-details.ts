@@ -34,7 +34,9 @@ export class UserDetails implements OnInit {
       this.userListService.getUserDetails(this.currentUserId()).subscribe({
         next: (data) => {
           console.log(data);
-          this.currentUser.set(data)
+          this.currentUser.set(data);
+
+          this.fetchUserKycInfo();
         },
         error: (error) => {
           console.log('Erreur lors le l\'affichage des informations utilisateur', error.error.message);
@@ -52,11 +54,11 @@ export class UserDetails implements OnInit {
           console.log(data);
         },
         error: (error) => {
-          console.log(error.error.message);
+          console.log(error.error);
         }
       })
     } catch (error: any) {
-      console.log(error.error.message);
+      console.log(error.error);
     }
   }
 }

@@ -50,10 +50,13 @@ export class UserDetails implements OnInit {
       this.userListService.getUserKycDetails(this.currentUserId()).subscribe({
         next: (data) => {
           console.log(data);
+        },
+        error: (error) => {
+          console.log(error.error.message);
         }
       })
-    } catch (error) {
-      
+    } catch (error: any) {
+      console.log(error.error.message);
     }
   }
 }

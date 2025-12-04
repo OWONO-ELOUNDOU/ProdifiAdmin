@@ -42,3 +42,10 @@ export interface TransactionListResponse {
     previous: string;
     results: Transaction[]
 }
+
+export interface TransactionAction {
+    payment_ref: string;
+    soruce: string;
+    reason: string;
+    nav_at_exec: number;
+}

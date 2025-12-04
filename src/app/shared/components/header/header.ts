@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { Auth } from '../../../core/services/Auth/auth';
 
 // Import du model
-import { BrokerageFirm } from '../../models/user.model';
 import { UserLoginResponse } from '../../../core/models/auth';
 
 @Component({

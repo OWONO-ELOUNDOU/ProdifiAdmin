@@ -9,13 +9,15 @@ import { MessageService } from 'primeng/api';
 import { WalletService } from '../../../core/services/Wallet/wallet-service';
 
 // Import custom components
+import { TopupForm } from '../../../shared/components/topup-form/topup-form';
+import { WithdrawalForm } from '../../../shared/components/withdrawal-form/withdrawal-form';
 import { WalletBalanceCard } from '../../../shared/components/wallet-balance-card/wallet-balance-card';
 import { WalletTopupsTable } from '../../../shared/components/wallet-topups-table/wallet-topups-table';
 import { WalletWithdrawalsTable } from '../../../shared/components/wallet-withdrawals-table/wallet-withdrawals-table';
 
 @Component({
   selector: 'app-wallet',
-  imports: [CommonModule, WalletBalanceCard, WalletTopupsTable, WalletWithdrawalsTable],
+  imports: [CommonModule, WalletBalanceCard, WalletTopupsTable, WalletWithdrawalsTable, WithdrawalForm, TopupForm],
   templateUrl: './wallet.html',
   styleUrl: './wallet.scss',
   standalone: true,
@@ -57,5 +59,13 @@ export class Wallet implements OnInit {
     if (this.activeTab !== tab) {
       this.activeTab = tab;
     }
+  }
+
+  openTopUpModal() {
+
+  }
+
+  openWithdrawModal() {
+
   }
 }

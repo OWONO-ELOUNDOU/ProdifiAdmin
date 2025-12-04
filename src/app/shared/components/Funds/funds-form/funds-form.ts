@@ -14,6 +14,7 @@ import { TableModule } from "primeng/table";
 // Import Models
 import { fundTypeList, riskLevelList } from '../../../models/asset.model';
 import { FundsService } from '../../../../core/services/Funds/funds-service';
+import { UserLoginResponse } from '../../../../core/models/auth';
 
 
 @Component({
@@ -27,6 +28,8 @@ export class FundsForm {
   visible: boolean = false;
   fundTypeList = fundTypeList;
   fundRiskLevel = riskLevelList;
+
+  current_user: UserLoginResponse = JSON.parse(localStorage.getItem('current_firm') || '{}');
 
   // Injection des services
   private router = inject(Router);
@@ -77,7 +80,7 @@ export class FundsForm {
 
       this.fundForm.patchValue({
         code: `FUND-${Math.floor(100000 + Math.random() * 900000)}`, // Générer un code aléatoire pour le fond de placement
-        management_company: 'a53b4cc9-e7de-49ee-ba12-131d0990cbb4'
+        management_company: `${this.current_user.user.id}` // Récupérer le nom de la société de gestion à partir de l'utilisateur connecté
       });
       console.table('Form fund data: ', this.fundForm.value);
 

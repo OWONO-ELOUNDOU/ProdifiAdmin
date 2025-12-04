@@ -9,6 +9,9 @@
         <li (click)="navigateTo('assets')">Titres</li>
         <li (click)="navigateTo('funds')">Fonds</li>
         <li (click)="navigateTo('wallet')">Portefeuille</li>
+        @if (currentFirm.user.role === 'super_admin') {
+            <li (click)="navigateTo('users')">Utilisateurs</li>
+        }
     </ul>
 
     

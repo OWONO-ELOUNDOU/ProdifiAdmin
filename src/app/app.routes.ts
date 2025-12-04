@@ -42,6 +42,16 @@ export const routes: Routes = [
         loadComponent: () => import('./features/components/profile/profile').then(m => m.Profile),
     },
     {
+        path: 'users',
+        canActivate: [authGuard],
+        loadComponent: () => import('./features/components/users/users').then(m => m.Users),
+    },
+    {
+        path: 'users/:id',
+        canActivate: [authGuard],
+        loadComponent: () => import('./features/components/user-details/user-details').then(m => m.UserDetails),
+    },
+    {
         path: '**',
         pathMatch: 'full',
         loadComponent: () => import('./features/components/not-found/not-found').then(m => m.NotFound),

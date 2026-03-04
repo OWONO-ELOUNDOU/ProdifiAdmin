@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 // Import models here
-import { CurrentUser, UserLoginResponse } from '../../models/auth';
+import { CurrentUser, KYC, KYCValidation, UserLoginResponse } from '../../models/auth';
 import { environment } from '../../../../environment/environment';
 import { ClientListResponse, CompaniesListResponse } from '../../../shared/models/user.model';
 
@@ -35,8 +35,8 @@ export class UsersListService {
     })
   }
 
-  getUserKycDetails(userId: string) {
-    return this.http.get(`${environment.apiRoutes.baseRoute}${this.apiEndpoint}/kyc/by-user/${userId}`, {
+  getUserKycDetails(userId: string): Observable<KYC> {
+    return this.http.get<KYC>(`${environment.apiRoutes.baseRoute}${this.apiEndpoint}/kyc/by-user/${userId}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.currentUser.access}`
@@ -51,5 +51,14 @@ export class UsersListService {
         'Authorization': `Bearer ${this.currentUser.access}`
       }
     });
+  }
+
+  validateUserKyc(request: KYCValidation): Observable<KYCValidation> {
+    return this.http.post<KYCValidation>(`${environment.apiRoutes.baseRoute}/kyc/validate`, request, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.currentUser.access}`
+      }
+    })
   }
 }

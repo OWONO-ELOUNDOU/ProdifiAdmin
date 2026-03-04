@@ -51,9 +51,16 @@ export interface KYC {
     birth_date: string;
     nationality: string;
     average_income: number;
-    investment_activities: string[];
+    investment_objectives: string[];
     investment_horizon: string;
     status: string;
+    rejection_reason: string;
     verified_by: string;
     verified_at: string;
+}
+
+export interface KYCValidation {
+    kyc_id: string;
+    status: string;
+    rejection_reason: string
 }

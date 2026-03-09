@@ -56,26 +56,25 @@ export class CustomersForm {
     if (this.customerForm.valid) {
       console.table('Customer form data:', this.customerForm.value);
       const current_user: UserLoginResponse = JSON.parse(localStorage.getItem('current_firm') || '{}');
-      this.customerForm.patchValue({ push_token: current_user.access });
-      console.table('Customer form data:', this.customerForm.value);
+      // this.customerForm.patchValue({ push_token: current_user.access });
+      // console.table('Customer form data:', this.customerForm.value);
 
       try {
         this.companyService.createCustomer(this.customerForm.value).subscribe({
           next: (response) => {
             console.log('Customer created successfully:', response);
-            this.showMessage('success', 'Succès', 'Client créé avec succès');
-            this.closeDialog();
+            this.showMessage('success', 'Succès', 'Client créé avec succès.');
             this.customerForm.reset();
+            this.closeDialog();
           },
           error: (error) => {
             console.error('Error creating customer:', error);
-            this.showMessage('error', 'Erreur', "Échec de la création du client");
+            this.showMessage('danger', 'Erreur', error.error.message || 'Une erreur est survenue lors de la création du client.');
           }
         });
       } catch (error) {
-        this.showMessage('error', 'Erreur', "Une erreur inattendue s'est produite");
+        
       }
-
     } else {
       this.customerForm.markAllAsTouched();
     }

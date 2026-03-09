@@ -47,8 +47,8 @@ export class TitleService {
   }
 
   // Récupérer les informations d'un titre spécifique
-  getReelTitleDetails(title_code: string): Observable<VirtualAsset> {
-    return this.http.get<VirtualAsset>(`${environment.apiRoutes.v1Route}/${this.realEndPoint}${title_code}`, {
+  getReelTitleDetails(title_code: string): Observable<ReelAsset> {
+    return this.http.get<ReelAsset>(`${environment.apiRoutes.v1Route}/${this.realEndPoint}${title_code}`, {
       headers: {
         "Content-type": "application/json",
         "Authorization": `Bearer ${this.current_user.access}`
@@ -57,8 +57,8 @@ export class TitleService {
   }
 
   // activattion du titre réel (DRAFT --> ACTIVE)
-  activateRealTitle(id: any) {
-    return this.http.post(`${environment.apiRoutes.v1Route}/${this.realEndPoint}${id}/activate`, {
+  activateRealTitle(id: any, title: ReelAsset) {
+    return this.http.post(`${environment.apiRoutes.v1Route}/${this.realEndPoint}${id}/activate`, title, {
       headers: {
         "Content-type": "application/json",
         "Authorization": `Bearer ${this.current_user.access}`

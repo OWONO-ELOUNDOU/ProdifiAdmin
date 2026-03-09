@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { Auth } from '../../../core/services/Auth/auth';
 
 // Import Modèles
-import { UserLoginResponse } from '../../../core/models/auth';
+import { KYC, UserLoginResponse } from '../../../core/models/auth';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +21,7 @@ export class Profile implements OnInit {
   private authService = inject(Auth); // Injection du service d'authentification
 
   current_user!: UserLoginResponse;
+  current_user_kyc = signal<KYC | null>(null);
   isAccessVisible = false;
   isRefreshVisible = false;
 
@@ -31,6 +32,7 @@ export class Profile implements OnInit {
     this.current_user = JSON.parse(localStorage.getItem('current_firm') || '{}');
     console.log(this.current_user);
     this.onFecthProfile(this.current_user.access);
+    this.fetchProfileKYC();
   }
 
   // Fonction pour masquer ou afficher le token d'accès
@@ -58,5 +60,25 @@ export class Profile implements OnInit {
     } catch (error) {
       console.error('Unexpected error:', error);
     }
+  }
+
+  fetchProfileKYC() {
+    try {
+      this.authService.getProfileKyc().subscribe({
+        next: (kyc) => {
+          console.log(kyc);
+          this.current_user_kyc.set(kyc);
+        },
+        error: (error) => {
+          console.error('Error fetching KYC info:', error);
+        }
+      });
+    } catch (error) {
+      console.error('Unexpected error:', error);
+    }
+  }
+
+  validateKYC() {
+    
   }
 }

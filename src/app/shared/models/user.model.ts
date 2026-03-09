@@ -35,6 +35,17 @@ export interface Client {
     created_at: string;
     updated_at: string;
 }
+
+export interface ClientListResponse {
+    id: string;
+    email: string;
+    password: string;
+    phone: string;
+    role: string; // 'admin', 'user', etc.
+    is_active: boolean;
+    push_token: string; // Token pour les notifications push
+    has_wallet: boolean;
+}
 /**
  * Modèles pour les clients fin
  */
@@ -47,6 +58,19 @@ export interface CompanyClient {
     password: string;
     phone: string;
     push_token?: string;
+}
+
+export interface CompaniesListResponse {
+    id: string;
+    name: string;
+    nui: string;
+    logo: string;
+    address: string;
+    contact_info: string;
+    is_active: boolean;
+    is_issues: boolean;
+    clients: string[];
+    created_at: string;
 }
 /**
  * Modèles pour les utilisateurs / clients liés à une société fin

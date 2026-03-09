@@ -8,10 +8,14 @@ export interface ReelAsset {
     company: string;
     title_code: string;
     name: string;
+    issue_date: string;
     amount: number;
+    title_type: string;
+    state: string;
+    bta_duration_weeks: number;
     interest_rate: number;
     maturity_date: string;
-    quanity: number;
+    quantity: number;
     document: File; // Document justificatif associé à l'actif
     verified: boolean;
     verified_by: string | null;

@@ -34,3 +34,34 @@ export interface CurrentUser {
     push_token: string;
     has_wallet: boolean;
 }
+
+// KYC info
+export interface KYC {
+    id: string;
+    user: string;
+    full_name: string;
+    first_name: string;
+    profession: string;
+    filiation: string;
+    id_document_front: string;
+    id_document_back: string;
+    user_image: string;
+    id_number: string;
+    address: string;
+    birth_date: string;
+    nationality: string;
+    average_income: number;
+    investment_objectives: string[];
+    investment_horizon: string;
+    status: string;
+    rejection_reason: string;
+    verified_by: string;
+    verified_at: string;
+}
+
+export interface KYCValidation {
+    kyc_id: string;
+    section: string[];
+    status: string;
+    rejection_reason: string
+}

@@ -9,7 +9,7 @@ import { Dialog } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { VirtualAsset } from '../../../shared/models/asset.model';
+import { ReelAsset, VirtualAsset } from '../../../shared/models/asset.model';
 import { TitleService } from '../../../core/services/Titles/title-service';
 
 @Component({
@@ -22,7 +22,8 @@ import { TitleService } from '../../../core/services/Titles/title-service';
 export class TitleDetails implements OnInit {
   protected readonly dialogLabel = signal<string>('Détails du titre');
 
-  current_title = signal<VirtualAsset | null>(null); // Récupération du nom du titre courant
+  current_title = signal<ReelAsset | null>(null); // Récupération du nom du titre courant
+  safeTitle: any = {};
   title_id = input<string>('');
   buttonLabel = input<string>('');
   visible: boolean = false;
@@ -59,6 +60,8 @@ export class TitleDetails implements OnInit {
         next: (response) => {
           console.log(response);
           this.current_title.set(response);
+          this.safeTitle = response;
+          console.log(this.safeTitle);
         },
         error: (error) => {
           this.showMessage('error', 'Erreur', `${error.message}`);
@@ -71,7 +74,7 @@ export class TitleDetails implements OnInit {
 
   onActivate() {
     try {
-      this.titleService.activateRealTitle(this.current_title()?.id).subscribe({
+      this.titleService.activateRealTitle(this.current_title()?.id, this.safeTitle).subscribe({
         next: (data) => {
           console.log(data);
         },

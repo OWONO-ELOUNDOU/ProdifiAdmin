@@ -16,17 +16,6 @@
                         }
                         <input id="name" type="text" placeholder="Entrer le nom du fond" formControlName="name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outlined-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                     </div>
-
-                    <!-- Champs d'entrée pour la société de gestion -->
-                    <div class="input-box w-full">
-                        <label for="management_company" class="block text-sm font-medium text-gray-700">Société de gestion</label>
-                        @if (f['management_company'].touched && f['management_company'].invalid) {
-                            @if (f['management_company'].errors?.['required']) {
-                                <span class="text-red-500 font-semibold" style="font-size: 0.7rem;">Le nom de la société est requis</span>
-                            }
-                        }
-                        <input id="management_company" type="text" placeholder="Entrer le nom de la société de gestion" formControlName="management_company" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outlined-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-                    </div>
                 </div>
 
                 <!-- Champs d'entrée pour le type de fond -->

@@ -2,7 +2,7 @@ import { Component, computed, inject, input, OnInit, signal, ViewChild } from '@
 import { CommonModule } from '@angular/common';
 
 // Import Charts Module for charts
-import { ChartComponent, ApexChart, ApexStroke, ApexXAxis, ApexAxisChartSeries, ApexTitleSubtitle, ApexDataLabels } from 'ng-apexcharts';
+import { ChartComponent, ApexChart, ApexStroke, ApexXAxis, ApexAxisChartSeries, ApexTitleSubtitle } from 'ng-apexcharts';
 import { ReelAsset, VirtualAsset } from '../../models/asset.model';
 import { TitleService } from '../../../core/services/Titles/title-service';
 
@@ -11,7 +11,7 @@ interface ChartOptions {
   chart: ApexChart;
   xaxis: ApexXAxis;
   stroke: ApexStroke;
-  dataLabels: ApexDataLabels
+  title: ApexTitleSubtitle;
 }
 
 @Component({
@@ -34,6 +34,32 @@ export class ChartLine implements OnInit {
   ngOnInit(): void {
     // On component init, fetch data from the service
     this.fetchData();
+
+    this.chartOptions = {
+      series: [
+        {
+          name: "My series",
+          data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+        },
+        {
+          name: "My time",
+          data: [20, 82, 15, 102, 29, 31, 138, 46, 100],
+        },
+      ],
+      chart: {
+        height: 450,
+        type: "area"
+      },
+      title: {
+        text: "Graphic of the evolution of the reel title on the market"
+      },
+      xaxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"]
+      },
+      stroke: {
+        curve: "smooth"
+      }
+    };
   }
 
   fetchData() {
@@ -50,43 +76,6 @@ export class ChartLine implements OnInit {
       })
     } catch (error) {
       console.log('Une erreur est survenue', error);
-    }
-  }
-
-  fetchChartData() {
-    this.chartOptions = {
-      series: [
-        {
-          name: "Titres Réels",
-          data: [31, 40, 28, 51, 42, 109, 100]
-        },
-        {
-          name: "Fonds de placement",
-          data: [11, 32, 45, 32, 34, 52, 41]
-        }
-      ],
-      chart: {
-        height: 350,
-        type: 'area'
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: 'smooth'
-      },
-      xaxis: {
-        type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z"
-        ]
-      },
     }
   }
 }

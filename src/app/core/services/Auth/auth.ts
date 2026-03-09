@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 import { environment } from '../../../../environment/environment';
 import { BrokerageFirm } from '../../../shared/models/user.model';
-import { CurrentUser, UserLogin, UserLoginResponse } from '../../models/auth';
+import { CurrentUser, KYC, UserLogin, UserLoginResponse } from '../../models/auth';
 
 
 // Sociétés prédéfinies pour la demo
@@ -39,7 +39,8 @@ import { CurrentUser, UserLogin, UserLoginResponse } from '../../models/auth';
 })
 export class Auth {
   private readonly endPoint = '/auth/login';
-  private readonly profileEndPoint = 'users/me';
+  private readonly profileEndPoint = '/users/me';
+  private readonly kycEndPoint = '/kyc/me';
 
   // Injection du service http Client pour les requêtes avec les apis backend
   private http = inject(HttpClient);
@@ -47,6 +48,7 @@ export class Auth {
 
   private currentUserSubject = new BehaviorSubject<UserLoginResponse | null>(null);
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  private current_user: UserLoginResponse = JSON.parse(localStorage.getItem('current_firm') || '{}');
 
   constructor() {
 
@@ -118,6 +120,15 @@ export class Auth {
 
     // Rediriger vres la page de connexion
     this.router.navigate(['/login']);
+  }
+
+  getProfileKyc(): Observable<KYC> {
+    return this.http.get<KYC>(environment.apiRoutes.baseRoute + this.kycEndPoint, {
+      headers: {
+        "Content-Type": 'application/json',
+        "Authorization": `Bearer ${this.current_user.access}`
+      }
+    });
   }
 
 

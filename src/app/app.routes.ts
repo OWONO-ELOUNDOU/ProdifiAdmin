@@ -14,10 +14,17 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadComponent: () => import('./features/components/assets/assets').then(m => m.Assets),
     },
+    /*
     {
         path: 'funds',
         canActivate: [authGuard],
         loadComponent: () => import('./features/components/Titles/funds/funds').then(m => m.Funds),
+    },
+    */
+    {
+        path: 'wallet',
+        canActivate: [authGuard],
+        loadComponent: () => import('./features/components/wallet/wallet').then(m => m.Wallet),
     },
     {
         path: 'customers',
@@ -33,6 +40,16 @@ export const routes: Routes = [
         path: 'profile',
         canActivate: [authGuard],
         loadComponent: () => import('./features/components/profile/profile').then(m => m.Profile),
+    },
+    {
+        path: 'users',
+        canActivate: [authGuard],
+        loadComponent: () => import('./features/components/users/users').then(m => m.Users),
+    },
+    {
+        path: 'users/:id',
+        canActivate: [authGuard],
+        loadComponent: () => import('./features/components/user-details/user-details').then(m => m.UserDetails),
     },
     {
         path: '**',

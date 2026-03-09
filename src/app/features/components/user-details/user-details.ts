@@ -49,9 +49,14 @@ export class UserDetails implements OnInit {
     this.fetchUserDetails();
   }
 
-  checkValidatedSection(el: string) {
+  validateSection(el: string) {
     this.sectionsValidation().push(el);
     console.log(this.sectionsValidation());
+  }
+
+  rejectSection(el: string) {
+    const reason = el + 'invalide';
+    console.log(reason);
   }
 
   fetchUserDetails() {

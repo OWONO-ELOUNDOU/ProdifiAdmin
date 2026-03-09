@@ -25,6 +25,7 @@ export class UserDetails implements OnInit {
   currentUserKyc = signal<KYC | null>(null);
   currentUserId = signal('');
   errorMessage = signal('');
+  sectionsValidation = signal(['']);
 
   // Injection de services
   private router = inject(Router);
@@ -34,6 +35,7 @@ export class UserDetails implements OnInit {
   // Formulaire de validation du KYC
   KYCForm: FormGroup = new FormGroup({
     kyc_id: new FormControl(''),
+    section: new FormControl(['']),
     status: new FormControl(''),
     rejection_reason: new FormControl('')
   })
@@ -45,6 +47,11 @@ export class UserDetails implements OnInit {
     console.log(this.currentUserId());
 
     this.fetchUserDetails();
+  }
+
+  checkValidatedSection(el: string) {
+    this.sectionsValidation().push(el);
+    console.log(this.sectionsValidation());
   }
 
   fetchUserDetails() {

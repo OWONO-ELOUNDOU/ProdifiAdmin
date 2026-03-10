@@ -10,7 +10,7 @@ import { MessageService } from 'primeng/api';
 
 // Import Services
 import { UsersListService } from '../../../core/services/UsersList/users-list-service';
-import { CurrentUser, KYC } from '../../../core/models/auth';
+import { CurrentUser, KYC, KYCValidation } from '../../../core/models/auth';
 
 @Component({
   selector: 'app-user-details',
@@ -25,7 +25,11 @@ export class UserDetails implements OnInit {
   currentUserKyc = signal<KYC | null>(null);
   currentUserId = signal('');
   errorMessage = signal('');
-  sectionsValidation = signal(['']);
+  rejectionReason = signal('');
+  sectionsValidation = signal('');
+
+  isValidating = signal<boolean>(false);
+  isRejecting = signal<boolean>(false);
 
   // Injection de services
   private router = inject(Router);
@@ -35,7 +39,7 @@ export class UserDetails implements OnInit {
   // Formulaire de validation du KYC
   KYCForm: FormGroup = new FormGroup({
     kyc_id: new FormControl(''),
-    section: new FormControl(['']),
+    section: new FormControl(''),
     status: new FormControl(''),
     rejection_reason: new FormControl('')
   })
@@ -50,13 +54,13 @@ export class UserDetails implements OnInit {
   }
 
   validateSection(el: string) {
-    this.sectionsValidation().push(el);
-    console.log(this.sectionsValidation());
+    this.sectionsValidation.set(el);
+    console.log('Valide',this.sectionsValidation());
   }
 
   rejectSection(el: string) {
-    const reason = el + 'invalide';
-    console.log(reason);
+    this.rejectionReason.set(el);
+    console.log('Rejeté',this.rejectionReason());
   }
 
   fetchUserDetails() {
@@ -99,12 +103,44 @@ export class UserDetails implements OnInit {
     }
   }
 
-  onValidateKyc() {
+  validateKycSection(sectionTitle: string) {
     // Complétion des champs du formulaire du KYC
     this.KYCForm.patchValue({
       kyc_id: this.currentUserKyc()?.id,
+      section: sectionTitle,
       status: 'approved',
       rejection_reason: ''
+    });
+
+    console.table(this.KYCForm.value);
+    this.isValidating.set(true);
+    try {
+      this.userListService.validateUserKyc(this.KYCForm.value).subscribe({
+        next: (data) => {
+          this.isValidating.set(false);
+          console.log(data);
+          this.showMessage('success', 'Succès', 'La section a été Validée');
+        },
+        error: (error) => {
+          this.isValidating.set(false);
+          console.log(error);
+          this.showMessage('danger', 'Erreur', `Erreur lors de la validation de la section, ${error.error.message}`);
+        }
+      })
+    } catch (error) {
+        this.isValidating.set(false);
+        console.log(error)
+        this.showMessage('danger', 'Erreur', 'Une erreur est survenue');
+    }
+  }
+
+  rejectKycSection(sectionTitle: string) {
+    // Complétion des champs du formulaire du KYC
+    this.KYCForm.patchValue({
+      kyc_id: this.currentUserKyc()?.id,
+      section: sectionTitle,
+      status: 'rejected',
+      rejection_reason: sectionTitle + 'invalide'
     });
 
     console.table(this.KYCForm.value);
@@ -113,11 +149,11 @@ export class UserDetails implements OnInit {
       this.userListService.validateUserKyc(this.KYCForm.value).subscribe({
         next: (data) => {
           console.log(data);
-          this.showMessage('success', 'Succès', 'Le KYC a été Validé');
+          this.showMessage('success', 'Succès', 'La section a été Rejeté');
         },
         error: (error) => {
           console.log(error);
-          this.showMessage('danger', 'Erreur', `Erreur lors de la validation du KYC, ${error.error.message}`);
+          this.showMessage('danger', 'Erreur', `Erreur lors du rejet de la section, ${error.error.message}`);
         }
       })
     } catch (error) {

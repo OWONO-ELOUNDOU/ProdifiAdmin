@@ -61,7 +61,7 @@ export interface KYC {
 
 export interface KYCValidation {
     kyc_id: string;
-    section: string[];
+    section: string;
     status: string;
     rejection_reason: string
 }

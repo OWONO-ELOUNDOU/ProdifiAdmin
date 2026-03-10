@@ -30,6 +30,7 @@ export class UserDetails implements OnInit {
 
   isValidating = signal<boolean>(false);
   isRejecting = signal<boolean>(false);
+  currentSection = signal<string>('1');
 
   // Injection de services
   private router = inject(Router);
@@ -103,7 +104,8 @@ export class UserDetails implements OnInit {
     }
   }
 
-  validateKycSection(sectionTitle: string) {
+  validateKycSection(sectionTitle: string, sectionId: string) {
+    this.currentSection.set(sectionId);
     // Complétion des champs du formulaire du KYC
     this.KYCForm.patchValue({
       kyc_id: this.currentUserKyc()?.id,
@@ -134,7 +136,8 @@ export class UserDetails implements OnInit {
     }
   }
 
-  rejectKycSection(sectionTitle: string) {
+  rejectKycSection(sectionTitle: string, sectionId: string) {
+    this.currentSection.set(sectionId);
     // Complétion des champs du formulaire du KYC
     this.KYCForm.patchValue({
       kyc_id: this.currentUserKyc()?.id,

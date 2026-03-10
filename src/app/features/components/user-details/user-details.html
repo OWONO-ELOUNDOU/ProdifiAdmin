@@ -94,13 +94,13 @@
                         <div class="w-full flex items-end justify-end gap-4">
                             <button
                                 pButton
-                                [severity]="isValidating() ? 'secondary' : 'success'"
-                                [icon]="isValidating() ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+                                [severity]="isValidating() && currentSection() === '1' ? 'secondary' : 'success'"
+                                [icon]="isValidating() && currentSection() === '1' ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
                                 size="small"
                                 class="w-[100px] text-xs text-white font-semibold bg-green-400 p-2 rounded-md cursor-pointer"
-                                (click)="validateKycSection('personal_info')" [disabled]="isValidating()"
+                                (click)="validateKycSection('personal_info', '1')" [disabled]="isValidating() && currentSection()"
                             >
-                                @if (isValidating()) {
+                                @if (isValidating() && currentSection()) {
                                     Validation en cours
                                 } @else {
                                     Valider
@@ -109,14 +109,14 @@
 
                             <button
                                 pButton
-                                [severity]="isRejecting() ? 'secondary' : 'danger'"
-                                [icon]="isRejecting() ? 'pi pi-spin pi-spinner' : 'pi pi-times'"
+                                [severity]="isRejecting() && currentSection() === '1' ? 'secondary' : 'danger'"
+                                [icon]="isRejecting() && currentSection() === '1' ? 'pi pi-spin pi-spinner' : 'pi pi-times'"
                                 size="small"
                                 class="w-[100px] text-xs text-white font-semibold bg-red-400 p-2 rounded-md cursor-pointer"
-                                (click)="rejectKycSection('personal_info')"
-                                [disabled]="isRejecting()"
+                                (click)="rejectKycSection('personal_info', '1')"
+                                [disabled]="isRejecting() && currentSection()"
                             >
-                                @if (isRejecting()) {
+                                @if (isRejecting() && currentSection()) {
                                     Rejet en cours
                                 } @else {
                                     Rejeter
@@ -145,8 +145,36 @@
                         </div>
 
                         <div class="w-full flex items-end justify-end gap-4">
-                            <button pButton severity="success" icon="pi pi-check" class="w-[100px] text-xs text-white font-semibold bg-green-400 p-2 rounded-md cursor-pointer" (click)="validateSection('income')">Valider</button>
-                            <button pButton severity="danger" icon="pi pi-times" class="w-[100px] text-xs text-white font-semibold bg-red-400 p-2 rounded-md cursor-pointer" (click)="rejectSection('income')">Rejeter</button>
+                            <button
+                                pButton
+                                [severity]="isValidating() && currentSection() === '2' ? 'secondary' : 'success'"
+                                [icon]="isValidating() && currentSection() === '2' ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+                                size="small"
+                                class="w-[100px] text-xs text-white font-semibold bg-green-400 p-2 rounded-md cursor-pointer"
+                                (click)="validateKycSection('income', '2')" [disabled]="isValidating() && currentSection()"
+                            >
+                                @if (isValidating() && currentSection()) {
+                                    Validation en cours
+                                } @else {
+                                    Valider
+                                }
+                            </button>
+
+                            <button
+                                pButton
+                                [severity]="isRejecting() && currentSection() === '2' ? 'secondary' : 'danger'"
+                                [icon]="isRejecting() && currentSection() === '2' ? 'pi pi-spin pi-spinner' : 'pi pi-times'"
+                                size="small"
+                                class="w-[100px] text-xs text-white font-semibold bg-red-400 p-2 rounded-md cursor-pointer"
+                                (click)="rejectKycSection('income', '2')"
+                                [disabled]="isRejecting() && currentSection()"
+                            >
+                                @if (isRejecting() && currentSection()) {
+                                    Rejet en cours
+                                } @else {
+                                    Rejeter
+                                }
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -170,8 +198,36 @@
                         </div>
 
                         <div class="w-full flex items-end justify-end gap-4">
-                            <button pButton severity="success" icon="pi pi-check" class="w-[100px] text-xs text-white font-semibold bg-green-400 p-2 rounded-md cursor-pointer" (click)="validateSection('id_document')">Valider</button>
-                            <button pButton severity="danger" icon="pi pi-times" class="w-[100px] text-xs text-white font-semibold bg-red-400 p-2 rounded-md cursor-pointer" (click)="rejectSection('id_document')">Rejeter</button>
+                            <button
+                                pButton
+                                [severity]="isValidating() && currentSection() === '3' ? 'secondary' : 'success'"
+                                [icon]="isValidating() && currentSection() === '3' ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+                                size="small"
+                                class="w-[100px] text-xs text-white font-semibold bg-green-400 p-2 rounded-md cursor-pointer"
+                                (click)="validateKycSection('id_document', '3')" [disabled]="isValidating() && currentSection() === '3'"
+                            >
+                                @if (isValidating() && currentSection()) {
+                                    Validation en cours
+                                } @else {
+                                    Valider
+                                }
+                            </button>
+
+                            <button
+                                pButton
+                                [severity]="isRejecting() && currentSection() === '3' ? 'secondary' : 'danger'"
+                                [icon]="isRejecting() && currentSection() === '3' ? 'pi pi-spin pi-spinner' : 'pi pi-times'"
+                                size="small"
+                                class="w-[100px] text-xs text-white font-semibold bg-red-400 p-2 rounded-md cursor-pointer"
+                                (click)="rejectKycSection('id_document', '3')"
+                                [disabled]="isRejecting() && currentSection() === '3'"
+                            >
+                                @if (isRejecting() && currentSection() === '3') {
+                                    Rejet en cours
+                                } @else {
+                                    Rejeter
+                                }
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -199,8 +255,36 @@
                         </div>
 
                         <div class="w-full flex items-end justify-end gap-4">
-                            <button pButton severity="success" icon="pi pi-check" class="w-[100px] text-xs text-white font-semibold bg-green-400 p-2 rounded-md cursor-pointer" (click)="validateSection('investment')">Valider</button>
-                            <button pButton severity="danger" icon="pi pi-times" class="w-[100px] text-xs text-white font-semibold bg-red-400 p-2 rounded-md cursor-pointer" (click)="rejectSection('investment')">Rejeter</button>
+                            <button
+                                pButton
+                                [severity]="isValidating() && currentSection() === '4' ? 'secondary' : 'success'"
+                                [icon]="isValidating() && currentSection() === '4' ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+                                size="small"
+                                class="w-[100px] text-xs text-white font-semibold bg-green-400 p-2 rounded-md cursor-pointer"
+                                (click)="validateKycSection('investment', '4')" [disabled]="isValidating() && currentSection() === '4'"
+                            >
+                                @if (isValidating() && currentSection() === '4') {
+                                    Validation en cours
+                                } @else {
+                                    Valider
+                                }
+                            </button>
+
+                            <button
+                                pButton
+                                [severity]="isRejecting() && currentSection() === '4' ? 'secondary' : 'danger'"
+                                [icon]="isRejecting() && currentSection() === '4' ? 'pi pi-spin pi-spinner' : 'pi pi-times'"
+                                size="small"
+                                class="w-[100px] text-xs text-white font-semibold bg-red-400 p-2 rounded-md cursor-pointer"
+                                (click)="rejectKycSection('investment', '4')"
+                                [disabled]="isRejecting() && currentSection() === '4'"
+                            >
+                                @if (isRejecting() && currentSection() === '4') {
+                                    Rejet en cours
+                                } @else {
+                                    Rejeter
+                                }
+                            </button>
                         </div>
                     </div>
                 </div>

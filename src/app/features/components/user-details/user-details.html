@@ -58,6 +58,17 @@
             <h2 class="text-2xl font-semibold mb-4">Informations relatives au KYC (Know Your Customer) de l'utilisateur</h2>
         </div>
 
+        <div class="progress-bar">
+            <progress
+                min="0"
+                max="100"
+                [value]="progressBarValue()"
+                class="w-[350px] h-[7px] bg-gray-100 rounded-full"
+            ></progress>
+            <button pButton severity="primary" variant="text" icon="pi pi-plus" size="small" (click)="increaseProgressValue()">Ajouter</button>
+            <button pButton severity="secondary" variant="text" icon="pi pi-minus" size="small" (click)="decreaseProgressValue()">Retirer</button>
+        </div>
+
         @if (currentUserKyc() === null) {
             <div class="error-msg w-1/3 bg-red-100 p-4 rounded-md">
                 <p class="text-lg text-red-500 font-semibold">KYC non soumis</p>
@@ -68,7 +79,7 @@
                 <div class="col-1 w-full p-4 bg-white rounded-md">
                     <h3 class="text-lg text-gray-600 font-semibold mb-4">Informations Personnelles</h3>
                     <div class="w-full">
-                        <div class="w-full flex items-start justify-between gap-6 mb-3">
+                        <div class="w-full flex items-start justify-between flex-wrap gap-6 mb-6">
                             <div class="user-id">
                                 <label for="id" class="text-sm text-gray-500 font-bold mb-4">Nom complet</label>
                                 <p id="id" class="text-sm text-gray-700 font-semibold">{{ currentUserKyc()?.full_name }}</p>
@@ -88,6 +99,24 @@
                             <div class="user-role">
                                 <label for="role" class="text-sm text-gray-500 font-bold mb-4">Adresse</label>
                                 <p id="role" class="text-sm text-gray-700 font-semibold">{{ currentUserKyc()?.address }}</p>
+                            </div>
+                            <div class="user-role">
+                                <label for="role" class="text-sm text-gray-500 font-bold mb-4">status</label>
+                                @if (currentUserKyc()?.personal_info_status === 'approved') {
+                                    <p id="role"  class="text-xs text-green-400 font-semibold">Approuvé</p>
+                                }@else {
+                                    <p
+                                        id="has_wallet"
+                                        [ngClass]="currentUserKyc()?.personal_info_status === 'rejected' ? 'text-red-400' : 'text-orange-400'"
+                                        class="text-xs font-semibold"
+                                    >
+                                        {{ currentUserKyc()?.personal_info_status === 'rejected' ? 'Rejeté' : 'En attente' }}
+                                    </p>
+                                }
+                            </div>
+                            <div class="user-role">
+                                <label for="role" class="text-sm text-gray-500 font-bold mb-4">Raison du rejet</label>
+                                <p id="role" class="text-sm text-gray-700 font-semibold">{{ currentUserKyc()?.personal_info_rejection_reason }}</p>
                             </div>
                         </div>
 
@@ -129,7 +158,7 @@
                 <div class="col-2 w-full p-4 bg-white rounded-md">
                     <h3 class="text-lg text-gray-600 font-semibold mb-4">Revenus</h3>
                     <div class="w-full">
-                        <div class="w-full flex items-start justify-start gap-20 mb-3">
+                        <div class="w-full flex items-start justify-start gap-20 mb-6">
                             <div class="user-email">
                                 <label for="email" class="text-sm text-gray-500 font-bold mb-4">Profession</label>
                                 <p id="email" class="text-sm text-gray-700 font-semibold">{{ currentUserKyc()?.profession }}</p>
@@ -141,6 +170,24 @@
                             <div class="user-phone">
                                 <label for="phone" class="text-sm text-gray-500 font-bold mb-4">Revenu Moyen</label>
                                 <p id="phone" class="text-sm text-gray-700 font-semibold">{{ currentUserKyc()?.average_income }}</p>
+                            </div>
+                            <div class="user-role">
+                                <label for="role" class="text-sm text-gray-500 font-bold mb-4">status</label>
+                                @if (currentUserKyc()?.income_status === 'approved') {
+                                    <p id="role"  class="text-xs text-green-400 font-semibold">Approuvé</p>
+                                }@else {
+                                    <p
+                                        id="has_wallet"
+                                        [ngClass]="currentUserKyc()?.income_status === 'rejected' ? 'text-red-400' : 'text-orange-400'"
+                                        class="text-xs font-semibold"
+                                    >
+                                        {{ currentUserKyc()?.income_status === 'rejected' ? 'Rejeté' : 'En attente' }}
+                                    </p>
+                                }
+                            </div>
+                            <div class="user-role">
+                                <label for="role" class="text-sm text-gray-500 font-bold mb-4">Raison du rejet</label>
+                                <p id="role" class="text-sm text-gray-700 font-semibold">{{ currentUserKyc()?.income_rejection_reason }}</p>
                             </div>
                         </div>
 
@@ -180,9 +227,9 @@
                 </div>
     
                 <div class="col-3 w-full p-4 bg-white rounded-md">
-                    <h3 class="text-lg text-gray-600 font-semibold mb-4">Documents</h3>
+                    <h3 class="text-lg text-gray-600 font-semibold mb-6">Documents</h3>
                     <div class="w-full">
-                        <div class="w-full flex items-start justify-between gap-6 mb-6">
+                        <div class="w-full flex items-start justify-between flex-wrap gap-6 mb-6">
                             <div class="user-active">
                                 <label for="is_active" class="text-sm text-gray-500 font-bold mb-4">Photo utilisateur</label>
                                 <img [src]="currentUserKyc()?.user_image" [alt]="currentUserKyc()?.user_image" class="w-[300px] border border-gray-300 rounded-md">
@@ -194,6 +241,24 @@
                             <div class="user-has_wallet">
                                 <label for="has_wallet" class="text-sm text-gray-500 font-bold mb-4">Image document Verso</label>
                                 <img [src]="currentUserKyc()?.id_document_back" [alt]="currentUserKyc()?.id_document_back" class="w-[300px] border border-gray-300 rounded-md">
+                            </div>
+                            <div class="user-role">
+                                <label for="role" class="text-sm text-gray-500 font-bold mb-4">status</label>
+                                @if (currentUserKyc()?.id_document_status === 'approved') {
+                                    <p id="role"  class="text-xs text-green-400 font-semibold">Approuvé</p>
+                                }@else {
+                                    <p
+                                        id="has_wallet"
+                                        [ngClass]="currentUserKyc()?.id_document_status === 'rejected' ? 'text-red-400' : 'text-orange-400'"
+                                        class="text-xs font-semibold"
+                                    >
+                                        {{ currentUserKyc()?.id_document_status === 'rejected' ? 'Rejeté' : 'En attente' }}
+                                    </p>
+                                }
+                            </div>
+                            <div class="user-role">
+                                <label for="role" class="text-sm text-gray-500 font-bold mb-4">Raison du rejet</label>
+                                <p id="role" class="text-sm text-gray-700 font-semibold">{{ currentUserKyc()?.id_document_rejection_reason }}</p>
                             </div>
                         </div>
 
@@ -233,12 +298,12 @@
                 </div>
     
                 <div class="col-3 w-full p-4 bg-white rounded-md">
-                    <h3 class="text-lg text-gray-600 font-semibold mb-4">Investissements</h3>
+                    <h3 class="text-lg text-gray-600 font-semibold mb-6">Investissements</h3>
                     <div class="w-full">
                         <div class="w-full flex items-start justify-start gap-6 mb-6">
                             <div class="user-active">
                                 <label for="is_active" class="text-sm text-gray-500 font-bold mb-4">Objectifs d'investissement</label>
-                                <p id="is_active" class="text-sm text-gray-700 font-semibold">{{ currentUserKyc()?.investment_objectives }}</p>
+                                <p id="is_active" class="text-sm text-gray-700 font-semibold">{{ currentUserKyc()?.investment_objectives?.join(', ') }}</p>
                             </div>
                             <div class="user-push_token">
                                 <label for="push_token" class="text-sm text-gray-500 font-bold mb-4">Horizon d'investissement</label>
@@ -246,11 +311,21 @@
                             </div>
                             <div class="user-has_wallet">
                                 <label for="has_wallet" class="text-sm text-gray-500 font-bold mb-4">Status</label>
-                                @if (currentUserKyc()?.status === 'approved') {
+                                @if (currentUserKyc()?.investment_status === 'approved') {
                                     <p id="has_wallet" class="text-xs text-green-400 font-semibold">Approuvé</p>
                                 }@else {
-                                    <p id="has_wallet" class="text-xs text-orange-400 font-semibold">En attente</p>
+                                    <p
+                                        id="has_wallet"
+                                        [ngClass]="currentUserKyc()?.investment_status === 'rejected' ? 'text-red-400' : 'text-orange-400'"
+                                        class="text-xs font-semibold"
+                                    >
+                                        {{ currentUserKyc()?.investment_status === 'rejected' ? 'Rejeté' : 'En attente' }}
+                                    </p>
                                 }
+                            </div>
+                            <div class="user-role">
+                                <label for="role" class="text-sm text-gray-500 font-bold mb-4">Raison du rejet</label>
+                                <p id="role" class="text-sm text-gray-700 font-semibold">{{ currentUserKyc()?.investment_rejection_reason }}</p>
                             </div>
                         </div>
 
@@ -292,6 +367,20 @@
                 <hr class="w-full" />
     
                 <div class="col-3 w-full flex items-start justify-start gap-20 mb-2 p-4 bg-white rounded-md">
+                    <div class="user-role">
+                        <label for="role" class="text-sm text-gray-500 font-bold mb-4">status</label>
+                        @if (currentUserKyc()?.status === 'approved') {
+                            <p id="role"  class="text-xs text-green-400 font-semibold">Approuvé</p>
+                        }@else {
+                            <p
+                                id="has_wallet"
+                                [ngClass]="currentUserKyc()?.status === 'rejected' ? 'text-red-400' : 'text-orange-400'"
+                                class="text-xs font-semibold"
+                            >
+                                {{ currentUserKyc()?.status === 'rejected' ? 'Rejeté' : 'En attente' }}
+                            </p>
+                        }
+                    </div>
                     <div class="user-active">
                         <label for="is_active" class="text-sm text-gray-500 font-bold mb-4">Raison de rejet</label>
                         <p id="is_active" class="text-sm text-gray-700 font-semibold">{{ currentUserKyc()?.rejection_reason }}</p>

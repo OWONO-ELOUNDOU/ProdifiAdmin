@@ -31,6 +31,7 @@ export class UserDetails implements OnInit {
   isValidating = signal<boolean>(false);
   isRejecting = signal<boolean>(false);
   currentSection = signal<string>('1');
+  progressBarValue = signal<number>(0);
 
   // Injection de services
   private router = inject(Router);
@@ -52,6 +53,14 @@ export class UserDetails implements OnInit {
     console.log(this.currentUserId());
 
     this.fetchUserDetails();
+  }
+
+  increaseProgressValue() {
+    this.progressBarValue.update(value => value + 1);
+  }
+
+  decreaseProgressValue() {
+    this.progressBarValue.update(value => value - 1);
   }
 
   validateSection(el: string) {
@@ -121,7 +130,10 @@ export class UserDetails implements OnInit {
         next: (data) => {
           this.isValidating.set(false);
           console.log(data);
-          this.showMessage('success', 'Succès', 'La section a été Validée');
+          setTimeout(() => {
+            this.showMessage('success', 'Succès', 'La section a été Validée');
+          }, 2000);
+          window.location.reload();
         },
         error: (error) => {
           this.isValidating.set(false);
@@ -143,23 +155,29 @@ export class UserDetails implements OnInit {
       kyc_id: this.currentUserKyc()?.id,
       section: sectionTitle,
       status: 'rejected',
-      rejection_reason: sectionTitle + 'invalide'
+      rejection_reason: sectionTitle + ' invalide'
     });
 
     console.table(this.KYCForm.value);
-
+    this.isRejecting.set(true);
     try {
       this.userListService.validateUserKyc(this.KYCForm.value).subscribe({
         next: (data) => {
+          this.isRejecting.set(false);
           console.log(data);
-          this.showMessage('success', 'Succès', 'La section a été Rejeté');
+          setTimeout(() => {
+            this.showMessage('success', 'Succès', 'La section a été Rejeté');
+          }, 2000);
+          window.location.reload();
         },
         error: (error) => {
+          this.isRejecting.set(false);
           console.log(error);
           this.showMessage('danger', 'Erreur', `Erreur lors du rejet de la section, ${error.error.message}`);
         }
       })
     } catch (error) {
+      this.isRejecting.set(false);
         console.log(error)
         this.showMessage('danger', 'Erreur', 'Une erreur est survenue');
     }
